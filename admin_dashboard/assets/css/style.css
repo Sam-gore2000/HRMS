@@ -1,0 +1,6226 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/**
+* Template Name: NiceAdmin
+* Updated: May 30 2023 with Bootstrap v5.3.0
+* Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+* Author: BootstrapMade.com
+* License: https://bootstrapmade.com/license/
+*/
+
+/*--------------------------------------------------------------
+# General
+--------------------------------------------------------------*/
+/* =====================================================
+   THEME VARIABLES (GLOBAL)
+===================================================== */
+
+/* -------- DARK MODE (DEFAULT) -------- */
+:root {
+  --footer-height: 80px;
+  /* ================= BACKGROUNDS ================= */
+  --bg-main: #041221;
+  /* App background */
+  --bg-card: #0C1D2F;
+  /* Primary cards */
+  --bg-card-soft: #081a2e;
+  /* Inner cards / tables */
+  --bg-input: #081a2e;
+
+  /* ================= BORDERS ================= */
+  --border-light: rgba(255, 255, 255, 0.06);
+  --border-medium: rgba(255, 255, 255, 0.12);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.15);
+  --border-faint: rgba(255, 255, 255, 0.05);
+  --border-soft: rgba(255, 255, 255, 0.08);
+
+  /* ================= TEXT ================= */
+  --text-heading: #ffffff;
+  --text-primary: #ffffff;
+  --text-muted: #9CA3AF;
+  --text-secondary: #acacac;
+
+  /* ================= BRAND / ACCENTS ================= */
+  --accent-primary: #cffa39;
+  /* Brand green */
+  --accent-hover: #b7e92f;
+  --accent-secondary: #6015c6;
+  /* Purple (targets, dots) */
+
+  /* ================= STATUS COLORS ================= */
+  --status-success: #cffa39;
+  --status-warning: #facc15;
+  --status-danger: #ef4444;
+  --status-info: #38bdf8;
+
+  /* ================= LINKS ================= */
+  --link-primary: #cffa39;
+
+  /* ================= EFFECTS ================= */
+  --shadow-soft: 0px 2px 10px rgba(0, 0, 0, 0.35);
+  --shadow-heavy: 0 10px 30px rgba(0, 0, 0, 0.35);
+
+  /* ================= INTERACTIONS ================= */
+  --row-hover: rgba(207, 250, 57, 0.08);
+  --focus-ring: 0 0 0 0.15rem rgba(207, 250, 57, 0.25);
+}
+
+
+/* -------- LIGHT MODE -------- */
+body.light-mode {
+  /* ================= BACKGROUNDS ================= */
+  --bg-main: #f7f8fa;
+  --bg-card: #ffffff;
+  --bg-card-soft: #f1f5f9;
+  --bg-input: #f3f4f6;
+
+  /* ================= BORDERS ================= */
+  --border-light: #e5e7eb;
+  --border-medium: #d1d5db;
+  --border-subtle: #e5e7eb;
+  --border-strong: #cddfff;
+  --border-faint: #eef2f7;
+  --border-soft: #e5e7eb;
+
+  /* ================= TEXT ================= */
+  --text-heading: #012970;
+  --text-primary: #111827;
+  --text-muted: #6b7280;
+  --text-secondary: #4b5563;
+
+  /* ================= BRAND / ACCENTS ================= */
+  --accent-primary: #cffa39;
+  /* brand stays */
+  --accent-hover: #bfe82e;
+  --accent-secondary: #E6D9FB;
+  /* soft purple */
+
+  /* ================= STATUS COLORS ================= */
+  --status-success: #16a34a;
+  --status-warning: #ca8a04;
+  --status-danger: #dc2626;
+  --status-info: #0284c7;
+
+  /* ================= LINKS ================= */
+  --link-primary: #012970;
+
+  /* ================= EFFECTS (SOFT) ================= */
+  --shadow-soft: 0px 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-heavy: 0px 8px 24px rgba(0, 0, 0, 0.12);
+
+  /* ================= INTERACTIONS ================= */
+  --row-hover: rgba(1, 41, 112, 0.05);
+  --focus-ring: 0 0 0 0.15rem rgba(1, 41, 112, 0.25);
+}
+
+
+
+
+body {
+  font-family: "Poppins", sans-serif !important;
+  background-color: var(--bg-main);
+  color: var(--text-muted);
+}
+
+/* Links */
+a {
+  color: var(--link-primary);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--accent-hover);
+  text-decoration: none;
+}
+
+/*--------------------------------------------------------------
+# Main
+--------------------------------------------------------------*/
+#main {
+  margin-top: 80px;
+  padding: 20px 30px;
+  min-height: calc(100vh - 80px - var(--footer-height));
+  transition: all 0.3s;
+}
+
+@media (max-width: 1199px) {
+  #main {
+    padding: 20px;
+  }
+}
+
+/*--------------------------------------------------------------
+# Page Title
+--------------------------------------------------------------*/
+.pagetitle {
+  margin-bottom: 10px;
+}
+
+.pagetitle h1 {
+  font-size: 24px;
+  margin-bottom: 0;
+  font-weight: 600;
+  color: var(--link-primary);
+}
+
+/*--------------------------------------------------------------
+# Back to top button
+--------------------------------------------------------------*/
+.back-to-top {
+  position: fixed;
+  visibility: hidden;
+  opacity: 0;
+  right: 15px;
+  bottom: 15px;
+  z-index: 99999;
+  background: var(--link-primary);
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  transition: all 0.4s;
+}
+
+.back-to-top i {
+  font-size: 24px;
+  color: var(--text-primary);
+  line-height: 0;
+}
+
+.back-to-top:hover {
+  background: var(--accent-hover);
+  color: var(--text-primary);
+}
+
+.back-to-top.active {
+  visibility: visible;
+  opacity: 1;
+}
+
+
+/*--------------------------------------------------------------
+# Override some default Bootstrap stylings
+--------------------------------------------------------------*/
+/* Dropdown menus */
+/* Dropdown */
+.dropdown-menu {
+  border-radius: 4px;
+  padding: 10px 0;
+  animation-name: dropdown-animate;
+  animation-duration: 0.2s;
+  animation-fill-mode: both;
+  border: 0;
+  box-shadow: var(--shadow-soft);
+  background-color: var(--bg-card);
+}
+
+.dropdown-menu .dropdown-header,
+.dropdown-menu .dropdown-footer {
+  text-align: center;
+  font-size: 15px;
+  padding: 10px 25px;
+  color: var(--text-muted);
+}
+
+.dropdown-menu .dropdown-footer a {
+  color: var(--text-primary);
+  text-decoration: underline;
+}
+
+.dropdown-menu .dropdown-footer a:hover {
+  text-decoration: none;
+}
+
+.dropdown-menu .dropdown-divider {
+  color: var(--border-light);
+  margin: 0;
+}
+
+.dropdown-menu .dropdown-item {
+  font-size: 14px;
+  padding: 10px 15px;
+  transition: 0.3s;
+  color: var(--text-muted);
+}
+
+.dropdown-menu .dropdown-item i {
+  margin-right: 10px;
+  font-size: 18px;
+  line-height: 0;
+}
+
+.dropdown-menu .dropdown-item:hover {
+  background-color: var(--bg-hover);
+  color: var(--accent-primary);
+}
+
+/* Dropdown arrow */
+@media (min-width: 768px) {
+  .dropdown-menu-arrow::before {
+    content: "";
+    width: 13px;
+    height: 13px;
+    background: var(--bg-card);
+    position: absolute;
+    top: -7px;
+    right: 20px;
+    transform: rotate(45deg);
+    border-top: 1px solid var(--border-light);
+    border-left: 1px solid var(--border-light);
+  }
+}
+
+/* Animation */
+@keyframes dropdown-animate {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Light Background Helpers */
+.bg-primary-light,
+.bg-secondary-light,
+.bg-success-light,
+.bg-danger-light,
+.bg-warning-light,
+.bg-info-light,
+.bg-dark-light {
+  background-color: var(--bg-soft);
+  border-color: var(--bg-soft);
+}
+
+/* Card */
+.card {
+  margin-bottom: 30px;
+  border: none;
+  border-radius: 25px;
+  box-shadow: var(--shadow-soft);
+  background-color: var(--bg-card);
+}
+
+.card-header,
+.card-footer {
+  border-color: var(--border-light);
+  background-color: var(--bg-card);
+  color: var(--text-muted);
+  padding: 15px;
+}
+
+.card-title {
+  padding: 20px 0 15px 0;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text-muted);
+  font-family: "Poppins", sans-serif;
+}
+
+.card-title span {
+  color: var(--text-subtle);
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.card-body {
+  padding: 0 20px 20px 20px;
+}
+
+.card-img-overlay {
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+/* Alerts */
+.alert-heading {
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+  font-size: 20px;
+  color: var(--text-primary);
+}
+
+/* Close Button */
+.btn-close {
+  background-size: 25%;
+}
+
+.btn-close:focus {
+  outline: 0;
+  box-shadow: none;
+}
+
+/* Accordion */
+.accordion-item {
+  border: 1px solid var(--border-light);
+}
+
+.accordion-button:focus {
+  outline: 0;
+  box-shadow: none;
+}
+
+.accordion-button:not(.collapsed) {
+  color: var(--link-primary);
+  background-color: var(--bg-hover);
+}
+
+.accordion-flush .accordion-button {
+  padding: 15px 0;
+  background: none;
+  border: 0;
+}
+
+.accordion-flush .accordion-button:not(.collapsed) {
+  box-shadow: none;
+  color: var(--link-primary);
+}
+
+.accordion-flush .accordion-body {
+  padding: 0 0 15px 0;
+  color: var(--text-muted);
+  font-size: 15px;
+}
+
+/* Breadcrumbs */
+.breadcrumb {
+  font-size: 14px;
+  font-family: "Nunito", sans-serif;
+  color: var(--text-subtle);
+  font-weight: 600;
+}
+
+.breadcrumb a {
+  color: var(--text-subtle);
+  transition: 0.3s;
+}
+
+.breadcrumb a:hover {
+  color: var(--link-primary);
+}
+
+.breadcrumb .breadcrumb-item::before {
+  color: var(--text-subtle);
+}
+
+.breadcrumb .active {
+  color: var(--link-primary);
+  font-weight: 600;
+}
+
+/* Bordered Tabs */
+.nav-tabs-bordered {
+  border-bottom: 2px solid var(--border-light);
+}
+
+.nav-tabs-bordered .nav-link {
+  margin-bottom: -2px;
+  border: none;
+  color: var(--text-muted);
+}
+
+.nav-tabs-bordered .nav-link:hover,
+.nav-tabs-bordered .nav-link:focus {
+  color: var(--link-primary);
+}
+
+.nav-tabs-bordered .nav-link.active {
+  background-color: var(--bg-card);
+  color: var(--link-primary);
+  border-bottom: 2px solid var(--link-primary);
+}
+
+
+
+
+/* ================================Dashboard============================ */
+
+/*--------------------------------------------------------------
+# Dashboard
+--------------------------------------------------------------*/
+/* Filter dropdown */
+.dashboard .filter {
+  position: absolute;
+  right: 0px;
+  top: 15px;
+}
+
+.card-icon {
+  border-radius: 20px;
+  margin: 10px;
+}
+
+.dashboard .filter .icon {
+  color: var(--text-muted);
+  padding-right: 20px;
+  padding-bottom: 5px;
+  transition: 0.3s;
+  font-size: 16px;
+}
+
+.dashboard .filter .icon:hover,
+.dashboard .filter .icon:focus {
+  color: var(--link-primary);
+}
+
+.dashboard .filter .dropdown-header {
+  padding: 8px 15px;
+}
+
+.dashboard .filter .dropdown-header h6 {
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  margin-bottom: 0;
+  padding: 0;
+}
+
+.dashboard .filter .dropdown-item {
+  padding: 8px 15px;
+}
+
+/* =======================
+   Info Cards
+======================= */
+.dashboard .info-card {
+  padding-bottom: 10px;
+  background-color: var(--bg-card);
+  border: 0.5px solid var(--border-medium);
+}
+
+.dashboard .info-card h6 {
+  font-size: 28px;
+  color: var(--text-primary);
+  font-weight: 700;
+  margin: 0;
+  padding: 0;
+}
+
+.dashboard .card-icon {
+  font-size: 32px;
+  line-height: 0;
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+
+/* Sales */
+.dashboard .sales-card .card-icon {
+  color: var(--accent-primary);
+  background: rgba(207, 250, 57, 0.12);
+  border: 0.5px solid var(--accent-primary);
+}
+
+/* Revenue (normalized to theme) */
+.dashboard .revenue-card .card-icon {
+  color: var(--accent-primary);
+  background: rgba(207, 250, 57, 0.08);
+}
+
+/* Customers (normalized to theme) */
+.dashboard .customers-card .card-icon {
+  color: var(--accent-primary);
+  background: rgba(207, 250, 57, 0.06);
+}
+
+/* =======================
+   Activity
+======================= */
+.dashboard .activity {
+  font-size: 14px;
+}
+
+.dashboard .activity .activity-item .activite-label {
+  color: var(--text-muted);
+  position: relative;
+  flex-shrink: 0;
+  min-width: 64px;
+}
+
+.dashboard .activity .activity-item .activite-label::before {
+  content: "";
+  position: absolute;
+  right: -11px;
+  width: 4px;
+  top: 0;
+  bottom: 0;
+  background-color: var(--border-light);
+}
+
+.dashboard .activity .activity-item .activity-badge {
+  margin-top: 3px;
+  z-index: 1;
+  font-size: 11px;
+  line-height: 0;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 3px solid var(--bg-card);
+}
+
+.dashboard .activity .activity-item .activity-content {
+  padding-left: 10px;
+  padding-bottom: 20px;
+}
+
+.dashboard .activity .activity-item:first-child .activite-label::before {
+  top: 5px;
+}
+
+.dashboard .activity .activity-item:last-child .activity-content {
+  padding-bottom: 0;
+}
+
+/* =======================
+   News & Updates
+======================= */
+.dashboard .news .post-item+.post-item {
+  margin-top: 15px;
+}
+
+.dashboard .news img {
+  width: 80px;
+  float: left;
+  border-radius: 5px;
+}
+
+.dashboard .news h4 {
+  font-size: 15px;
+  margin-left: 95px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.dashboard .news h4 a {
+  color: var(--link-primary);
+  transition: 0.3s;
+}
+
+.dashboard .news h4 a:hover {
+  color: var(--accent-primary);
+}
+
+.dashboard .news p {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-left: 95px;
+}
+
+/* =======================
+   Recent Sales
+======================= */
+.dashboard .recent-sales {
+  font-size: 14px;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  padding: 20px;
+  border: 0.5px solid var(--border-medium);
+}
+
+.attendance-title {
+  padding-bottom: 0;
+}
+
+.attendance-text {
+  color: var(--text-muted);
+}
+
+#punchBtn {
+  color: var(--text-primary);
+}
+
+.dashboard .recent-sales .table thead {
+  background: var(--accent-secondary);
+}
+
+.dashboard .recent-sales .table thead th {
+  border: 0;
+}
+
+.dashboard .recent-sales .dataTable-top {
+  padding: 0 0 10px 0;
+}
+
+.dashboard .recent-sales .dataTable-bottom {
+  padding: 10px 0 0 0;
+}
+
+/* =======================
+   Top Selling
+======================= */
+.dashboard .top-selling {
+  font-size: 14px;
+}
+
+.dashboard .top-selling .table thead {
+  background: var(--bg-hover);
+}
+
+.dashboard .top-selling .table thead th {
+  border: 0;
+}
+
+.dashboard .top-selling .table tbody td {
+  vertical-align: middle;
+}
+
+.dashboard .top-selling img {
+  border-radius: 5px;
+  max-width: 60px;
+}
+
+
+/* ================================Dashboard============================ */
+
+
+
+/* =====================Attendance======================== */
+
+.attendance {
+  border: 1px solid var(--border-medium);
+  text-align: center;
+  margin: 10px;
+  border-radius: 10px;
+  padding: 15px 0;
+  color: var(--text-primary);
+}
+
+/* Attendance boxes */
+.at-box {
+  background-color: var(--accent-primary);
+  color: #000;
+}
+
+.at-box1 {
+  background-color: var(--bg-hover);
+  border: 0.5px solid var(--accent-primary);
+}
+
+/* Work time text */
+.work-time {
+  color: var(--text-muted);
+}
+
+.work-time1 {
+  color: var(--accent-primary);
+}
+
+/* Attendance icon */
+.attendance i {
+  font-size: 35px;
+  color: var(--text-primary);
+  padding: 10px;
+  background-color: transparent;
+}
+
+/* Not checked */
+.not-checked {
+  padding: 10px;
+}
+
+/* Notice */
+.notice {
+  border: 1px solid var(--border-medium);
+  border-radius: 15px;
+  padding: 15px 20px;
+  margin-top: 10px;
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+}
+
+/* Divider */
+.divider {
+  border-top: 1px solid var(--border-medium);
+  margin-bottom: 20px;
+}
+
+/* Attendance summary */
+.attendance-summury {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.attendance-summury h3 {
+  color: var(--accent-primary);
+}
+
+
+/* =====================Attendance======================== */
+
+
+/* ==================Notice Board=================== */
+/* ================= NOTICE BOARD – FINAL MATCH ================= */
+
+.notice-board {
+  background: var(--bg-card);
+  border-radius: 22px;
+  border: 1px solid var(--border-light);
+}
+
+.notice-board-body {
+  padding: 26px;
+}
+
+/* Header */
+.notice-board-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.notice-subtitle {
+  color: var(--text-muted);
+  font-size: 13px;
+  margin: 0;
+}
+
+/* Bell */
+.notice-bell {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: rgba(207, 250, 57, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-primary);
+}
+
+.notice-dot {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 8px;
+  height: 8px;
+  background: var(--accent-secondary);
+  border-radius: 50%;
+}
+
+/* List */
+.notice-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Item */
+.notice-item {
+  display: flex;
+  gap: 14px;
+  padding: 16px;
+  border-radius: 18px;
+  background: linear-gradient(180deg,
+      rgba(255, 255, 255, 0.03),
+      rgba(255, 255, 255, 0.01));
+  border: 1px solid var(--border-light);
+}
+
+/* Icon */
+.notice-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 18px;
+}
+
+/* Content */
+.notice-content h6 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.notice-content p {
+  margin: 4px 0 6px;
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.notice-content span {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* Types */
+.notice-danger .notice-icon {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+  /* semantic red – intentional */
+}
+
+.notice-info .notice-icon {
+  background: rgba(156, 163, 175, 0.15);
+  color: var(--text-muted);
+}
+
+.notice-success {
+  background: linear-gradient(180deg,
+      rgba(207, 250, 57, 0.12),
+      rgba(207, 250, 57, 0.05));
+  border: 1px solid rgba(207, 250, 57, 0.25);
+}
+
+.notice-success .notice-icon {
+  background: rgba(207, 250, 57, 0.25);
+  color: var(--accent-primary);
+}
+
+/* Footer */
+.notice-footer {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-light);
+  text-align: center;
+}
+
+.notice-footer a {
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.notice-footer a i {
+  margin-left: 6px;
+}
+
+
+
+/* ==================Notice Board=================== */
+
+
+/* ========================Weekly Overview====================== */
+
+
+/* ================= WEEKLY OVERVIEW (FINAL – SIDE BY SIDE) ================= */
+
+/* Card */
+.weekly-card {
+  background: var(--bg-card);
+  border-radius: 24px;
+  padding: 24px;
+  border: 1px solid var(--border-light);
+}
+
+/* Header */
+.weekly-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.weekly-header h4 {
+  color: var(--text-primary);
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.weekly-header p {
+  color: var(--text-muted);
+  font-size: 13px;
+  margin: 4px 0 0;
+}
+
+.weekly-action {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: rgba(207, 250, 57, 0.12);
+  color: var(--accent-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+/* Stats */
+.weekly-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 22px 0;
+}
+
+.weekly-stat {
+  background: var(--bg-hover);
+  border-radius: 18px;
+  padding: 18px;
+  border: 1px solid var(--border-light);
+}
+
+.stat-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(207, 250, 57, 0.18);
+  color: var(--accent-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.weekly-stat p {
+  color: var(--text-muted);
+  font-size: 13px;
+  margin: 10px 0 6px;
+}
+
+.weekly-stat h3 {
+  color: var(--accent-primary);
+  font-size: 26px;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Chart */
+.weekly-chart {
+  margin-top: 10px;
+  background: var(--bg-soft);
+  border-radius: 20px;
+  padding: 20px;
+}
+
+/* ================= CHART AREA ================= */
+
+.chart-area {
+  position: relative;
+  padding-left: 36px;
+}
+
+/* Y Axis */
+.y-axis {
+  position: absolute;
+  left: 0;
+  bottom: 20px;
+  height: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.y-axis span {
+  color: var(--text-muted);
+  font-size: 11px;
+  text-align: right;
+  min-width: 30px;
+}
+
+/* Bars container */
+.chart-bars {
+  position: relative;
+  height: 200px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-end;
+}
+
+/* Day column */
+.day {
+  width: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.day.muted {
+  opacity: 0.45;
+}
+
+/* Bar container — SIDE BY SIDE */
+.bar-stack {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  height: 140px;
+}
+
+/* Bars */
+.weekly-card .bar-stack .bar {
+  position: static !important;
+  width: 30px !important;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+
+/* Colors */
+.weekly-card .bar.target {
+  background: var(--accent-secondary);
+}
+
+.weekly-card .bar.actual {
+  background: var(--accent-primary);
+}
+
+/* Divider */
+.weekly-divider {
+  border-bottom: 1px solid var(--border-medium);
+  margin: 30px 0;
+}
+
+/* Day label */
+.day span {
+  margin-top: 10px;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* Legend */
+.weekly-legend {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 20px;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.weekly-legend .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent-secondary);
+  display: inline-block;
+  margin-right: 6px;
+}
+
+.weekly-legend .dot.active {
+  background: var(--accent-primary);
+}
+
+
+
+
+
+/* ========================Weekly Overview====================== */
+
+
+/* =========================Company Policies==================== */
+
+
+
+.policies-card {
+  background: linear-gradient(180deg, var(--bg-card), #081a2e);
+  border-radius: 28px;
+  padding: 26px;
+  border: 1px solid var(--border-light);
+  margin-top: 30px;
+}
+
+/* ======================================================
+   HEADER
+====================================================== */
+
+.policies-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.policies-header h4 {
+  color: var(--text-primary);
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.policies-header p {
+  color: var(--text-muted);
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.policies-header-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  background: rgba(207, 250, 57, 0.15);
+  color: var(--accent-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+/* ======================================================
+   GRID
+====================================================== */
+
+.policies-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-top: 26px;
+}
+
+/* ======================================================
+   POLICY ITEM (FIXED)
+====================================================== */
+
+.policy-item {
+  position: relative;
+  border-radius: 22px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+
+  /* 🔥 CORRECT layered background */
+  background:
+    radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(180deg, #102a3a, #0c2232);
+
+  background-size: 16px 16px, cover;
+
+  border: 1px solid rgba(207, 250, 57, 0.15);
+  transition: all 0.3s ease;
+}
+
+/* Soft glow on hover */
+.policy-item:hover {
+  box-shadow: 0 0 0 1px rgba(207, 250, 57, 0.35),
+    0 15px 40px rgba(0, 0, 0, 0.45);
+}
+
+/* ======================================================
+   TAG
+====================================================== */
+
+.policy-tag {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  font-size: 11px;
+  color: var(--text-muted);
+  background: #0c1d2f;
+  padding: 4px 10px;
+  border-radius: 12px;
+  border: 1px solid var(--border-subtle);
+}
+
+/* ======================================================
+   ICON
+====================================================== */
+
+.policy-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: rgba(207, 250, 57, 0.2);
+  color: var(--accent-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin-top: 42px;
+}
+
+/* ======================================================
+   CONTENT
+====================================================== */
+
+.policy-item h5 {
+  color: var(--text-primary);
+  font-size: 15px;
+  font-weight: 500;
+  margin: 26px 0 6px;
+}
+
+.policy-item p {
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1.5;
+  flex-grow: 1;
+}
+
+/* ======================================================
+   FOOTER DIVIDER
+====================================================== */
+
+.policy-divider {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  margin: 16px 0 10px;
+}
+
+/* ======================================================
+   FOOTER
+====================================================== */
+
+.policy-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* ======================================================
+   ACTION ICONS
+====================================================== */
+
+.policy-actions i {
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  color: var(--text-muted);
+
+  background: #0c1d2f;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 50%;
+
+  transition: all 0.25s ease;
+}
+
+.policy-actions i:hover {
+  background: rgba(207, 250, 57, 0.18);
+  color: var(--accent-primary);
+  border-color: rgba(207, 250, 57, 0.45);
+}
+
+/* ======================================================
+   BOTTOM ACTIONS
+====================================================== */
+
+.policies-bottom {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-light);
+}
+
+.policy-action-box {
+  background: linear-gradient(180deg, #102a3a, #0c2232);
+  border-radius: 18px;
+  padding: 18px;
+  border: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.policy-action-box:hover {
+  border-color: rgba(207, 250, 57, 0.35);
+}
+
+/* Icon */
+.action-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(207, 250, 57, 0.2);
+  color: var(--accent-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.policy-action-box h6 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.policy-action-box p {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.policy-action-box i.bi-chevron-right {
+  margin-left: auto;
+  color: var(--text-muted);
+}
+
+
+
+/* =========================Company Policies==================== */
+
+
+/*--------------------------------------------------------------
+# Icons list page
+--------------------------------------------------------------*/
+.iconslist {
+  display: grid;
+  max-width: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.25rem;
+  padding-top: 15px;
+}
+
+.iconslist .icon {
+  background-color: var(--bg-card);
+  border-radius: 0.25rem;
+  text-align: center;
+  color: var(--link-primary);
+  padding: 15px 0;
+}
+
+.iconslist i {
+  margin: 0.25rem;
+  font-size: 2.5rem;
+}
+
+.iconslist .label {
+  font-family: var(--bs-font-monospace);
+  display: inline-block;
+  width: 100%;
+  overflow: hidden;
+  padding: 0.25rem;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-muted);
+}
+
+
+/*--------------------------------------------------------------
+# Profie Page
+--------------------------------------------------------------*/
+.profile .profile-card img {
+  max-width: 120px;
+}
+
+.profile .profile-card h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-heading);
+  margin: 10px 0 0 0;
+}
+
+.profile .profile-card h3 {
+  font-size: 18px;
+  color: var(--text-primary);
+}
+
+.profile .profile-card .social-links a {
+  font-size: 20px;
+  display: inline-block;
+  color: var(--icon-muted);
+  line-height: 0;
+  margin-right: 10px;
+  transition: 0.3s;
+}
+
+.profile .profile-card .social-links a:hover {
+  color: var(--link-primary);
+}
+
+.profile .profile-overview .row {
+  margin-bottom: 20px;
+  font-size: 15px;
+}
+
+.profile .profile-overview .card-title {
+  color: var(--text-primary);
+}
+
+.profile .profile-overview .label {
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.profile .profile-edit label {
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.profile .profile-edit img {
+  max-width: 120px;
+}
+
+
+/*--------------------------------------------------------------
+# F.A.Q Page
+--------------------------------------------------------------*/
+.faq .basic h6 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--link-primary);
+}
+
+.faq .basic p {
+  color: var(--text-muted);
+}
+
+
+/*--------------------------------------------------------------
+# Contact
+--------------------------------------------------------------*/
+.contact .info-box {
+  padding: 28px 30px;
+}
+
+.contact .info-box i {
+  font-size: 38px;
+  line-height: 0;
+  color: var(--link-primary);
+}
+
+.contact .info-box h3 {
+  font-size: 20px;
+  color: var(--text-heading);
+  font-weight: 700;
+  margin: 20px 0 10px 0;
+}
+
+.contact .info-box p {
+  padding: 0;
+  line-height: 24px;
+  font-size: 14px;
+  margin-bottom: 0;
+  color: var(--text-muted);
+}
+
+/* Error / Success Messages */
+.contact .php-email-form .error-message {
+  display: none;
+  color: var(--text-primary);
+  background: var(--danger);
+  text-align: left;
+  padding: 15px;
+  margin-bottom: 24px;
+  font-weight: 600;
+}
+
+.contact .php-email-form .sent-message {
+  display: none;
+  color: var(--text-primary);
+  background: var(--success);
+  text-align: center;
+  padding: 15px;
+  margin-bottom: 24px;
+  font-weight: 600;
+}
+
+/* Loading */
+.contact .php-email-form .loading {
+  display: none;
+  background: var(--bg-card);
+  text-align: center;
+  padding: 15px;
+  margin-bottom: 24px;
+  color: var(--text-muted);
+}
+
+.contact .php-email-form .loading:before {
+  content: "";
+  display: inline-block;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  margin: 0 10px -6px 0;
+  border: 3px solid var(--success);
+  border-top-color: var(--border-light);
+  animation: animate-loading 1s linear infinite;
+}
+
+/* Inputs */
+.contact .php-email-form input,
+.contact .php-email-form textarea {
+  border-radius: 0;
+  box-shadow: none;
+  font-size: 14px;
+  border: 1px solid var(--border-light);
+  background: var(--bg-input);
+  color: var(--text-primary);
+}
+
+.contact .php-email-form input:focus,
+.contact .php-email-form textarea:focus {
+  border-color: var(--link-primary);
+}
+
+/* Spacing */
+.contact .php-email-form input {
+  padding: 10px 15px;
+}
+
+.contact .php-email-form textarea {
+  padding: 12px 15px;
+}
+
+/* Submit Button */
+.contact .php-email-form button[type=submit] {
+  background: var(--link-primary);
+  border: 0;
+  padding: 10px 30px;
+  color: var(--text-primary);
+  transition: 0.4s;
+  border-radius: 4px;
+}
+
+.contact .php-email-form button[type=submit]:hover {
+  background: var(--link-primary-hover);
+}
+
+/* Spinner */
+@keyframes animate-loading {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+/*--------------------------------------------------------------
+# Error 404
+--------------------------------------------------------------*/
+.error-404 {
+  padding: 30px;
+}
+
+.error-404 h1 {
+  font-size: 180px;
+  font-weight: 700;
+  color: var(--link-primary);
+  margin-bottom: 0;
+  line-height: 150px;
+}
+
+.error-404 h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-heading);
+  margin-bottom: 30px;
+}
+
+.error-404 .btn {
+  background: var(--btn-secondary);
+  color: var(--text-primary);
+  padding: 8px 30px;
+}
+
+.error-404 .btn:hover {
+  background: var(--btn-secondary-hover);
+}
+
+@media (min-width: 992px) {
+  .error-404 img {
+    max-width: 50%;
+  }
+}
+
+
+/*--------------------------------------------------------------
+# Footer
+--------------------------------------------------------------*/
+.footer {
+  padding: 20px 0;
+  font-size: 14px;
+  transition: all 0.3s;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.footer .copyright {
+  text-align: center;
+  color: var(--text-heading);
+}
+
+.footer .credits {
+  padding-top: 5px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-heading);
+}
+
+
+
+/* ==============================Employee Details Page=========================== */
+/* ==============================Employee Details Page=========================== */
+
+.employeedetails {
+  color: var(--text-muted);
+  background: var(--bg-main);
+}
+
+/* ================= PAGE TITLE ================= */
+.employeedetails .pagetitle h1 {
+  color: var(--text-heading);
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* ================= CARD ================= */
+.employeedetails .card {
+  background: linear-gradient(180deg,
+      var(--bg-card),
+      var(--bg-card));
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  box-shadow: var(--shadow-strong);
+  padding: 30px;
+}
+
+.employeedetails .card-body {
+  color: var(--text-muted);
+}
+
+.employeedetails .card-body h5 {
+  color: var(--text-heading);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.employeedetails .card-body hr {
+  border-color: var(--border-soft);
+  margin: 10px 0 20px;
+}
+
+/* ================= TABLE ================= */
+.employeedetails .table {
+  color: var(--text-muted);
+  margin-bottom: 0;
+  background: linear-gradient(180deg,
+      var(--bg-card),
+      var(--bg-card));
+}
+
+.employeedetails .table thead th {
+  color: var(--text-subtle);
+  font-size: 14px;
+  font-weight: 600;
+  border-bottom: 1px solid var(--border-medium);
+  background: linear-gradient(180deg,
+      var(--bg-card),
+      var(--bg-card));
+}
+
+.employeedetails .table tbody tr {
+  border-bottom: 1px solid var(--border-soft);
+  background: linear-gradient(180deg,
+      var(--bg-card),
+      var(--bg-card));
+}
+
+.employeedetails .table tbody tr:hover {
+  background-color: var(--hover-soft);
+}
+
+.employeedetails .table td {
+  vertical-align: middle;
+  font-size: 14px;
+  background: linear-gradient(180deg,
+      var(--bg-card),
+      var(--bg-card));
+  color: var(--text-subtle);
+}
+
+/* ================= ACTION ICONS ================= */
+.employeedetails .table td a i {
+  font-size: 15px;
+  margin-right: 10px;
+  transition: opacity 0.25s ease;
+}
+
+.employeedetails .table td a i.fa-user {
+  color: var(--accent-primary);
+}
+
+.employeedetails .table td a i.fa-edit {
+  color: var(--accent-warning);
+}
+
+.employeedetails .table td a i.fa-trash {
+  color: var(--accent-danger);
+}
+
+.employeedetails .table td a i:hover {
+  opacity: 0.85;
+}
+
+/* ================= FORM LABELS ================= */
+.employeedetails .form-label {
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* ================= INPUTS (BOOTSTRAP OVERRIDE) ================= */
+.employeedetails input.form-control,
+.employeedetails textarea.form-control {
+  background-color: var(--bg-main);
+  border: 1px solid var(--border-medium);
+  color: var(--text-heading);
+  height: 45px !important;
+}
+
+.employeedetails select.datatable-selector,
+.employeedetails input.datatable-input {
+  background-color: var(--bg-main) !important;
+  border: 1px solid var(--border-medium) !important;
+  color: var(--text-heading) !important;
+  height: 45px !important;
+}
+
+/* Small inputs */
+.employeedetails input.form-control-sm,
+.employeedetails textarea.form-control-sm {
+  background-color: var(--bg-main);
+  border: 1px solid var(--border-medium);
+  color: var(--text-heading);
+}
+
+/* Placeholders */
+.employeedetails input::placeholder,
+.employeedetails textarea::placeholder {
+  color: var(--text-placeholder);
+}
+
+/* Focus state */
+.employeedetails input.form-control:focus,
+.employeedetails textarea.form-control:focus {
+  background-color: var(--bg-main);
+  border-color: var(--accent-primary);
+  color: var(--text-heading);
+  box-shadow: 0 0 0 0.15rem var(--focus-ring);
+}
+
+.employeedetails select.datatable-selector:focus,
+.employeedetails input.datatable-input:focus {
+  background-color: var(--bg-main);
+  border-color: var(--accent-primary);
+  color: var(--text-heading);
+  box-shadow: 0 0 0 0.15rem var(--focus-ring);
+}
+
+/* ================= FILE INPUT ================= */
+.employeedetails input[type="file"].form-control {
+  background-color: var(--bg-main);
+  border: 1px solid var(--border-medium);
+  color: var(--text-muted);
+}
+
+/* Remove resize */
+.employeedetails textarea.form-control {
+  resize: none;
+}
+
+/* ================= BUTTON ================= */
+.employeedetails .btn-success {
+  background-color: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: var(--text-on-accent);
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 8px 26px;
+}
+
+.employeedetails .btn-success:hover {
+  background-color: var(--accent-primary-hover);
+  border-color: var(--accent-primary-hover);
+  color: var(--text-on-accent);
+}
+
+/* ================= TABLE RESPONSIVE ================= */
+.employeedetails .table-responsive {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* ================= DATATABLE SAFE ================= */
+.employeedetails table.datatable {
+  background-color: transparent;
+}
+
+
+
+
+/* ==============================Employee Details Page=========================== */
+/* ==============================Employee Details Page=========================== */
+
+
+/* ==============================Leave Details Page============================== */
+/* ==============================Leave Details Page============================== */
+/* =====================================================
+   LEAVE DETAILS PAGE (SCOPED)
+===================================================== */
+
+.leavedetails {
+  color: var(--text-muted);
+  background: var(--bg-main);
+}
+
+/* ================= PAGE TITLE ================= */
+.leavedetails .pagetitle h1 {
+  color: var(--text-heading);
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* ================= CARD ================= */
+.leavedetails .card {
+  background: linear-gradient(180deg,
+      var(--bg-card),
+      var(--bg-main));
+  border: 1px solid var(--border-soft);
+  border-radius: 16px;
+  box-shadow: var(--shadow-heavy);
+  padding: 30px;
+}
+
+.leavedetails .card-body {
+  color: var(--text-muted);
+}
+
+.leavedetails .card-body h5 {
+  color: var(--text-heading);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.leavedetails .card-body hr {
+  border-color: var(--border-muted);
+  margin: 10px 0 20px;
+}
+
+/* ================= DATATABLE INPUTS ================= */
+.leavedetails select.datatable-selector,
+.leavedetails input.datatable-input {
+  background-color: var(--bg-main) !important;
+  border: 1px solid var(--border-soft) !important;
+  color: var(--text-heading) !important;
+  height: 45px !important;
+}
+
+.leavedetails select.datatable-selector:focus,
+.leavedetails input.datatable-input:focus {
+  background-color: var(--bg-main);
+  border-color: var(--accent-primary);
+  color: var(--text-heading);
+  box-shadow: var(--focus-ring);
+  outline: none;
+}
+
+/* ================= TABLE ================= */
+.leavedetails .table {
+  color: var(--text-muted);
+  margin-bottom: 0;
+  background: linear-gradient(180deg,
+      var(--bg-card),
+      var(--bg-card));
+}
+
+.leavedetails .table thead th {
+  color: var(--text-heading);
+  font-size: 14px;
+  font-weight: 600;
+  border-bottom: 1px solid var(--border-strong);
+  background: linear-gradient(180deg,
+      var(--bg-card),
+      var(--bg-card));
+}
+
+.leavedetails .table tbody tr {
+  border-bottom: 1px solid var(--border-soft);
+  background: linear-gradient(180deg,
+      var(--bg-card),
+      var(--bg-card));
+}
+
+.leavedetails .table tbody tr:hover {
+  background-color: var(--row-hover);
+}
+
+.leavedetails .table td {
+  vertical-align: middle;
+  font-size: 14px;
+  background: linear-gradient(180deg,
+      var(--bg-card),
+      var(--bg-card));
+  color: var(--text-secondary);
+}
+
+/* ================= ACTION LINKS ================= */
+.leavedetails .table td a {
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* Approved */
+.leavedetails .text-success {
+  color: var(--accent-primary) !important;
+}
+
+/* Warning */
+.leavedetails .text-warning {
+  color: var(--status-warning) !important;
+}
+
+/* Rejected */
+.leavedetails .text-danger {
+  color: var(--status-danger) !important;
+}
+
+/* Edit */
+.leavedetails .text-info {
+  color: var(--status-info) !important;
+}
+
+/* Hover effect */
+.leavedetails .table td a:hover {
+  opacity: 0.85;
+}
+
+/* ================= DATATABLE SAFE ================= */
+.leavedetails table.datatable {
+  background-color: transparent;
+}
+
+/* ================= RESPONSIVE ================= */
+.leavedetails .table-responsive {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+
+/* ==============================Leave Details Page============================== */
+/* ==============================Leave Details Page============================== */
+
+
+/* ================================Attendance Details Page=============================== */
+/* ================================Attendance Details Page=============================== */
+
+
+.attendance_details {
+  background: var(--bg-main);
+  color: var(--text-muted);
+}
+
+/* ================= PAGE TITLE ================= */
+.attendance_details .pagetitle h1 {
+  color: var(--text-heading);
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* ================= CARD ================= */
+.attendance_details .card {
+  background: linear-gradient(180deg, var(--bg-card), var(--bg-card-soft));
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: var(--shadow-heavy);
+}
+
+.attendance_details .card-body {
+  color: var(--text-muted);
+}
+
+.attendance_details .card-body h5 {
+  color: var(--text-heading);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.attendance_details .card-body hr {
+  border-color: var(--border-subtle);
+  margin: 10px 0 20px;
+}
+
+/* ================= FORM LABELS ================= */
+.attendance_details label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+/* ================= INPUTS & SELECTS ================= */
+.attendance_details input.form-control,
+.attendance_details select.form-control {
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-medium);
+  color: var(--text-primary);
+  height: 45px;
+}
+
+.attendance_details input.form-control-sm,
+.attendance_details select.form-control-sm {
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-medium);
+  color: var(--text-primary);
+}
+
+.attendance_details input::placeholder {
+  color: var(--text-secondary);
+}
+
+/* Focus state */
+.attendance_details input.form-control:focus,
+.attendance_details select.form-control:focus {
+  background-color: var(--bg-input);
+  border-color: var(--accent-primary);
+  color: var(--text-primary);
+  box-shadow: var(--focus-ring);
+  outline: none;
+}
+
+/* ================= SUBMIT BUTTON ================= */
+.attendance_details .btn-success {
+  background-color: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: #000;
+  font-weight: 600;
+  padding: 8px 26px;
+  border-radius: 10px;
+}
+
+.attendance_details .btn-success:hover {
+  background-color: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+/* ================= TABLE ================= */
+.attendance_details .table {
+  margin-bottom: 0;
+  color: var(--text-muted);
+  background: transparent;
+}
+
+.attendance_details .table thead th {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-heading);
+  border-bottom: 1px solid var(--border-strong);
+  background: var(--bg-card);
+}
+
+.attendance_details .table tbody tr {
+  border-bottom: 1px solid var(--border-faint);
+  background: var(--bg-card);
+}
+
+.attendance_details .table tbody tr:hover {
+  background-color: var(--row-hover);
+}
+
+.attendance_details .table td {
+  font-size: 14px;
+  vertical-align: middle;
+  color: var(--text-secondary);
+  background: var(--bg-card);
+}
+
+/* ================= STATUS TEXT ================= */
+.attendance_details .text-success {
+  color: var(--status-success) !important;
+}
+
+.attendance_details .text-danger {
+  color: var(--status-danger) !important;
+}
+
+.attendance_details .text-warning {
+  color: var(--status-warning) !important;
+}
+
+/* ================= ACTION ICONS ================= */
+.attendance_details .table td a i {
+  font-size: 15px;
+  margin-right: 10px;
+  transition: opacity 0.25s ease;
+}
+
+.attendance_details .table td a i.fa-edit {
+  color: var(--status-warning);
+}
+
+.attendance_details .table td a i.fa-trash {
+  color: var(--status-danger);
+}
+
+.attendance_details .table td a i:hover {
+  opacity: 0.85;
+}
+
+/* ================= DATATABLE SAFE ================= */
+.attendance_details table.datatable {
+  background-color: transparent;
+}
+
+.attendance_details .datatable-selector,
+.attendance_details .datatable-input {
+  background-color: var(--bg-input) !important;
+  border: 1px solid var(--border-medium) !important;
+  color: var(--text-primary) !important;
+  height: 45px !important;
+}
+
+.attendance_details .datatable-selector:focus,
+.attendance_details .datatable-input:focus {
+  border-color: var(--accent-primary);
+  box-shadow: var(--focus-ring);
+}
+
+/* ================= RESPONSIVE ================= */
+.attendance_details .table-responsive {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* ================================Attendance Details Page=============================== */
+/* ================================Attendance Details Page=============================== */
+
+
+/* =================================Attendance Report=================================== */
+/* =================================Attendance Report=================================== */
+/* ======================================================
+   ATTENDANCE REPORT PAGE
+====================================================== */
+
+.attendance_report {
+  background: var(--bg-main);
+  color: var(--text-muted);
+}
+
+/* ================= PAGE TITLE ================= */
+.attendance_report .pagetitle h1 {
+  color: var(--text-heading);
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* ================= CARD ================= */
+.attendance_report .card {
+  background: linear-gradient(180deg, var(--bg-card), var(--bg-card-soft));
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: var(--shadow-heavy);
+}
+
+.attendance_report .card-body {
+  color: var(--text-muted);
+}
+
+.attendance_report .card-body h5 {
+  color: var(--text-heading);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.attendance_report .card-body hr {
+  border-color: var(--border-subtle);
+  margin: 10px 0 20px;
+}
+
+/* ================= FORM LABELS ================= */
+.attendance_report label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+/* ================= INPUTS ================= */
+.attendance_report input.form-control,
+.attendance_report input.form-control-sm {
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-medium);
+  color: var(--text-primary);
+  height: 45px;
+}
+
+.attendance_report input::placeholder {
+  color: var(--text-secondary);
+}
+
+/* Focus */
+.attendance_report input.form-control:focus {
+  background-color: var(--bg-input);
+  border-color: var(--accent-primary);
+  color: var(--text-primary);
+  box-shadow: var(--focus-ring);
+  outline: none;
+}
+
+/* ================= SUBMIT BUTTON ================= */
+.attendance_report .btn-success {
+  background-color: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: #000;
+  font-weight: 600;
+  padding: 8px 26px;
+  border-radius: 10px;
+}
+
+.attendance_report .btn-success:hover {
+  background-color: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+/* ================= TABLE ================= */
+.attendance_report .table {
+  margin-bottom: 0;
+  color: var(--text-muted);
+  background: transparent;
+}
+
+.attendance_report .table thead th {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-heading);
+  border-bottom: 1px solid var(--border-strong);
+  background: var(--bg-card);
+}
+
+.attendance_report .table tbody tr {
+  border-bottom: 1px solid var(--border-faint);
+  background: var(--bg-card);
+}
+
+.attendance_report .table tbody tr:hover {
+  background-color: var(--row-hover);
+}
+
+.attendance_report .table td {
+  font-size: 14px;
+  vertical-align: middle;
+  color: var(--text-secondary);
+  background: var(--bg-card);
+}
+
+/* ================= STATUS TEXT ================= */
+.attendance_report .text-success {
+  color: var(--status-success) !important;
+}
+
+.attendance_report .text-danger {
+  color: var(--status-danger) !important;
+}
+
+.attendance_report .text-warning {
+  color: var(--status-warning) !important;
+}
+
+/* ================= EMPTY STATE ================= */
+.attendance_report .table td.text-center {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* ================= DATATABLE SAFE ================= */
+.attendance_report table.datatable {
+  background-color: transparent;
+}
+
+.attendance_report .datatable-selector,
+.attendance_report .datatable-input {
+  background-color: var(--bg-input) !important;
+  border: 1px solid var(--border-medium) !important;
+  color: var(--text-primary) !important;
+  height: 45px !important;
+}
+
+.attendance_report .datatable-selector:focus,
+.attendance_report .datatable-input:focus {
+  border-color: var(--accent-primary);
+  box-shadow: var(--focus-ring);
+}
+
+/* ================= RESPONSIVE ================= */
+.attendance_report .table-responsive {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* =================================Attendance Report=================================== */
+/* =================================Attendance Report=================================== */
+
+
+/* ===================================Query Page======================================= */
+/* ===================================Query Page======================================= */
+/* ======================================================
+   QUERY PAGE
+====================================================== */
+
+.query {
+  background: var(--bg-main);
+  color: var(--text-muted);
+}
+
+/* ================= PAGE TITLE ================= */
+.query .pagetitle h1 {
+  color: var(--text-heading);
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* ================= CARD ================= */
+.query .card {
+  background: linear-gradient(180deg, var(--bg-card), var(--bg-card-soft));
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: var(--shadow-heavy);
+}
+
+.query .card-body {
+  color: var(--text-muted);
+}
+
+.query .card-body h5 {
+  color: var(--text-heading);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.query .card-body hr {
+  border-color: var(--border-subtle);
+  margin: 10px 0 20px;
+}
+
+/* ================= TABLE ================= */
+.query .table {
+  margin-bottom: 0;
+  color: var(--text-muted);
+  background: transparent;
+}
+
+.query .table thead th {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-heading);
+  border-bottom: 1px solid var(--border-strong);
+  background: var(--bg-card);
+}
+
+.query .table tbody tr {
+  border-bottom: 1px solid var(--border-faint);
+  background: var(--bg-card);
+}
+
+.query .table tbody tr:hover {
+  background-color: var(--row-hover);
+}
+
+.query .table td {
+  font-size: 14px;
+  vertical-align: middle;
+  color: var(--text-secondary);
+  background: var(--bg-card);
+}
+
+/* ================= ACTION LINKS ================= */
+.query .table td a {
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* Status colors */
+.query .text-success {
+  color: var(--status-success) !important;
+}
+
+.query .text-warning {
+  color: var(--status-warning) !important;
+}
+
+.query .text-danger {
+  color: var(--status-danger) !important;
+}
+
+/* Hover effect */
+.query .table td a:hover {
+  opacity: 0.85;
+}
+
+/* ================= DATATABLE SAFE ================= */
+.query table.datatable {
+  background-color: transparent;
+}
+
+.query .datatable-selector,
+.query .datatable-input {
+  background-color: var(--bg-input) !important;
+  border: 1px solid var(--border-medium) !important;
+  color: var(--text-primary) !important;
+  height: 45px !important;
+}
+
+.query .datatable-selector:focus,
+.query .datatable-input:focus {
+  border-color: var(--accent-primary);
+  box-shadow: var(--focus-ring);
+}
+
+/* ================= RESPONSIVE ================= */
+.query .table-responsive {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* ===================================Query Page======================================= */
+/* ===================================Query Page======================================= */
+
+
+
+/* =============================Compensation Details Page============================= */
+/* =============================Compensation Details Page============================= */
+/* =====================================================
+ /* =====================================================
+   BANK DETAILS PAGE
+===================================================== */
+
+.bank_details {
+  color: var(--text-muted);
+  background: var(--bg-main);
+}
+
+/* ================= PAGE TITLE ================= */
+.bank_details .pagetitle h1 {
+  color: var(--text-heading);
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* ================= CARD ================= */
+.bank_details .card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+  padding: 30px;
+}
+
+.bank_details .card-body {
+  color: var(--text-muted);
+}
+
+.bank_details .card-body h5 {
+  color: var(--text-primary);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.bank_details .card-body hr {
+  border-color: var(--border-subtle);
+  margin: 10px 0 20px;
+}
+
+/* ================= FORM LABELS ================= */
+.bank_details label {
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* ================= INPUTS ================= */
+.bank_details input.form-control,
+.bank_details select.form-control,
+.bank_details textarea.form-control {
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-medium);
+  color: var(--text-primary);
+  height: 45px;
+}
+
+.bank_details input.form-control-sm,
+.bank_details select.form-control-sm {
+  height: 40px;
+}
+
+/* Placeholder */
+.bank_details input::placeholder {
+  color: var(--text-muted);
+}
+
+/* Focus */
+.bank_details input.form-control:focus,
+.bank_details select.form-control:focus {
+  background-color: var(--bg-input);
+  border-color: var(--accent-primary);
+  color: var(--text-primary);
+  box-shadow: 0 0 0 0.15rem rgba(207, 250, 57, 0.25);
+}
+
+/* ================= BUTTON ================= */
+.bank_details .btn-primary {
+  background-color: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: #000;
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 8px 26px;
+}
+
+.bank_details .btn-primary:hover {
+  background-color: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+/* ================= TABLE ================= */
+.bank_details .table {
+  color: var(--text-muted);
+  background: var(--bg-card);
+  margin-bottom: 0;
+}
+
+/* Table header */
+.bank_details .table thead th {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 600;
+  border-bottom: 1px solid var(--border-medium);
+}
+
+/* Table rows */
+.bank_details .table tbody tr {
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border-light);
+}
+
+/* Hover */
+.bank_details .table tbody tr:hover {
+  background-color: rgba(207, 250, 57, 0.08);
+}
+
+/* Table cells */
+.bank_details .table td {
+  vertical-align: middle;
+  font-size: 14px;
+  color: var(--text-muted);
+  background: var(--bg-card);
+}
+
+/* ================= ACTION ICONS ================= */
+.bank_details .table td a i {
+  font-size: 15px;
+  margin-right: 10px;
+  transition: opacity 0.25s ease;
+}
+
+.bank_details .table td a i.fa-edit {
+  color: var(--warning);
+}
+
+.bank_details .table td a i.fa-trash {
+  color: var(--danger);
+}
+
+.bank_details .table td a i:hover {
+  opacity: 0.85;
+}
+
+/* ================= TABLE RESPONSIVE ================= */
+.bank_details .table-responsive {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* ================= DATATABLE SAFE ================= */
+.bank_details table.datatable {
+  background-color: transparent;
+}
+
+/* ================= DATATABLE CONTROLS ================= */
+
+/* Search input */
+.bank_details input.datatable-input {
+  background-color: var(--bg-input) !important;
+  border: 1px solid var(--border-medium) !important;
+  color: var(--text-primary) !important;
+  height: 45px;
+  border-radius: 8px;
+}
+
+/* Placeholder */
+.bank_details input.datatable-input::placeholder {
+  color: var(--text-muted);
+}
+
+/* Search focus */
+.bank_details input.datatable-input:focus {
+  background-color: var(--bg-input);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 0.15rem rgba(207, 250, 57, 0.25);
+  outline: none;
+}
+
+/* Entries selector */
+.bank_details select.datatable-selector {
+  background-color: var(--bg-input) !important;
+  border: 1px solid var(--border-medium) !important;
+  color: var(--text-primary) !important;
+  height: 45px;
+  border-radius: 8px;
+}
+
+/* Selector focus */
+.bank_details select.datatable-selector:focus {
+  background-color: var(--bg-input);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 0.15rem rgba(207, 250, 57, 0.25);
+  outline: none;
+}
+
+/* Top / bottom spacing */
+.bank_details .dataTable-top,
+.bank_details .dataTable-bottom {
+  padding: 10px 0;
+  color: var(--text-muted);
+}
+
+/* Info text */
+.bank_details .dataTable-info {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+/* Pagination */
+.bank_details .dataTable-pagination a {
+  color: var(--text-muted);
+  border-radius: 8px;
+  padding: 6px 10px;
+  transition: all 0.25s ease;
+}
+
+.bank_details .dataTable-pagination a:hover {
+  background: rgba(207, 250, 57, 0.15);
+  color: var(--accent-primary);
+}
+
+/* Active page */
+.bank_details .dataTable-pagination .active a {
+  background: var(--accent-primary);
+  color: #000;
+  font-weight: 600;
+}
+
+
+/* =============================Compensation Details Page============================= */
+/* =============================Compensation Details Page============================= */
+
+
+
+/* ================================Payslip Generate Page=============================== */
+/* ================================Payslip Generate Page=============================== */
+/* =====================================================
+   GENERATE PAYSLIP PAGE
+===================================================== */
+
+.generate_payslip {
+  color: var(--text-muted);
+  background: var(--bg-main);
+}
+
+/* ================= PAGE TITLE ================= */
+.generate_payslip .pagetitle h1 {
+  color: var(--text-heading);
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* ================= CARD ================= */
+.generate_payslip .card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+  padding: 30px;
+}
+
+.generate_payslip .card-body {
+  color: var(--text-muted);
+}
+
+.generate_payslip .card-body h5 {
+  color: var(--text-primary);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.generate_payslip .card-body hr {
+  border-color: var(--border-subtle);
+  margin: 10px 0 20px;
+}
+
+/* ================= FORM LABELS ================= */
+.generate_payslip label {
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* ================= INPUTS ================= */
+.generate_payslip input.form-control,
+.generate_payslip select.form-control,
+.generate_payslip textarea.form-control {
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-medium);
+  color: var(--text-primary);
+  height: 45px;
+}
+
+.generate_payslip input.form-control-sm {
+  height: 40px;
+}
+
+/* Placeholder */
+.generate_payslip input::placeholder {
+  color: var(--text-muted);
+}
+
+/* Focus */
+.generate_payslip input.form-control:focus,
+.generate_payslip select.form-control:focus {
+  background-color: var(--bg-input);
+  border-color: var(--accent-primary);
+  color: var(--text-primary);
+  box-shadow: 0 0 0 0.15rem rgba(207, 250, 57, 0.25);
+}
+
+/* ================= BUTTON ================= */
+.generate_payslip .btn-success {
+  background-color: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: #000;
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 8px 26px;
+}
+
+.generate_payslip .btn-success:hover {
+  background-color: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+/* ================= TABLE ================= */
+.generate_payslip .table {
+  color: var(--text-muted);
+  background: var(--bg-card);
+  margin-bottom: 0;
+}
+
+/* Header */
+.generate_payslip .table thead th {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 600;
+  border-bottom: 1px solid var(--border-medium);
+}
+
+/* Rows */
+.generate_payslip .table tbody tr {
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border-light);
+}
+
+/* Hover */
+.generate_payslip .table tbody tr:hover {
+  background-color: rgba(207, 250, 57, 0.08);
+}
+
+/* Cells */
+.generate_payslip .table td {
+  vertical-align: middle;
+  font-size: 14px;
+  color: var(--text-muted);
+  background: var(--bg-card);
+}
+
+/* ================= ACTION ICONS ================= */
+.generate_payslip .table td a i {
+  font-size: 15px;
+  margin-right: 10px;
+  transition: opacity 0.25s ease;
+}
+
+.generate_payslip .table td a i.fa-eye {
+  color: var(--info);
+}
+
+.generate_payslip .table td a i.fa-edit {
+  color: var(--warning);
+}
+
+.generate_payslip .table td a i.fa-trash {
+  color: var(--danger);
+}
+
+.generate_payslip .table td a i:hover {
+  opacity: 0.85;
+}
+
+/* ================= TABLE RESPONSIVE ================= */
+.generate_payslip .table-responsive {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* ================= DATATABLE SAFE ================= */
+.generate_payslip table.datatable {
+  background-color: transparent;
+}
+
+/* ================= DATATABLE CONTROLS ================= */
+
+/* Search input */
+.generate_payslip input.datatable-input {
+  background-color: var(--bg-input) !important;
+  border: 1px solid var(--border-medium) !important;
+  color: var(--text-primary) !important;
+  height: 45px;
+  border-radius: 8px;
+}
+
+/* Placeholder */
+.generate_payslip input.datatable-input::placeholder {
+  color: var(--text-muted);
+}
+
+/* Search focus */
+.generate_payslip input.datatable-input:focus {
+  background-color: var(--bg-input);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 0.15rem rgba(207, 250, 57, 0.25);
+  outline: none;
+}
+
+/* Entries selector */
+.generate_payslip select.datatable-selector {
+  background-color: var(--bg-input) !important;
+  border: 1px solid var(--border-medium) !important;
+  color: var(--text-primary) !important;
+  height: 45px;
+  border-radius: 8px;
+}
+
+/* Selector focus */
+.generate_payslip select.datatable-selector:focus {
+  background-color: var(--bg-input);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 0.15rem rgba(207, 250, 57, 0.25);
+  outline: none;
+}
+
+/* Top / bottom spacing */
+.generate_payslip .dataTable-top,
+.generate_payslip .dataTable-bottom {
+  padding: 10px 0;
+  color: var(--text-muted);
+}
+
+/* Info text */
+.generate_payslip .dataTable-info {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+/* Pagination */
+.generate_payslip .dataTable-pagination a {
+  color: var(--text-muted);
+  border-radius: 8px;
+  padding: 6px 10px;
+  transition: all 0.25s ease;
+}
+
+.generate_payslip .dataTable-pagination a:hover {
+  background: rgba(207, 250, 57, 0.15);
+  color: var(--accent-primary);
+}
+
+/* Active page */
+.generate_payslip .dataTable-pagination .active a {
+  background: var(--accent-primary);
+  color: #000;
+  font-weight: 600;
+}
+
+
+/* ================================Payslip Generate Page=============================== */
+/* ================================Payslip Generate Page=============================== */
+
+
+
+/* ===================================Holidays Page==================================== */
+/* ===================================Holidays Page==================================== */
+/* =====================================================
+   HOLIDAYS PAGE
+===================================================== */
+
+.holidays {
+  color: var(--text-muted);
+  background: var(--bg-main);
+}
+
+/* ================= PAGE TITLE ================= */
+.holidays .pagetitle h1 {
+  color: var(--text-heading);
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* ================= CARD ================= */
+.holidays .card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+  padding: 30px;
+}
+
+.holidays .card-body {
+  color: var(--text-muted);
+}
+
+.holidays .card-body h5 {
+  color: var(--text-primary);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.holidays .card-body hr {
+  border-color: var(--border-subtle);
+  margin: 10px 0 20px;
+}
+
+/* ================= FORM LABELS ================= */
+.holidays .form-label,
+.holidays label {
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* ================= INPUTS & TEXTAREA ================= */
+.holidays input.form-control,
+.holidays textarea.form-control {
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-medium);
+  color: var(--text-primary);
+}
+
+.holidays input.form-control {
+  height: 45px;
+}
+
+/* Floating textarea */
+.holidays .form-floating textarea.form-control {
+  height: 100px;
+  resize: none;
+}
+
+/* Placeholder */
+.holidays input::placeholder,
+.holidays textarea::placeholder {
+  color: var(--text-muted);
+}
+
+/* Focus state */
+.holidays input.form-control:focus,
+.holidays textarea.form-control:focus {
+  background-color: var(--bg-input);
+  border-color: var(--accent-primary);
+  color: var(--text-primary);
+  box-shadow: 0 0 0 0.15rem rgba(207, 250, 57, 0.25);
+}
+
+/* Floating label */
+.holidays .form-floating label {
+  color: var(--text-muted);
+}
+
+/* ================= BUTTON ================= */
+.holidays .btn-success {
+  background-color: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: #000;
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 8px 26px;
+}
+
+.holidays .btn-success:hover {
+  background-color: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+/* ================= TABLE ================= */
+.holidays .table {
+  color: var(--text-muted);
+  background: var(--bg-card);
+  margin-bottom: 0;
+}
+
+/* Header */
+.holidays .table thead th {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 600;
+  border-bottom: 1px solid var(--border-medium);
+}
+
+/* Rows */
+.holidays .table tbody tr {
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border-light);
+}
+
+/* Hover */
+.holidays .table tbody tr:hover {
+  background-color: rgba(207, 250, 57, 0.08);
+}
+
+/* Cells */
+.holidays .table td,
+.holidays .table th {
+  vertical-align: middle;
+  font-size: 14px;
+  color: var(--text-muted);
+  background: var(--bg-card);
+}
+
+/* ================= ACTION ICONS ================= */
+.holidays .table td a i {
+  font-size: 15px;
+  margin-right: 10px;
+  transition: opacity 0.25s ease;
+}
+
+.holidays .table td a i.fa-edit {
+  color: var(--warning);
+}
+
+.holidays .table td a i.fa-trash {
+  color: var(--danger);
+}
+
+.holidays .table td a i:hover {
+  opacity: 0.85;
+}
+
+/* ================= TABLE RESPONSIVE ================= */
+.holidays .table-responsive {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* ================= DATATABLE SAFE ================= */
+.holidays table.datatable {
+  background-color: transparent;
+}
+
+/* ================= DATATABLE CONTROLS ================= */
+
+/* Search input */
+.holidays input.datatable-input {
+  background-color: var(--bg-input) !important;
+  border: 1px solid var(--border-medium) !important;
+  color: var(--text-primary) !important;
+  height: 45px;
+  border-radius: 8px;
+}
+
+/* Search placeholder */
+.holidays input.datatable-input::placeholder {
+  color: var(--text-muted);
+}
+
+/* Search focus */
+.holidays input.datatable-input:focus {
+  background-color: var(--bg-input);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 0.15rem rgba(207, 250, 57, 0.25);
+  outline: none;
+}
+
+/* Entries selector */
+.holidays select.datatable-selector {
+  background-color: var(--bg-input) !important;
+  border: 1px solid var(--border-medium) !important;
+  color: var(--text-primary) !important;
+  height: 45px;
+  border-radius: 8px;
+}
+
+/* Selector focus */
+.holidays select.datatable-selector:focus {
+  background-color: var(--bg-input);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 0.15rem rgba(207, 250, 57, 0.25);
+  outline: none;
+}
+
+/* Top / bottom spacing */
+.holidays .dataTable-top,
+.holidays .dataTable-bottom {
+  padding: 10px 0;
+  color: var(--text-muted);
+}
+
+/* Info text */
+.holidays .dataTable-info {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+/* Pagination */
+.holidays .dataTable-pagination a {
+  color: var(--text-muted);
+  border-radius: 8px;
+  padding: 6px 10px;
+}
+
+.holidays .dataTable-pagination a:hover {
+  background: rgba(207, 250, 57, 0.15);
+  color: var(--accent-primary);
+}
+
+/* Active page */
+.holidays .dataTable-pagination .active a {
+  background: var(--accent-primary);
+  color: #000;
+  font-weight: 600;
+}
+
+
+/* ===================================Holidays Page==================================== */
+/* ===================================Holidays Page==================================== */
+
+
+
+/* =================================Employee Handbook Page============================ */
+/* =================================Employee Handbook Page============================ */
+/* ================= HAND BOOK PAGE ================= */
+
+.handBook {
+  background: var(--bg-main);
+  color: var(--text-muted);
+}
+
+/* Card-like container feel */
+.handBook iframe {
+  background: var(--bg-card);
+  border-radius: 16px;
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-soft);
+}
+
+/* Download button wrapper */
+.handBook .d-flex {
+  margin-top: 12px;
+}
+
+/* Download button */
+.handBook .btn-primary {
+  background-color: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: #000;
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 6px 16px;
+  transition: all 0.25s ease;
+}
+
+.handBook .btn-primary i {
+  margin-right: 6px;
+}
+
+/* Hover */
+.handBook .btn-primary:hover {
+  background-color: var(--accent-hover);
+  border-color: var(--accent-hover);
+  color: #000;
+}
+
+/* Light mode polish */
+body.light-mode .handBook iframe {
+  background: var(--bg-card);
+  border-color: var(--border-medium);
+  box-shadow: var(--shadow-soft);
+}
+
+/* =================================Employee Handbook Page============================ */
+/* =================================Employee Handbook Page============================ */
+
+
+/* ==================================HR Notice Page================================== */
+/* ==================================HR Notice Page================================== */
+
+.hrnoticepage {
+  background: var(--bg-main);
+  color: var(--text-muted);
+}
+
+/* ================= PAGE TITLE ================= */
+.hrnoticepage .pagetitle h1 {
+  color: var(--text-heading);
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* ================= LABELS ================= */
+.hrnoticepage label {
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* ================= INPUTS ================= */
+.hrnoticepage input.form-control,
+.hrnoticepage textarea.form-control {
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-medium);
+  color: var(--text-primary);
+  height: 45px;
+}
+
+.hrnoticepage textarea.form-control {
+  height: auto;
+}
+
+.hrnoticepage input::placeholder,
+.hrnoticepage textarea::placeholder {
+  color: var(--text-muted);
+}
+
+/* Focus */
+.hrnoticepage input.form-control:focus,
+.hrnoticepage textarea.form-control:focus {
+  background-color: var(--bg-input);
+  border-color: var(--accent-primary);
+  color: var(--text-primary);
+  box-shadow: 0 0 0 0.15rem rgba(207, 250, 57, 0.25);
+}
+
+/* ================= BUTTON ================= */
+.hrnoticepage .btn-success {
+  background-color: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: #000;
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 8px 26px;
+}
+
+.hrnoticepage .btn-success:hover {
+  background-color: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+/* ================= CARD ================= */
+.hrnoticepage .card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+  padding: 24px;
+}
+
+.hrnoticepage .card-body h5 {
+  color: var(--text-primary);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.hrnoticepage .card-body hr {
+  border-color: var(--border-subtle);
+  margin: 10px 0 20px;
+}
+
+/* ================= TABLE ================= */
+.hrnoticepage .table {
+  color: var(--text-muted);
+  background: var(--bg-card);
+  margin-bottom: 0;
+}
+
+/* Header */
+.hrnoticepage .table thead th {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 600;
+  border-bottom: 1px solid var(--border-medium);
+}
+
+/* Rows */
+.hrnoticepage .table tbody tr {
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border-light);
+}
+
+/* Hover */
+.hrnoticepage .table tbody tr:hover {
+  background-color: rgba(207, 250, 57, 0.08);
+}
+
+/* Cells */
+.hrnoticepage .table td {
+  vertical-align: middle;
+  font-size: 14px;
+  color: var(--text-muted);
+  background: var(--bg-card);
+}
+
+/* ================= ACTION ICONS ================= */
+.hrnoticepage .table td a i {
+  font-size: 15px;
+  margin-right: 10px;
+  transition: opacity 0.25s ease;
+}
+
+.hrnoticepage .table td a i.fa-edit {
+  color: var(--warning);
+}
+
+.hrnoticepage .table td a i.fa-trash {
+  color: var(--danger);
+}
+
+.hrnoticepage .table td a i:hover {
+  opacity: 0.85;
+}
+
+/* ================= TABLE RESPONSIVE ================= */
+.hrnoticepage .table-responsive {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* ================= DATATABLE SAFE ================= */
+.hrnoticepage table.datatable {
+  background-color: transparent;
+}
+
+/* ================= DATATABLE CONTROLS ================= */
+
+/* Search input */
+.hrnoticepage input.datatable-input {
+  background-color: var(--bg-input) !important;
+  border: 1px solid var(--border-medium) !important;
+  color: var(--text-primary) !important;
+  height: 45px;
+  border-radius: 8px;
+}
+
+/* Placeholder */
+.hrnoticepage input.datatable-input::placeholder {
+  color: var(--text-muted);
+}
+
+/* Search focus */
+.hrnoticepage input.datatable-input:focus {
+  background-color: var(--bg-input);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 0.15rem rgba(207, 250, 57, 0.25);
+  outline: none;
+}
+
+/* Entries selector */
+.hrnoticepage select.datatable-selector {
+  background-color: var(--bg-input) !important;
+  border: 1px solid var(--border-medium) !important;
+  color: var(--text-primary) !important;
+  height: 45px;
+  border-radius: 8px;
+}
+
+/* Selector focus */
+.hrnoticepage select.datatable-selector:focus {
+  background-color: var(--bg-input);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 0.15rem rgba(207, 250, 57, 0.25);
+  outline: none;
+}
+
+/* Top / bottom spacing */
+.hrnoticepage .dataTable-top,
+.hrnoticepage .dataTable-bottom {
+  padding: 10px 0;
+  color: var(--text-muted);
+}
+
+/* Info text */
+.hrnoticepage .dataTable-info {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+/* Pagination */
+.hrnoticepage .dataTable-pagination a {
+  color: var(--text-muted);
+  border-radius: 8px;
+  padding: 6px 10px;
+  transition: all 0.25s ease;
+}
+
+.hrnoticepage .dataTable-pagination a:hover {
+  background: rgba(207, 250, 57, 0.15);
+  color: var(--accent-primary);
+}
+
+/* Active page */
+.hrnoticepage .dataTable-pagination .active a {
+  background: var(--accent-primary);
+  color: #000;
+  font-weight: 600;
+}
+
+/* ==================================HR Notice Page================================== */
+/* ==================================HR Notice Page================================== */
+
+
+/* =================================Assign Work Page================================= */
+/* =================================Assign Work Page================================= */
+/* ================= ROOT WRAPPER ================= */
+.assignwork {
+  background: var(--bg-main);
+  color: var(--text-muted);
+}
+
+/* ================= PAGE TITLE ================= */
+.assignwork .pagetitle h1 {
+  color: var(--text-heading);
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* ================= CARD ================= */
+.assignwork .card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+  padding: 30px;
+}
+
+.assignwork .card-body {
+  color: var(--text-muted);
+}
+
+.assignwork .card-body h5 {
+  color: var(--text-primary);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.assignwork .card-body hr {
+  border-color: var(--border-subtle);
+  margin: 10px 0 20px;
+}
+
+/* ================= FORM LABELS ================= */
+.assignwork label {
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* ================= INPUTS & SELECTS ================= */
+.assignwork input.form-control,
+.assignwork select.form-control,
+.assignwork textarea.form-control {
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-medium);
+  color: var(--text-primary);
+  border-radius: 8px;
+}
+
+/* Small controls */
+.assignwork .form-control-sm {
+  height: 40px;
+}
+
+/* Textarea */
+.assignwork textarea.form-control {
+  resize: none;
+}
+
+/* Placeholder */
+.assignwork input::placeholder,
+.assignwork textarea::placeholder {
+  color: var(--text-muted);
+}
+
+/* ================= FOCUS STATES ================= */
+.assignwork input.form-control:focus,
+.assignwork select.form-control:focus,
+.assignwork textarea.form-control:focus {
+  background-color: var(--bg-input);
+  border-color: var(--accent-primary);
+  color: var(--text-primary);
+  box-shadow: 0 0 0 0.15rem rgba(207, 250, 57, 0.25);
+  outline: none;
+}
+
+/* ================= BUTTON ================= */
+.assignwork .btn-success {
+  background-color: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: #000;
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 8px 26px;
+}
+
+.assignwork .btn-success:hover {
+  background-color: var(--accent-hover);
+  border-color: var(--accent-hover);
+  color: #000;
+}
+
+/* =================================Assign Work Page================================= */
+/* =================================Assign Work Page================================= */
+
+
+/* ===============================Update Bank Details Page=========================== */
+/* ===============================Update Bank Details Page=========================== */
+/* =====================================================
+   UPDATE BANK PAGE
+   Scope: <main id="main" class="updatebank">
+   ===================================================== */
+
+.updatebank {
+  background: var(--bg-main);
+  color: var(--text-muted);
+}
+
+/* ================= PAGE TITLE ================= */
+.updatebank .pagetitle h1 {
+  color: var(--text-heading);
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* ================= CARD ================= */
+.updatebank .card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+}
+
+.updatebank .card-body {
+  padding: 30px;
+  color: var(--text-muted);
+}
+
+.updatebank .card-body h5 {
+  color: var(--text-primary);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.updatebank .card-body hr {
+  border-color: var(--border-subtle);
+  margin: 10px 0 20px;
+}
+
+/* ================= FORM LABELS ================= */
+.updatebank label {
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* ================= INPUTS ================= */
+.updatebank input.form-control,
+.updatebank textarea.form-control {
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-medium);
+  color: var(--text-primary);
+  height: 45px;
+}
+
+.updatebank input.form-control-sm {
+  height: 40px;
+}
+
+/* Placeholder */
+.updatebank input::placeholder {
+  color: var(--text-muted);
+}
+
+/* Focus */
+.updatebank input.form-control:focus,
+.updatebank textarea.form-control:focus {
+  background-color: var(--bg-input);
+  border-color: var(--accent-primary);
+  color: var(--text-primary);
+  box-shadow: 0 0 0 0.15rem rgba(207, 250, 57, 0.25);
+  outline: none;
+}
+
+/* ================= BUTTON ================= */
+.updatebank .btn-primary {
+  background-color: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: var(--text-primary);
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 8px 26px;
+}
+
+.updatebank .btn-primary:hover {
+  filter: brightness(1.05);
+}
+
+/* Small button */
+.updatebank .btn-sm {
+  padding: 6px 20px;
+  font-size: 13px;
+}
+
+/* ================= FORM SPACING ================= */
+.updatebank .row.g-3 {
+  row-gap: 14px;
+}
+
+/* ===============================Update Bank Details Page=========================== */
+/* ===============================Update Bank Details Page=========================== */
+
+
+/* =================================DailyReport Page================================= */
+/* =================================DailyReport Page================================= */
+/* =====================================================
+   DAILY PROJECT REPORT PAGE
+   Scope: <main id="main" class="dailyreport">
+   ===================================================== */
+
+.dailyreport {
+  background: var(--bg-main);
+  color: var(--text-muted);
+}
+
+/* ================= PAGE TITLE ================= */
+.dailyreport .pagetitle h1 {
+  color: var(--text-heading);
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* ================= CARD ================= */
+.dailyreport .card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+}
+
+.dailyreport .card-body {
+  padding: 30px;
+  color: var(--text-muted);
+}
+
+.dailyreport .card-body h5 {
+  color: var(--text-primary);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.dailyreport .card-body hr {
+  border-color: var(--border-subtle);
+  margin: 10px 0 20px;
+}
+
+/* ================= TABLE ================= */
+.dailyreport .table {
+  background: var(--bg-card);
+  color: var(--text-muted);
+  margin-bottom: 0;
+}
+
+/* Header */
+.dailyreport .table thead th {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 600;
+  border-bottom: 1px solid var(--border-medium);
+}
+
+/* Rows */
+.dailyreport .table tbody tr {
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border-light);
+}
+
+/* Hover */
+.dailyreport .table tbody tr:hover {
+  background-color: rgba(207, 250, 57, 0.08);
+}
+
+/* Cells */
+.dailyreport .table td {
+  vertical-align: middle;
+  font-size: 14px;
+  color: var(--text-muted);
+  background: var(--bg-card);
+}
+
+/* ================= ACTION ICONS ================= */
+.dailyreport .table td a i {
+  font-size: 15px;
+  margin-right: 10px;
+  transition: opacity 0.25s ease;
+}
+
+.dailyreport .table td a i.fa-trash {
+  color: var(--danger);
+}
+
+.dailyreport .table td a i:hover {
+  opacity: 0.85;
+}
+
+/* ================= TABLE RESPONSIVE ================= */
+.dailyreport .table-responsive {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* ================= DATATABLE SAFE ================= */
+.dailyreport table.datatable {
+  background-color: transparent;
+}
+
+/* ================= DATATABLE CONTROLS ================= */
+
+/* Search input */
+.dailyreport input.datatable-input {
+  background-color: var(--bg-input) !important;
+  border: 1px solid var(--border-medium) !important;
+  color: var(--text-primary) !important;
+  height: 45px;
+  border-radius: 8px;
+}
+
+/* Placeholder */
+.dailyreport input.datatable-input::placeholder {
+  color: var(--text-muted);
+}
+
+/* Focus */
+.dailyreport input.datatable-input:focus {
+  background-color: var(--bg-input);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 0.15rem rgba(207, 250, 57, 0.25);
+  outline: none;
+}
+
+/* Entries selector */
+.dailyreport select.datatable-selector {
+  background-color: var(--bg-input) !important;
+  border: 1px solid var(--border-medium) !important;
+  color: var(--text-primary) !important;
+  height: 45px;
+  border-radius: 8px;
+}
+
+/* Selector focus */
+.dailyreport select.datatable-selector:focus {
+  background-color: var(--bg-input);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 0.15rem rgba(207, 250, 57, 0.25);
+  outline: none;
+}
+
+/* Top / bottom spacing */
+.dailyreport .dataTable-top,
+.dailyreport .dataTable-bottom {
+  padding: 10px 0;
+  color: var(--text-muted);
+}
+
+/* Info text */
+.dailyreport .dataTable-info {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+/* Pagination */
+.dailyreport .dataTable-pagination a {
+  color: var(--text-muted);
+  border-radius: 8px;
+  padding: 6px 10px;
+  transition: all 0.25s ease;
+}
+
+.dailyreport .dataTable-pagination a:hover {
+  background: rgba(207, 250, 57, 0.15);
+  color: var(--accent-primary);
+}
+
+/* Active page */
+.dailyreport .dataTable-pagination .active a {
+  background: var(--accent-primary);
+  color: #000;
+  font-weight: 600;
+}
+
+/* =================================DailyReport Page================================= */
+/* =================================DailyReport Page================================= */
+
+
+/* ==============================Update DailyReport Page============================= */
+/* ==============================Update DailyReport Page============================= */
+/* =====================================================
+   UPDATE DAILY PROJECT REPORT PAGE
+   Scope: <main id="main" class="update_dailyreport">
+   ===================================================== */
+
+.update_dailyreport {
+  background: var(--bg-main);
+  color: var(--text-muted);
+}
+
+/* ================= PAGE TITLE ================= */
+.update_dailyreport .pagetitle h1 {
+  color: var(--text-heading);
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* ================= CARD ================= */
+.update_dailyreport .card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+}
+
+.update_dailyreport .card-body {
+  padding: 30px;
+  color: var(--text-muted);
+}
+
+.update_dailyreport .card-body h5 {
+  color: var(--text-primary);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.update_dailyreport .card-body hr {
+  border-color: var(--border-subtle);
+  margin: 10px 0 20px;
+}
+
+/* ================= LABELS ================= */
+.update_dailyreport label {
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* ================= INPUTS & SELECT ================= */
+.update_dailyreport input.form-control,
+.update_dailyreport select.form-control,
+.update_dailyreport textarea.form-control {
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-medium);
+  color: var(--text-primary);
+  font-size: 14px;
+}
+
+/* Small inputs */
+.update_dailyreport .form-control-sm {
+  height: 40px;
+}
+
+/* Textarea */
+.update_dailyreport textarea.form-control {
+  resize: none;
+}
+
+/* Disabled field */
+.update_dailyreport input:disabled {
+  background-color: var(--bg-card-soft);
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+/* Placeholder */
+.update_dailyreport input::placeholder,
+.update_dailyreport textarea::placeholder {
+  color: var(--text-muted);
+}
+
+/* ================= FOCUS STATE ================= */
+.update_dailyreport input.form-control:focus,
+.update_dailyreport select.form-control:focus,
+.update_dailyreport textarea.form-control:focus {
+  background-color: var(--bg-input);
+  border-color: var(--accent-primary);
+  color: var(--text-primary);
+  box-shadow: 0 0 0 0.15rem rgba(207, 250, 57, 0.25);
+  outline: none;
+}
+
+/* ================= BUTTON ================= */
+.update_dailyreport .btn-success {
+  background-color: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: #000;
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 8px 26px;
+  margin-top: 10px;
+}
+
+.update_dailyreport .btn-success:hover {
+  background-color: var(--accent-hover);
+  border-color: var(--accent-hover);
+  color: #000;
+}
+
+/* ==============================Update DailyReport Page============================= */
+/* ==============================Update DailyReport Page============================= */
+
+
+/* =================================Document Page================================== */
+/* =================================Document Page================================== */
+/* =====================================================
+   DOCUMENT PAGE (EMPLOYEE DOCUMENTS)
+===================================================== */
+
+.document {
+  background: var(--bg-main);
+  color: var(--text-muted);
+}
+
+/* ================= PAGE TITLE ================= */
+.document .pagetitle h1 {
+  color: var(--text-heading);
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* ================= CARD ================= */
+.document .card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+  padding: 30px;
+}
+
+.document .card-body {
+  color: var(--text-muted);
+}
+
+.document .card-body h5 {
+  color: var(--text-primary);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.document .card-body hr {
+  border-color: var(--border-subtle);
+  margin: 10px 0 20px;
+}
+
+/* ================= TABLE ================= */
+.document .table {
+  width: 100%;
+  margin-bottom: 0;
+  background: var(--bg-card);
+  color: var(--text-muted);
+}
+
+/* Header */
+.document .table thead th {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 600;
+  border-bottom: 1px solid var(--border-medium);
+  white-space: nowrap;
+}
+
+/* Rows */
+.document .table tbody tr {
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border-light);
+}
+
+/* Hover */
+.document .table tbody tr:hover {
+  background-color: rgba(207, 250, 57, 0.08);
+}
+
+/* Cells */
+.document .table td {
+  vertical-align: middle;
+  font-size: 14px;
+  color: var(--text-muted);
+  background: var(--bg-card);
+}
+
+/* ================= IMAGE CELLS ================= */
+.document .table td img {
+  width: 100px;
+  height: auto;
+  border-radius: 8px;
+  border: 1px solid var(--border-light);
+  background: var(--bg-card-soft);
+  padding: 4px;
+}
+
+/* ================= TABLE RESPONSIVE ================= */
+.document .table-responsive {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* ================= DATATABLE SAFE ================= */
+.document table.datatable {
+  background-color: transparent;
+}
+
+/* ================= DATATABLE CONTROLS ================= */
+
+/* Search input */
+.document input.datatable-input {
+  background-color: var(--bg-input) !important;
+  border: 1px solid var(--border-medium) !important;
+  color: var(--text-primary) !important;
+  height: 45px;
+  border-radius: 8px;
+}
+
+.document input.datatable-input::placeholder {
+  color: var(--text-muted);
+}
+
+.document input.datatable-input:focus {
+  background-color: var(--bg-input);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 0.15rem rgba(207, 250, 57, 0.25);
+  outline: none;
+}
+
+/* Entries dropdown */
+.document select.datatable-selector {
+  background-color: var(--bg-input) !important;
+  border: 1px solid var(--border-medium) !important;
+  color: var(--text-primary) !important;
+  height: 45px;
+  border-radius: 8px;
+}
+
+.document select.datatable-selector:focus {
+  background-color: var(--bg-input);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 0.15rem rgba(207, 250, 57, 0.25);
+  outline: none;
+}
+
+/* Top / bottom spacing */
+.document .dataTable-top,
+.document .dataTable-bottom {
+  padding: 10px 0;
+  color: var(--text-muted);
+}
+
+/* Info text */
+.document .dataTable-info {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* Pagination */
+.document .dataTable-pagination a {
+  color: var(--text-muted);
+  border-radius: 8px;
+  padding: 6px 10px;
+  transition: all 0.25s ease;
+}
+
+.document .dataTable-pagination a:hover {
+  background: rgba(207, 250, 57, 0.15);
+  color: var(--accent-primary);
+}
+
+/* Active page */
+.document .dataTable-pagination .active a {
+  background: var(--accent-primary);
+  color: #000;
+  font-weight: 600;
+}
+
+/* Disabled */
+.document .dataTable-pagination .disabled a {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* =================================Document Page================================== */
+/* =================================Document Page================================== */
+
+
+/* ===============================Edit Leave Page================================= */
+/* ===============================Edit Leave Page================================= */
+/* =====================================================
+   EDIT LEAVE PAGE
+===================================================== */
+
+.editleavepage {
+  background: var(--bg-main);
+  color: var(--text-muted);
+}
+
+/* ================= PAGE TITLE ================= */
+.editleavepage .pagetitle h1 {
+  color: var(--text-heading);
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* ================= CARD ================= */
+.editleavepage .card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+  padding: 30px;
+}
+
+.editleavepage .card-body {
+  color: var(--text-muted);
+}
+
+.editleavepage .card-body h5 {
+  color: var(--text-primary);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.editleavepage .card-body hr {
+  border-color: var(--border-subtle);
+  margin: 10px 0 20px;
+}
+
+/* ================= FORM LABELS ================= */
+.editleavepage label.form-label,
+.editleavepage label.required {
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* ================= INPUTS & TEXTAREA ================= */
+.editleavepage input.form-control,
+.editleavepage textarea.form-control {
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-medium);
+  color: var(--text-primary);
+  height: 45px;
+}
+
+/* Textarea height */
+.editleavepage textarea.form-control {
+  height: auto;
+  resize: none;
+}
+
+/* Readonly inputs */
+.editleavepage input[readonly] {
+  background-color: var(--bg-card-soft);
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+/* Placeholder */
+.editleavepage input::placeholder,
+.editleavepage textarea::placeholder {
+  color: var(--text-muted);
+}
+
+/* ================= FOCUS STATE ================= */
+.editleavepage input.form-control:focus,
+.editleavepage textarea.form-control:focus {
+  background-color: var(--bg-input);
+  border-color: var(--accent-primary);
+  color: var(--text-primary);
+  box-shadow: 0 0 0 0.15rem rgba(207, 250, 57, 0.25);
+  outline: none;
+}
+
+/* ================= BUTTON ================= */
+.editleavepage .btn-primary {
+  background-color: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: #000;
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 8px 28px;
+  transition: all 0.25s ease;
+}
+
+.editleavepage .btn-primary:hover {
+  background-color: var(--accent-hover);
+  border-color: var(--accent-hover);
+  color: #000;
+}
+
+
+/* ===============================Edit Leave Page================================= */
+/* ===============================Edit Leave Page================================= */
+
+
+
+/* ========================Employee Details Update Page=========================== */
+/* ========================Employee Details Update Page=========================== */
+/* =====================================================
+   EMPLOYEE DETAILS UPDATE PAGE
+===================================================== */
+
+.empdetailsupdate {
+  background: var(--bg-main);
+  color: var(--text-muted);
+}
+
+/* ================= PAGE TITLE ================= */
+.empdetailsupdate .pagetitle h1 {
+  color: var(--text-heading);
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* ================= CARD ================= */
+.empdetailsupdate .card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+  padding: 30px;
+}
+
+.empdetailsupdate .card-body {
+  color: var(--text-muted);
+}
+
+.empdetailsupdate .card-body h5 {
+  color: var(--text-primary);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.empdetailsupdate .card-body hr {
+  border-color: var(--border-subtle);
+  margin: 10px 0 20px;
+}
+
+/* ================= FORM LABELS ================= */
+.empdetailsupdate label.form-label {
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* ================= INPUTS & TEXTAREA ================= */
+.empdetailsupdate input.form-control,
+.empdetailsupdate textarea.form-control {
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-medium);
+  color: var(--text-primary);
+}
+
+.empdetailsupdate input.form-control-sm,
+.empdetailsupdate textarea.form-control-sm {
+  height: 40px;
+}
+
+/* Textarea height consistency */
+.empdetailsupdate textarea {
+  resize: none;
+}
+
+/* Placeholder */
+.empdetailsupdate input::placeholder,
+.empdetailsupdate textarea::placeholder {
+  color: var(--text-muted);
+}
+
+/* Focus state */
+.empdetailsupdate input.form-control:focus,
+.empdetailsupdate textarea.form-control:focus {
+  background-color: var(--bg-input);
+  border-color: var(--accent-primary);
+  color: var(--text-primary);
+  box-shadow: 0 0 0 0.15rem rgba(207, 250, 57, 0.25);
+}
+
+/* ================= FILE INPUT ================= */
+.empdetailsupdate input[type="file"].form-control {
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-medium);
+  color: var(--text-muted);
+}
+
+/* Uploaded file name text */
+.empdetailsupdate p {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* ================= BUTTON ================= */
+.empdetailsupdate .btn-success {
+  background-color: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: #000;
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 8px 26px;
+}
+
+.empdetailsupdate .btn-success:hover {
+  background-color: var(--accent-hover);
+  border-color: var(--accent-hover);
+  color: #000;
+}
+
+/* ========================Employee Details Update Page=========================== */
+/* ========================Employee Details Update Page=========================== */
+
+
+/* ===============================Log Moniter Page============================== */
+/* ===============================Log Moniter Page============================== */
+
+/* =====================================================
+   LOGIN DETAILS PAGE
+   Scope: .logmoniter
+===================================================== */
+
+.logmoniter {
+  background: var(--bg-main);
+  color: var(--text-muted);
+}
+
+/* ================= PAGE TITLE ================= */
+.logmoniter .pagetitle h1 {
+  color: var(--text-heading);
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* ================= CARD ================= */
+.logmoniter .card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+}
+
+.logmoniter .card-body {
+  padding: 28px;
+  color: var(--text-muted);
+}
+
+.logmoniter .card-body h5 {
+  color: var(--text-primary);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.logmoniter .card-body hr {
+  border-color: var(--border-subtle);
+  margin: 12px 0 20px;
+}
+
+/* ================= TABLE ================= */
+.logmoniter .table {
+  background: var(--bg-card);
+  color: var(--text-muted);
+  margin-bottom: 0;
+}
+
+/* Table header */
+.logmoniter .table thead th {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 600;
+  border-bottom: 1px solid var(--border-medium);
+  white-space: nowrap;
+}
+
+/* Table rows */
+.logmoniter .table tbody tr {
+  border-bottom: 1px solid var(--border-light);
+}
+
+/* Hover */
+.logmoniter .table tbody tr:hover {
+  background-color: rgba(207, 250, 57, 0.08);
+}
+
+/* Cells */
+.logmoniter .table td,
+.logmoniter .table th {
+  font-size: 14px;
+  color: var(--text-muted);
+  vertical-align: middle;
+  background: var(--bg-card);
+}
+
+/* ================= STATUS ================= */
+.logmoniter .text-success {
+  color: var(--success) !important;
+  font-weight: 600;
+}
+
+.logmoniter .text-danger {
+  color: var(--danger) !important;
+  font-weight: 600;
+}
+
+/* ================= TABLE RESPONSIVE ================= */
+.logmoniter .table-responsive {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* ================= DATATABLE SAFE ================= */
+.logmoniter table.datatable {
+  background-color: transparent;
+}
+
+/* ================= DATATABLE CONTROLS ================= */
+
+/* Search input */
+.logmoniter input.datatable-input {
+  background-color: var(--bg-input) !important;
+  border: 1px solid var(--border-medium) !important;
+  color: var(--text-primary) !important;
+  height: 45px;
+  border-radius: 8px;
+}
+
+.logmoniter input.datatable-input::placeholder {
+  color: var(--text-muted);
+}
+
+.logmoniter input.datatable-input:focus {
+  background-color: var(--bg-input);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 0.15rem rgba(207, 250, 57, 0.25);
+  outline: none;
+}
+
+/* Entries selector */
+.logmoniter select.datatable-selector {
+  background-color: var(--bg-input) !important;
+  border: 1px solid var(--border-medium) !important;
+  color: var(--text-primary) !important;
+  height: 45px;
+  border-radius: 8px;
+}
+
+.logmoniter select.datatable-selector:focus {
+  background-color: var(--bg-input);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 0.15rem rgba(207, 250, 57, 0.25);
+  outline: none;
+}
+
+/* Top / bottom spacing */
+.logmoniter .dataTable-top,
+.logmoniter .dataTable-bottom {
+  padding: 10px 0;
+  color: var(--text-muted);
+}
+
+/* Info text */
+.logmoniter .dataTable-info {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+/* Pagination */
+.logmoniter .dataTable-pagination a {
+  color: var(--text-muted);
+  border-radius: 8px;
+  padding: 6px 10px;
+  transition: all 0.25s ease;
+}
+
+.logmoniter .dataTable-pagination a:hover {
+  background: rgba(207, 250, 57, 0.15);
+  color: var(--accent-primary);
+}
+
+/* Active page */
+.logmoniter .dataTable-pagination .active a {
+  background: var(--accent-primary);
+  color: #000;
+  font-weight: 600;
+}
+
+/* Disabled */
+.logmoniter .dataTable-pagination .disabled a {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ===============================Log Moniter Page============================== */
+/* ===============================Log Moniter Page============================== */
+
+
+/* ==============================Login Details Page============================= */
+/* ==============================Login Details Page============================= */
+/* =====================================================
+   LOGIN DETAILS / ONLINE USERS
+   Scope: .logindetails
+===================================================== */
+
+.logindetails {
+  background: var(--bg-main);
+  color: var(--text-muted);
+}
+
+/* ================= PAGE TITLE ================= */
+.logindetails .pagetitle h1 {
+  color: var(--text-heading);
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* ================= CARD ================= */
+.logindetails .card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+}
+
+.logindetails .card-body {
+  padding: 28px;
+  color: var(--text-muted);
+}
+
+.logindetails .card-body h5 {
+  color: var(--text-primary);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.logindetails .card-body hr {
+  border-color: var(--border-subtle);
+  margin: 12px 0 20px;
+}
+
+/* ================= TABLE ================= */
+.logindetails .table {
+  background: var(--bg-card);
+  color: var(--text-muted);
+  margin-bottom: 0;
+}
+
+/* Header */
+.logindetails .table thead th {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 600;
+  border-bottom: 1px solid var(--border-medium);
+  white-space: nowrap;
+}
+
+/* Rows */
+.logindetails .table tbody tr {
+  border-bottom: 1px solid var(--border-light);
+}
+
+/* Hover */
+.logindetails .table tbody tr:hover {
+  background-color: rgba(207, 250, 57, 0.08);
+}
+
+/* Cells */
+.logindetails .table td,
+.logindetails .table th {
+  font-size: 14px;
+  color: var(--text-muted);
+  vertical-align: middle;
+  background: var(--bg-card);
+}
+
+/* ================= STATUS COLORS ================= */
+.logindetails .text-success {
+  color: var(--success) !important;
+  font-weight: 600;
+}
+
+.logindetails .text-danger {
+  color: var(--danger) !important;
+  font-weight: 600;
+}
+
+/* ================= ACTION ICONS ================= */
+.logindetails .table td a i {
+  margin-right: 8px;
+  font-size: 14px;
+  transition: opacity 0.25s ease;
+}
+
+.logindetails .table td a i:hover {
+  opacity: 0.85;
+}
+
+/* ================= TABLE RESPONSIVE ================= */
+.logindetails .table-responsive {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* ================= DATATABLE SAFE ================= */
+.logindetails table.datatable {
+  background-color: transparent;
+}
+
+/* ================= DATATABLE CONTROLS ================= */
+
+/* Search input */
+.logindetails input.datatable-input {
+  background-color: var(--bg-input) !important;
+  border: 1px solid var(--border-medium) !important;
+  color: var(--text-primary) !important;
+  height: 45px;
+  border-radius: 8px;
+}
+
+.logindetails input.datatable-input::placeholder {
+  color: var(--text-muted);
+}
+
+.logindetails input.datatable-input:focus {
+  background-color: var(--bg-input);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 0.15rem rgba(207, 250, 57, 0.25);
+  outline: none;
+}
+
+/* Entries selector */
+.logindetails select.datatable-selector {
+  background-color: var(--bg-input) !important;
+  border: 1px solid var(--border-medium) !important;
+  color: var(--text-primary) !important;
+  height: 45px;
+  border-radius: 8px;
+}
+
+.logindetails select.datatable-selector:focus {
+  background-color: var(--bg-input);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 0.15rem rgba(207, 250, 57, 0.25);
+  outline: none;
+}
+
+/* Info text */
+.logindetails .dataTable-info {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+/* Pagination */
+.logindetails .dataTable-pagination a {
+  color: var(--text-muted);
+  border-radius: 8px;
+  padding: 6px 10px;
+  transition: all 0.25s ease;
+}
+
+.logindetails .dataTable-pagination a:hover {
+  background: rgba(207, 250, 57, 0.15);
+  color: var(--accent-primary);
+}
+
+/* Active page */
+.logindetails .dataTable-pagination .active a {
+  background: var(--accent-primary);
+  color: #000;
+  font-weight: 600;
+}
+
+/* Disabled */
+.logindetails .dataTable-pagination .disabled a {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ==============================Login Details Page============================= */
+/* ==============================Login Details Page============================= */
+
+
+
+/* =============================Payslip Update Page============================ */
+/* =============================Payslip Update Page============================ */
+/* =====================================================
+   PAYSLIP UPDATE PAGE
+   Scope: .payslipupdate
+===================================================== */
+
+.payslipupdate {
+  background: var(--bg-main);
+  color: var(--text-muted);
+}
+
+/* ================= PAGE TITLE ================= */
+.payslipupdate .pagetitle h1 {
+  color: var(--text-heading);
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* ================= CARD ================= */
+.payslipupdate .card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+}
+
+.payslipupdate .card-body {
+  padding: 28px;
+}
+
+.payslipupdate .card-body h5 {
+  color: var(--text-primary);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.payslipupdate .card-body hr {
+  border-color: var(--border-subtle);
+  margin: 12px 0 20px;
+}
+
+/* ================= LABELS ================= */
+.payslipupdate label {
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* ================= INPUTS ================= */
+.payslipupdate input.form-control,
+.payslipupdate textarea.form-control,
+.payslipupdate select.form-control {
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-medium);
+  color: var(--text-primary);
+  height: 45px;
+}
+
+.payslipupdate input.form-control-sm,
+.payslipupdate textarea.form-control-sm,
+.payslipupdate select.form-control-sm {
+  height: 40px;
+}
+
+/* Placeholder */
+.payslipupdate input::placeholder,
+.payslipupdate textarea::placeholder {
+  color: var(--text-muted);
+}
+
+/* Focus */
+.payslipupdate input.form-control:focus,
+.payslipupdate textarea.form-control:focus,
+.payslipupdate select.form-control:focus {
+  background-color: var(--bg-input);
+  border-color: var(--accent-primary);
+  color: var(--text-primary);
+  box-shadow: 0 0 0 0.15rem rgba(207, 250, 57, 0.25);
+  outline: none;
+}
+
+/* ================= TEXTAREA ================= */
+.payslipupdate textarea.form-control {
+  height: auto;
+  min-height: 90px;
+}
+
+/* ================= BUTTON ================= */
+.payslipupdate .btn-success {
+  background-color: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: #000;
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 8px 26px;
+}
+
+.payslipupdate .btn-success:hover {
+  background-color: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+/* ================= FORM GRID SAFE ================= */
+.payslipupdate .row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.payslipupdate .col-md-6,
+.payslipupdate .col-lg-6 {
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+/* ================= REQUIRED LABEL ================= */
+.payslipupdate .required::after {
+  content: " *";
+  color: var(--danger);
+  font-weight: 600;
+}
+
+/* =============================Payslip Update Page============================ */
+/* =============================Payslip Update Page============================ */
+
+
+
+/* ============================Project Details Page============================ */
+/* ============================Project Details Page============================ */
+/* =====================================================
+   PROJECT DETAILS PAGE
+   Scope: .projectdetails
+===================================================== */
+
+.projectdetails {
+  background: var(--bg-main);
+  color: var(--text-muted);
+}
+
+/* ================= PAGE TITLE ================= */
+.projectdetails .pagetitle h1 {
+  color: var(--text-heading);
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* ================= CARD ================= */
+.projectdetails .card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+}
+
+.projectdetails .card-body {
+  padding: 28px;
+}
+
+.projectdetails .card-body h5 {
+  color: var(--text-primary);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.projectdetails .card-body hr {
+  border-color: var(--border-subtle);
+  margin: 12px 0 20px;
+}
+
+/* ================= TABLE ================= */
+.projectdetails .table {
+  background: var(--bg-card);
+  color: var(--text-muted);
+  margin-bottom: 0;
+}
+
+/* Table Head */
+.projectdetails .table thead th {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 600;
+  border-bottom: 1px solid var(--border-medium);
+}
+
+/* Table Rows */
+.projectdetails .table tbody tr {
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.projectdetails .table tbody tr:hover {
+  background-color: rgba(207, 250, 57, 0.08);
+}
+
+/* Cells */
+.projectdetails .table td {
+  font-size: 14px;
+  color: var(--text-muted);
+  vertical-align: middle;
+  background: var(--bg-card);
+}
+
+/* ================= ACTION ICONS ================= */
+.projectdetails .table td a i {
+  font-size: 15px;
+  margin-right: 10px;
+  transition: opacity 0.25s ease;
+}
+
+.projectdetails .fa-edit {
+  color: var(--warning);
+}
+
+.projectdetails .fa-trash {
+  color: var(--danger);
+}
+
+.projectdetails .table td a i:hover {
+  opacity: 0.85;
+}
+
+/* ================= TABLE RESPONSIVE ================= */
+.projectdetails .table-responsive {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Prevent datatable background clash */
+.projectdetails table.datatable {
+  background-color: transparent;
+}
+
+/* ================= DATATABLE CONTROLS ================= */
+
+/* Search input */
+.projectdetails input.datatable-input {
+  background-color: var(--bg-input) !important;
+  border: 1px solid var(--border-medium) !important;
+  color: var(--text-primary) !important;
+  height: 45px;
+  border-radius: 8px;
+}
+
+.projectdetails input.datatable-input::placeholder {
+  color: var(--text-muted);
+}
+
+.projectdetails input.datatable-input:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 0.15rem rgba(207, 250, 57, 0.25);
+  outline: none;
+}
+
+/* Entries dropdown */
+.projectdetails select.datatable-selector {
+  background-color: var(--bg-input) !important;
+  border: 1px solid var(--border-medium) !important;
+  color: var(--text-primary) !important;
+  height: 45px;
+  border-radius: 8px;
+}
+
+.projectdetails select.datatable-selector:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 0.15rem rgba(207, 250, 57, 0.25);
+}
+
+/* Top & bottom spacing */
+.projectdetails .dataTable-top,
+.projectdetails .dataTable-bottom {
+  padding: 10px 0;
+  color: var(--text-muted);
+}
+
+/* Info text */
+.projectdetails .dataTable-info {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* Pagination */
+.projectdetails .dataTable-pagination a {
+  color: var(--text-muted);
+  border-radius: 8px;
+  padding: 6px 10px;
+  transition: all 0.25s ease;
+}
+
+.projectdetails .dataTable-pagination a:hover {
+  background: rgba(207, 250, 57, 0.15);
+  color: var(--accent-primary);
+}
+
+.projectdetails .dataTable-pagination .active a {
+  background: var(--accent-primary);
+  color: #000;
+  font-weight: 600;
+}
+
+/* ================= FORM ================= */
+.projectdetails label {
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* Inputs */
+.projectdetails input.form-control,
+.projectdetails textarea.form-control,
+.projectdetails select.form-control {
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-medium);
+  color: var(--text-primary);
+  height: 45px;
+}
+
+.projectdetails input.form-control-sm,
+.projectdetails textarea.form-control-sm,
+.projectdetails select.form-control-sm {
+  height: 40px;
+}
+
+/* Textarea */
+.projectdetails textarea.form-control {
+  height: auto;
+  min-height: 90px;
+}
+
+/* Focus */
+.projectdetails input:focus,
+.projectdetails textarea:focus,
+.projectdetails select:focus {
+  background-color: var(--bg-input);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 0.15rem rgba(207, 250, 57, 0.25);
+  outline: none;
+}
+
+/* ================= BUTTON ================= */
+.projectdetails .btn-success {
+  background-color: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: #000;
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 8px 26px;
+}
+
+.projectdetails .btn-success:hover {
+  background-color: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+/* ================= REQUIRED LABEL ================= */
+.projectdetails .required::after {
+  content: " *";
+  color: var(--danger);
+  font-weight: 600;
+}
+
+/* ============================Project Details Page============================ */
+/* ============================Project Details Page============================ */
+
+
+
+/* ============================Project Update Page============================= */
+/* ============================Project Update Page============================= */
+/* =====================================================
+   PROJECT UPDATE PAGE
+   Scope: .projectupdate
+===================================================== */
+
+.projectupdate {
+  background: var(--bg-main);
+  color: var(--text-muted);
+}
+
+/* ================= PAGE TITLE ================= */
+.projectupdate .pagetitle h1 {
+  color: var(--text-heading);
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* ================= CARD ================= */
+.projectupdate .card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+}
+
+.projectupdate .card-body {
+  padding: 28px;
+}
+
+.projectupdate .card-body h5 {
+  color: var(--text-primary);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.projectupdate .card-body hr {
+  border-color: var(--border-subtle);
+  margin: 12px 0 20px;
+}
+
+/* ================= FORM LABELS ================= */
+.projectupdate label {
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* ================= INPUTS & SELECT ================= */
+.projectupdate input.form-control,
+.projectupdate textarea.form-control,
+.projectupdate select.form-control,
+.projectupdate select.form-select {
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-medium);
+  color: var(--text-primary);
+  height: 45px;
+}
+
+.projectupdate input.form-control-sm,
+.projectupdate select.form-control-sm,
+.projectupdate select.form-select,
+.projectupdate textarea.form-control-sm {
+  height: 40px;
+}
+
+/* Textarea */
+.projectupdate textarea.form-control {
+  height: auto;
+  min-height: 90px;
+  resize: vertical;
+}
+
+/* Placeholder */
+.projectupdate input::placeholder,
+.projectupdate textarea::placeholder {
+  color: var(--text-muted);
+}
+
+/* Focus */
+.projectupdate input:focus,
+.projectupdate textarea:focus,
+.projectupdate select:focus {
+  background-color: var(--bg-input);
+  border-color: var(--accent-primary);
+  color: var(--text-primary);
+  box-shadow: 0 0 0 0.15rem rgba(207, 250, 57, 0.25);
+  outline: none;
+}
+
+/* ================= BUTTON ================= */
+.projectupdate .btn-success {
+  background-color: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: #000;
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 8px 26px;
+}
+
+.projectupdate .btn-success:hover {
+  background-color: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+/* ================= REQUIRED FIELD MARK ================= */
+.projectupdate .required::after {
+  content: " *";
+  color: var(--danger);
+  font-weight: 600;
+}
+
+/* ============================Project Update Page============================= */
+/* ============================Project Update Page============================= */
+
+
+
+/* =============================Task Details Page============================== */
+/* =============================Task Details Page============================== */
+.taskdetails {
+  background: var(--bg-main);
+  color: var(--text-muted);
+}
+
+/* ================= PAGE TITLE ================= */
+.taskdetails .pagetitle h1 {
+  color: var(--text-heading);
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* ================= CARD ================= */
+.taskdetails .card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+}
+
+.taskdetails .card-body {
+  color: var(--text-muted);
+}
+
+.taskdetails .card-body h5 {
+  color: var(--text-primary);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.taskdetails .card-body hr {
+  border-color: var(--border-subtle);
+  margin: 10px 0 20px;
+}
+
+/* ================= TABLE ================= */
+.taskdetails .table {
+  color: var(--text-muted);
+  background: var(--bg-card);
+  margin-bottom: 0;
+}
+
+/* Header */
+.taskdetails .table thead th {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 600;
+  border-bottom: 1px solid var(--border-medium);
+  white-space: nowrap;
+}
+
+/* Rows */
+.taskdetails .table tbody tr {
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border-light);
+}
+
+/* Hover */
+.taskdetails .table tbody tr:hover {
+  background-color: rgba(207, 250, 57, 0.08);
+}
+
+/* Cells */
+.taskdetails .table td {
+  vertical-align: middle;
+  font-size: 14px;
+  color: var(--text-muted);
+  background: var(--bg-card);
+}
+
+/* ================= ACTION ICONS ================= */
+.taskdetails .table td a i {
+  font-size: 15px;
+  margin-right: 10px;
+  transition: opacity 0.25s ease;
+}
+
+.taskdetails .table td a i.fa-edit {
+  color: var(--warning);
+}
+
+.taskdetails .table td a i.fa-trash {
+  color: var(--danger);
+}
+
+.taskdetails .table td a i:hover {
+  opacity: 0.85;
+}
+
+/* ================= TABLE RESPONSIVE ================= */
+.taskdetails .table-responsive {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* ================= DATATABLE SAFE ================= */
+.taskdetails table.datatable {
+  background-color: transparent;
+}
+
+/* ================= DATATABLE CONTROLS ================= */
+
+/* Search input */
+.taskdetails input.datatable-input {
+  background-color: var(--bg-input) !important;
+  border: 1px solid var(--border-medium) !important;
+  color: var(--text-primary) !important;
+  height: 45px;
+  border-radius: 8px;
+}
+
+.taskdetails input.datatable-input::placeholder {
+  color: var(--text-muted);
+}
+
+.taskdetails input.datatable-input:focus {
+  background-color: var(--bg-input);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 0.15rem rgba(207, 250, 57, 0.25);
+  outline: none;
+}
+
+/* Entries selector */
+.taskdetails select.datatable-selector {
+  background-color: var(--bg-input) !important;
+  border: 1px solid var(--border-medium) !important;
+  color: var(--text-primary) !important;
+  height: 45px;
+  border-radius: 8px;
+}
+
+.taskdetails select.datatable-selector:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 0.15rem rgba(207, 250, 57, 0.25);
+  outline: none;
+}
+
+/* Top / bottom spacing */
+.taskdetails .dataTable-top,
+.taskdetails .dataTable-bottom {
+  padding: 10px 0;
+  color: var(--text-muted);
+}
+
+/* Info text */
+.taskdetails .dataTable-info {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+/* Pagination */
+.taskdetails .dataTable-pagination a {
+  color: var(--text-muted);
+  border-radius: 8px;
+  padding: 6px 10px;
+  transition: all 0.25s ease;
+}
+
+.taskdetails .dataTable-pagination a:hover {
+  background: rgba(207, 250, 57, 0.15);
+  color: var(--accent-primary);
+}
+
+/* Active page */
+.taskdetails .dataTable-pagination .active a {
+  background: var(--accent-primary);
+  color: #000;
+  font-weight: 600;
+}
+
+
+/* =============================Task Details Page============================== */
+/* =============================Task Details Page============================== */
+
+
+
+/* ==============================Task Update Page============================== */
+/* ==============================Task Update Page============================== */
+/* =====================================================
+   UPDATE TASK PAGE
+===================================================== */
+
+.updatetask {
+  background: var(--bg-main);
+  color: var(--text-muted);
+}
+
+/* ================= PAGE TITLE ================= */
+.updatetask .pagetitle h1 {
+  color: var(--text-heading);
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* ================= CARD ================= */
+.updatetask .card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+  padding: 30px;
+}
+
+.updatetask .card-body {
+  color: var(--text-muted);
+}
+
+.updatetask .card-body h5 {
+  color: var(--text-primary);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.updatetask .card-body hr {
+  border-color: var(--border-subtle);
+  margin: 10px 0 20px;
+}
+
+/* ================= FORM LABELS ================= */
+.updatetask label {
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* ================= INPUTS / SELECT / TEXTAREA ================= */
+.updatetask input.form-control,
+.updatetask select.form-control,
+.updatetask textarea.form-control {
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-medium);
+  color: var(--text-primary);
+  height: 45px;
+}
+
+.updatetask input.form-control-sm,
+.updatetask select.form-control-sm {
+  height: 40px;
+}
+
+.updatetask textarea.form-control {
+  height: auto;
+}
+
+/* Placeholder */
+.updatetask input::placeholder,
+.updatetask textarea::placeholder {
+  color: var(--text-muted);
+}
+
+/* Focus */
+.updatetask input.form-control:focus,
+.updatetask select.form-control:focus,
+.updatetask textarea.form-control:focus {
+  background-color: var(--bg-input);
+  border-color: var(--accent-primary);
+  color: var(--text-primary);
+  box-shadow: 0 0 0 0.15rem rgba(207, 250, 57, 0.25);
+  outline: none;
+}
+
+/* ================= BUTTON ================= */
+.updatetask .btn-primary {
+  background-color: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: #000;
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 8px 26px;
+  margin-top: 10px;
+}
+
+.updatetask .btn-primary:hover {
+  background-color: var(--accent-hover);
+  border-color: var(--accent-hover);
+  color: #000;
+}
+
+/* ==============================Task Update Page============================== */
+/* ==============================Task Update Page============================== */
+
+
+
+/* =============================Team Meeting Page=============================== */
+/* =============================Team Meeting Page=============================== */
+/* =====================================================
+   TEAM MEETING PAGE
+===================================================== */
+
+.teammeeting {
+  background: var(--bg-main);
+  color: var(--text-muted);
+}
+
+/* ================= PAGE TITLE ================= */
+.teammeeting .pagetitle h1 {
+  color: var(--text-heading);
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* ================= CARD ================= */
+.teammeeting .card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+  padding: 30px;
+}
+
+.teammeeting .card-body {
+  color: var(--text-muted);
+}
+
+.teammeeting .card-body h5 {
+  color: var(--text-primary);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.teammeeting .card-body hr {
+  border-color: var(--border-subtle);
+  margin: 10px 0 20px;
+}
+
+/* ================= FORM LABELS ================= */
+.teammeeting label {
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* ================= INPUTS / SELECT / TEXTAREA ================= */
+.teammeeting input.form-control,
+.teammeeting select.form-control,
+.teammeeting textarea.form-control {
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-medium);
+  color: var(--text-primary);
+  height: 45px;
+}
+
+.teammeeting input.form-control-sm,
+.teammeeting select.form-control-sm {
+  height: 40px;
+}
+
+.teammeeting textarea.form-control {
+  height: auto;
+}
+
+/* Placeholder */
+.teammeeting input::placeholder,
+.teammeeting textarea::placeholder {
+  color: var(--text-muted);
+}
+
+/* Focus */
+.teammeeting input.form-control:focus,
+.teammeeting select.form-control:focus,
+.teammeeting textarea.form-control:focus {
+  background-color: var(--bg-input);
+  border-color: var(--accent-primary);
+  color: var(--text-primary);
+  box-shadow: 0 0 0 0.15rem rgba(207, 250, 57, 0.25);
+  outline: none;
+}
+
+/* ================= BUTTON ================= */
+.teammeeting .btn-success {
+  background-color: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: #000;
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 8px 26px;
+  margin-top: 10px;
+}
+
+.teammeeting .btn-success:hover {
+  background-color: var(--accent-hover);
+  border-color: var(--accent-hover);
+  color: #000;
+}
+
+/* ================= TABLE ================= */
+.teammeeting .table {
+  background: var(--bg-card);
+  color: var(--text-muted);
+  margin-bottom: 0;
+}
+
+/* Header */
+.teammeeting .table thead th {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 600;
+  border-bottom: 1px solid var(--border-medium);
+}
+
+/* Rows */
+.teammeeting .table tbody tr {
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border-light);
+}
+
+/* Hover */
+.teammeeting .table tbody tr:hover {
+  background-color: rgba(207, 250, 57, 0.08);
+}
+
+/* Cells */
+.teammeeting .table td {
+  font-size: 14px;
+  color: var(--text-muted);
+  vertical-align: middle;
+  background: var(--bg-card);
+}
+
+/* Links inside table */
+.teammeeting .table td a {
+  color: var(--accent-primary);
+  text-decoration: none;
+  word-break: break-all;
+}
+
+.teammeeting .table td a:hover {
+  text-decoration: underline;
+}
+
+/* ================= ACTION ICONS ================= */
+.teammeeting .fa-trash {
+  color: var(--danger);
+}
+
+.teammeeting .table td a i {
+  font-size: 15px;
+  margin-right: 10px;
+  transition: opacity 0.25s ease;
+}
+
+.teammeeting .table td a i:hover {
+  opacity: 0.85;
+}
+
+/* ================= TABLE RESPONSIVE ================= */
+.teammeeting .table-responsive {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* ================= DATATABLE SAFE ================= */
+.teammeeting table.datatable {
+  background-color: transparent;
+}
+
+/* ================= DATATABLE CONTROLS ================= */
+
+/* Search input */
+.teammeeting input.datatable-input {
+  background-color: var(--bg-input) !important;
+  border: 1px solid var(--border-medium) !important;
+  color: var(--text-primary) !important;
+  height: 45px;
+  border-radius: 8px;
+}
+
+/* Placeholder */
+.teammeeting input.datatable-input::placeholder {
+  color: var(--text-muted);
+}
+
+/* Focus */
+.teammeeting input.datatable-input:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 0.15rem rgba(207, 250, 57, 0.25);
+  outline: none;
+}
+
+/* Entries selector */
+.teammeeting select.datatable-selector {
+  background-color: var(--bg-input) !important;
+  border: 1px solid var(--border-medium) !important;
+  color: var(--text-primary) !important;
+  height: 45px;
+  border-radius: 8px;
+}
+
+/* Selector focus */
+.teammeeting select.datatable-selector:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 0.15rem rgba(207, 250, 57, 0.25);
+  outline: none;
+}
+
+/* Top / bottom spacing */
+.teammeeting .dataTable-top,
+.teammeeting .dataTable-bottom {
+  padding: 10px 0;
+  color: var(--text-muted);
+}
+
+/* Info text */
+.teammeeting .dataTable-info {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+/* Pagination */
+.teammeeting .dataTable-pagination a {
+  color: var(--text-muted);
+  border-radius: 8px;
+  padding: 6px 10px;
+  transition: all 0.25s ease;
+}
+
+.teammeeting .dataTable-pagination a:hover {
+  background: rgba(207, 250, 57, 0.15);
+  color: var(--accent-primary);
+}
+
+/* Active page */
+.teammeeting .dataTable-pagination .active a {
+  background: var(--accent-primary);
+  color: #000;
+  font-weight: 600;
+}
+
+/* =============================Team Meeting Page=============================== */
+/* =============================Team Meeting Page=============================== */
+
+
+
+/* =============================Team Members Page=============================== */
+/* =============================Team Members Page=============================== */
+.teammembers {
+  background: var(--bg-main);
+  color: var(--text-muted);
+}
+
+/* ================= PAGE TITLE ================= */
+.teammembers .pagetitle h1 {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* ================= CARD ================= */
+.teammembers .card {
+  background: var(--bg-card);
+  border-radius: 14px;
+  border: 1px solid var(--border-light);
+}
+
+.teammembers .card-body h5 {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* ================= TABLE ================= */
+.teammembers .table {
+  background: var(--bg-card);
+  color: var(--text-muted);
+  margin-bottom: 0;
+}
+
+.teammembers .table thead th {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 600;
+  border-bottom: 1px solid var(--border-medium);
+  white-space: nowrap;
+}
+
+.teammembers .table tbody tr {
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.teammembers .table tbody tr:hover {
+  background-color: rgba(207, 250, 57, 0.08);
+}
+
+.teammembers .table td {
+  font-size: 14px;
+  color: var(--text-muted);
+  vertical-align: middle;
+  background: var(--bg-card);
+  white-space: nowrap;
+}
+
+/* ================= ACTION ICONS ================= */
+.teammembers .table td a i {
+  font-size: 15px;
+  margin-right: 10px;
+  transition: opacity 0.25s ease;
+}
+
+.teammembers .table td a i.fa-edit {
+  color: var(--warning);
+}
+
+.teammembers .table td a i.fa-trash {
+  color: var(--danger);
+}
+
+.teammembers .table td a i:hover {
+  opacity: 0.85;
+}
+
+/* ================= TABLE RESPONSIVE ================= */
+.teammembers .table-responsive {
+  border-radius: 12px;
+  overflow-x: auto;
+}
+
+/* Prevent datatable forcing background */
+.teammembers table.datatable {
+  background-color: transparent;
+}
+
+/* ================= DATATABLE CONTROLS ================= */
+.teammembers input.datatable-input,
+.teammembers select.datatable-selector {
+  background-color: var(--bg-input) !important;
+  border: 1px solid var(--border-medium) !important;
+  color: var(--text-primary) !important;
+  height: 42px;
+  border-radius: 8px;
+}
+
+.teammembers input.datatable-input::placeholder {
+  color: var(--text-muted);
+}
+
+.teammembers input.datatable-input:focus,
+.teammembers select.datatable-selector:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 0.15rem rgba(207, 250, 57, 0.25);
+  outline: none;
+}
+
+/* Info text */
+.teammembers .dataTable-info {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+/* Pagination */
+.teammembers .dataTable-pagination a {
+  color: var(--text-muted);
+  border-radius: 8px;
+  padding: 6px 10px;
+  transition: all 0.25s ease;
+}
+
+.teammembers .dataTable-pagination a:hover {
+  background: rgba(207, 250, 57, 0.15);
+  color: var(--accent-primary);
+}
+
+.teammembers .dataTable-pagination .active a {
+  background: var(--accent-primary);
+  color: #000;
+  font-weight: 600;
+}
+
+/* ================= FORM ================= */
+.teammembers label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.teammembers input.form-control,
+.teammembers select.form-control,
+.teammembers textarea.form-control {
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-medium);
+  color: var(--text-primary);
+  height: 42px;
+}
+
+.teammembers textarea.form-control {
+  height: auto;
+}
+
+/* Focus */
+.teammembers input.form-control:focus,
+.teammembers select.form-control:focus,
+.teammembers textarea.form-control:focus {
+  background-color: var(--bg-input);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 0.15rem rgba(207, 250, 57, 0.25);
+}
+
+/* ================= BUTTON ================= */
+.teammembers .btn-success {
+  background-color: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: #000;
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 8px 26px;
+}
+
+.teammembers .btn-success:hover {
+  background-color: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+/* ================= OFFSET SAFETY ================= */
+
+/* =============================Team Members Page=============================== */
+/* =============================Team Members Page=============================== */
+
+
+
+/* ===============================TimeSheet Page================================ */
+/* ===============================TimeSheet Page================================ */
+.timesheet{
+  background: var(--bg-main);
+  color: var(--text-muted);
+}
+
+/* ================= PAGE TITLE ================= */
+.timesheet .pagetitle h1 {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* ================= CARD ================= */
+.timesheet .card {
+  background: var(--bg-card);
+  border-radius: 14px;
+  border: 1px solid var(--border-light);
+}
+
+.timesheet .card-body h5 {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* ================= TABLE ================= */
+.timesheet .table {
+  background: var(--bg-card);
+  color: var(--text-muted);
+  margin-bottom: 0;
+}
+
+.timesheet .table thead th {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 600;
+  border-bottom: 1px solid var(--border-medium);
+  white-space: nowrap;
+}
+
+.timesheet .table tbody tr {
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.timesheet .table tbody tr:hover {
+  background-color: rgba(207, 250, 57, 0.08);
+}
+
+.timesheet .table td {
+  font-size: 14px;
+  color: var(--text-muted);
+  vertical-align: middle;
+  background: var(--bg-card);
+}
+
+/* ================= TABLE RESPONSIVE ================= */
+.timesheet .table-responsive {
+  border-radius: 12px;
+  overflow-x: auto;
+}
+
+/* Prevent datatable default background */
+.timesheet table.datatable {
+  background-color: transparent;
+}
+
+/* ================= ACTION BUTTON ================= */
+.timesheet .btn-primary {
+  background-color: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: #000;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 6px 14px;
+}
+
+.timesheet .btn-primary:hover {
+  background-color: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+/* ================= DATATABLE CONTROLS ================= */
+.timesheet input.datatable-input,
+.timesheet select.datatable-selector {
+  background-color: var(--bg-input) !important;
+  border: 1px solid var(--border-medium) !important;
+  color: var(--text-primary) !important;
+  height: 42px;
+  border-radius: 8px;
+}
+
+.timesheet input.datatable-input::placeholder {
+  color: var(--text-muted);
+}
+
+.timesheet input.datatable-input:focus,
+.timesheet select.datatable-selector:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 0.15rem rgba(207, 250, 57, 0.25);
+  outline: none;
+}
+
+/* Info text */
+.timesheet .dataTable-info {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+/* Pagination */
+.timesheet .dataTable-pagination a {
+  color: var(--text-muted);
+  border-radius: 8px;
+  padding: 6px 10px;
+  transition: all 0.25s ease;
+}
+
+.timesheet .dataTable-pagination a:hover {
+  background: rgba(207, 250, 57, 0.15);
+  color: var(--accent-primary);
+}
+
+.timesheet .dataTable-pagination .active a {
+  background: var(--accent-primary);
+  color: #000;
+  font-weight: 600;
+}
+
+/* ===============================TimeSheet Page================================ */
+/* ===============================TimeSheet Page================================ */
+
+
+
+/* ============================Update Attendance Page=========================== */
+/* ============================Update Attendance Page=========================== */
+.updateattendance{
+  background: var(--bg-main);
+  color: var(--text-muted);
+}
+
+/* ================= PAGE TITLE ================= */
+.updateattendance .pagetitle h1 {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* ================= CARD ================= */
+.updateattendance .card {
+  background: var(--bg-card);
+  border-radius: 14px;
+  border: 1px solid var(--border-light);
+}
+
+.updateattendance .card-body h5 {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* Divider */
+.updateattendance hr {
+  border-color: var(--border-subtle);
+}
+
+/* ================= LABELS ================= */
+.updateattendance label {
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* ================= INPUTS & SELECT ================= */
+.updateattendance input.form-control,
+.updateattendance select.form-control,
+.updateattendance textarea.form-control {
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-medium);
+  color: var(--text-primary);
+  height: 45px;
+}
+
+/* Placeholder */
+.updateattendance input::placeholder {
+  color: var(--text-muted);
+}
+
+/* Focus */
+.updateattendance input.form-control:focus,
+.updateattendance select.form-control:focus {
+  background-color: var(--bg-input);
+  border-color: var(--accent-primary);
+  color: var(--text-primary);
+  box-shadow: 0 0 0 0.15rem rgba(207, 250, 57, 0.25);
+}
+
+/* ================= BUTTON ================= */
+.updateattendance .btn-success {
+  background-color: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: #000;
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 8px 26px;
+}
+
+.updateattendance .btn-success:hover {
+  background-color: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+/* ================= FORM GRID ================= */
+.updateattendance .row.g-3 {
+  margin-top: 5px;
+}
+
+/* ============================Update Attendance Page=========================== */
+/* ============================Update Attendance Page=========================== */

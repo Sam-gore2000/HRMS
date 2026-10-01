@@ -1,0 +1,107 @@
+/*pop up css*/
+
+
+/* ===== Extra button/icon variants for delete flow ===== */
+.theme-swal-confirm-danger {
+    background-color: var(--status-danger) !important;
+    color: #fff !important;
+    font-weight: 600 !important;
+    border: none !important;
+    border-radius: 12px !important;
+    padding: 10px 30px !important;
+    box-shadow: 0 0 24px rgba(239, 68, 68, 0.25) !important;
+}
+
+.theme-swal-confirm-danger:hover {
+    filter: brightness(1.08);
+}
+
+.theme-swal-cancel {
+    background: transparent !important;
+    color: var(--text-muted) !important;
+    font-weight: 500 !important;
+    border: 1px solid var(--border-light) !important;
+    border-radius: 12px !important;
+    padding: 10px 26px !important;
+    margin-right: 10px !important;
+}
+
+.theme-swal-cancel:hover {
+    color: var(--text-primary) !important;
+    border-color: var(--accent-primary) !important;
+}
+
+.theme-popup-icon-warning {
+    background: rgba(250, 204, 21, 0.12);
+    color: var(--status-warning);
+    border: 1px solid rgba(250, 204, 21, 0.25);
+}
+
+
+
+/* ======================Theme SweetAlert2 Popup=================== */
+.theme-swal-popup {
+    background: var(--bg-card) !important;
+    border: 1px solid var(--border-light);
+    border-radius: 20px !important;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(207, 250, 57, 0.05) !important;
+    padding: 36px 30px 30px !important;
+}
+
+/* Icon box — matches the dashboard's stat-card icon language */
+.theme-popup-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 30px;
+}
+
+.theme-popup-icon-success {
+    background: var(--accent-hover-bg);
+    color: var(--accent-primary);
+    border: 1px solid rgba(207, 250, 57, 0.25);
+}
+
+.theme-popup-icon-danger {
+    background: rgba(239, 68, 68, 0.12);
+    color: var(--status-danger);
+    border: 1px solid rgba(239, 68, 68, 0.25);
+}
+
+.theme-popup-title {
+    font-family: "Poppins", sans-serif;
+    font-size: 19px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0 0 8px;
+}
+
+.theme-popup-text {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.theme-swal-confirm {
+    background-color: var(--accent-primary) !important;
+    color: #081a0f !important;
+    font-weight: 600 !important;
+    border: none !important;
+    border-radius: 12px !important;
+    padding: 10px 30px !important;
+    box-shadow: 0 0 24px rgba(207, 250, 57, 0.25) !important;
+    margin-top: 8px !important;
+}
+
+.theme-swal-confirm:hover {
+    filter: brightness(1.08);
+}
+
+.swal2-backdrop-show {
+    background: rgba(2, 10, 20, 0.75) !important;
+}
