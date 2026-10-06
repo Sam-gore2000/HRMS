@@ -19,7 +19,7 @@ function cellValue(row, column) {
   return formatValue(value);
 }
 
-export function ResourceTable({ columns, records, columnLabels, fields, loading = false, activeSearch = "", ...actionProps }) {
+export function ResourceTable({ columns, records, columnLabels, fields, loading = false, activeSearch = "", startIndex = 0, ...actionProps }) {
   const emptyText = loading ? "Loading..." : activeSearch ? `No records match "${activeSearch}"` : "No records available";
   return (
     <div className="table-responsive">
@@ -30,7 +30,7 @@ export function ResourceTable({ columns, records, columnLabels, fields, loading 
         <tbody>
           {records.map((row, index) => (
             <tr key={row._id || row.id}>
-              <td>{index + 1}</td>
+              <td>{startIndex + index + 1}</td>
               {columns.map((column) => <td key={column}>{cellValue(row, column)}</td>)}
               <td><RowActions row={row} {...actionProps} /></td>
             </tr>

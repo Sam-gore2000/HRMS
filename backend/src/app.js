@@ -19,6 +19,11 @@ export function createApp() {
   app.use(morgan("dev"));
   app.use("/uploads", express.static(env.uploadDir));
 
+  // HR data must never be kept in the browser or proxy cache (no stale pages after logout / back button).
+  app.use("/api", (req, res, next) => {
+    res.set({ "Cache-Control": "no-store, no-cache, must-revalidate, private", Pragma: "no-cache", Expires: "0" });
+    next();
+  });
   app.use("/api", apiRoutes);
   app.use("/api", notFound);
   app.use(errorHandler);

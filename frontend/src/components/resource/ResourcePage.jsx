@@ -7,6 +7,7 @@ import { Card } from "../common/Card.jsx";
 import { PageTitle } from "../common/PageTitle.jsx";
 import { useDialog } from "../feedback/DialogProvider.jsx";
 import { employeeFieldProps, findById, findByName, hasEmployeeFields, ownValues, valuesFromEmployee } from "../forms/employeeFields.js";
+import { Pagination } from "../tables/Pagination.jsx";
 import { ResourceTable } from "../tables/ResourceTable.jsx";
 import { ResourceForm } from "./ResourceForm.jsx";
 import { SearchBar } from "./SearchBar.jsx";
@@ -31,10 +32,13 @@ function recordLabel(row) {
 //   columnLabels table headings, e.g. { fname: "Employee Name" } (otherwise the form label is used)
 //   compute(values)          -> { field: value } recalculated after every change (fields marked computed: true)
 //   onEmployeeSelected(emp)  -> Promise<{ field: value }> extra values to load when an admin picks an employee
-// Optional props: onView(row) adds a "View Profile" style action; viewLabel names it.
-export function ResourcePage({ config, user, onView, viewLabel, viewIcon }) {
+// Optional props: onView(row) adds a "View Profile" style action; viewLabel names it;
+// intro is shown under the page title (e.g. the attendance calendar); filters are extra list
+// parameters (e.g. { year: 2026 }) and toolbar renders their controls next to the search box;
+// rowActions adds buttons to every row: [{ label, icon, onClick(row) }].
+export function ResourcePage({ config, user, onView, viewLabel, viewIcon, intro, filters, toolbar, rowActions }) {
   const { resource, selfService = false, approvable = false } = config;
-  const data = useResource(resource);
+  const data = useResource(resource, { filters });
   const dialog = useDialog();
   const isAdmin = user.role === ROLES.ADMIN;
   const canApprove = user.role !== ROLES.EMPLOYEE;
@@ -158,6 +162,7 @@ export function ResourcePage({ config, user, onView, viewLabel, viewIcon }) {
   return (
     <>
       <PageTitle>{title}</PageTitle>
+      {intro}
       {canWrite && (
         <ResourceForm
           title={data.meta.title}
@@ -174,6 +179,7 @@ export function ResourcePage({ config, user, onView, viewLabel, viewIcon }) {
         />
       )}
       <Card>
+        <div className="table-toolbar-row">
         <SearchBar
           value={data.search}
           onChange={data.setSearch}
@@ -183,6 +189,8 @@ export function ResourcePage({ config, user, onView, viewLabel, viewIcon }) {
           activeSearch={data.activeSearch}
           total={data.total}
         />
+        {toolbar}
+        </div>
         <ResourceTable
           columns={columns}
           columnLabels={config.columnLabels}
@@ -199,7 +207,10 @@ export function ResourcePage({ config, user, onView, viewLabel, viewIcon }) {
           onView={onView}
           viewLabel={viewLabel}
           viewIcon={viewIcon}
+          extraActions={rowActions}
+          startIndex={(data.page - 1) * data.pageSize}
         />
+        <Pagination page={data.page} pageSize={data.pageSize} total={data.total} onChange={(next) => { data.setPage(next); }} />
       </Card>
     </>
   );

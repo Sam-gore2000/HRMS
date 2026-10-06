@@ -1,11 +1,14 @@
 import { Fragment, useCallback, useEffect, useMemo, useState } from "react";
 import { Alert } from "../../components/common/Alert.jsx";
 import { PageTitle } from "../../components/common/PageTitle.jsx";
+import { Pagination } from "../../components/tables/Pagination.jsx";
+import { ROLES } from "../../constants/app.js";
 import { formatDay, formatDuration, formatTime } from "../../utils/format.js";
 import { attendanceApi } from "./attendanceApi.js";
 import { downloadDailyCsv, downloadSummaryCsv } from "./reportExport.js";
 
 const LIVE_REFRESH_MS = 60_000;
+const PAGE_SIZE = 10;
 
 function currentMonth() {
   const now = new Date();
@@ -74,8 +77,10 @@ function DailyDetail({ employee }) {
   );
 }
 
-// Admin only: every employee's working hours and breaks for a month, with a day-by-day drill-down.
-export function BreakReportPage() {
+// Admin: every employee's working hours and breaks for a month, with a day-by-day drill-down.
+// Manager: the same for their team (and themselves) - the server limits the rows.
+export function BreakReportPage({ user }) {
+  const isManager = user?.role === ROLES.MANAGER;
   const [month, setMonth] = useState(currentMonth);
   const [report, setReport] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -85,6 +90,7 @@ export function BreakReportPage() {
   const [sort, setSort] = useState("name");
   const [onlyActive, setOnlyActive] = useState(false);
   const [expanded, setExpanded] = useState(null);
+  const [page, setPage] = useState(1);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -122,6 +128,10 @@ export function BreakReportPage() {
       .sort(SORTS[sort]);
   }, [report, search, department, onlyActive, sort]);
 
+  // Back to page 1 whenever the list changes shape.
+  useEffect(() => { setPage(1); }, [search, department, onlyActive, sort, month]);
+  const pageRows = employees.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+
   const totals = useMemo(() => {
     const work = employees.reduce((sum, employee) => sum + employee.work_seconds, 0);
     const breaks = employees.reduce((sum, employee) => sum + employee.break_seconds, 0);
@@ -139,7 +149,7 @@ export function BreakReportPage() {
 
   return (
     <>
-      <PageTitle>Break &amp; Work Report</PageTitle>
+      <PageTitle>{isManager ? "Team Break & Work Report" : "Break & Work Report"}</PageTitle>
 
       <div className="card report-card">
         <div className="card-body">
@@ -188,7 +198,7 @@ export function BreakReportPage() {
           <Alert type="danger" className="mt-3 mb-0">{error}</Alert>
 
           <div className="report-stats">
-            <StatTile icon="bi-people" label="Employees Tracked" value={`${totals.tracked} / ${employees.length}`} meta="with attendance this month" />
+            <StatTile icon="bi-people" label={isManager ? "Team Members Tracked" : "Employees Tracked"} value={`${totals.tracked} / ${employees.length}`} meta="with attendance this month" />
             <StatTile icon="bi-briefcase" label="Total Work Hours" value={formatDuration(totals.work)} meta={`${totals.workedDays} working days logged`} />
             <StatTile icon="bi-cup-hot" label="Total Break Time" value={formatDuration(totals.breaks)} meta={`${totals.breakCount} breaks taken`} />
             <StatTile icon="bi-graph-up" label="Avg Work / Day" value={formatDuration(totals.avgDay)} meta="per employee per day" />
@@ -207,7 +217,7 @@ export function BreakReportPage() {
               <tbody>
                 {loading && !report && <tr><td colSpan={9} className="text-center py-4">Loading report...</td></tr>}
                 {!loading && report && employees.length === 0 && <tr><td colSpan={9} className="text-center py-4">No employees match these filters.</td></tr>}
-                {employees.map((employee) => {
+                {pageRows.map((employee) => {
                   const open = expanded === employee.emp_id;
                   return (
                     <Fragment key={employee.emp_id}>
@@ -242,6 +252,7 @@ export function BreakReportPage() {
               </tbody>
             </table>
           </div>
+          <Pagination page={page} pageSize={PAGE_SIZE} total={employees.length} onChange={setPage} label="employees" />
         </div>
       </div>
     </>

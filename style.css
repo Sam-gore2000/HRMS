@@ -2346,6 +2346,7 @@ body.light-mode .btn-edit {
     background: radial-gradient(circle, #7AAA3F, #455D29);
     border: 1px solid #455D29;
     color: #ffffff !important;
+    margin-right: 10px;
 }
 .lb{
        display: inline-flex;

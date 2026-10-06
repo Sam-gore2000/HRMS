@@ -9,7 +9,16 @@ async function waitForImages(element) {
 export async function downloadElementAsPdf(element, filename) {
   const [{ default: html2canvas }, { jsPDF }] = await Promise.all([import("html2canvas"), import("jspdf")]);
   await waitForImages(element);
-  const canvas = await html2canvas(element, { scale: 2, useCORS: true, backgroundColor: "#ffffff" });
+  const canvas = await html2canvas(element, {
+    scale: 2,
+    useCORS: true,
+    backgroundColor: "#ffffff",
+    // A document rendered off-screen (direct download) is moved into view in the capture copy only.
+    onclone: (doc, clone) => {
+      const holder = clone.closest(".pd-offscreen");
+      if (holder) Object.assign(holder.style, { left: "0px", top: "0px" });
+    }
+  });
 
   const pdf = new jsPDF("p", "mm", "a4");
   const pageWidth = 210;

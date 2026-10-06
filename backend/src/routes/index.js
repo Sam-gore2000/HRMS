@@ -8,7 +8,7 @@ import dashboardRoutes from "./dashboard.js";
 import resourceRoutes from "./resources.js";
 
 // Bump when the API changes, so /api/health shows which build is answering.
-export const API_VERSION = "2026.10.01-profiles-search";
+export const API_VERSION = "2026.10.06-pagination-history";
 
 const router = express.Router();
 

@@ -17,5 +17,9 @@ export const env = {
   jwtExpiresIn: "12h",
   clientOrigin: process.env.CLIENT_ORIGIN || "http://localhost:5173",
   uploadDir: process.env.UPLOAD_DIR || path.resolve(srcDir, "../../uploads"),
-  disableMemoryFallback: process.env.DISABLE_MEMORY_FALLBACK === "true"
+  disableMemoryFallback: process.env.DISABLE_MEMORY_FALLBACK === "true",
+  // Paid leave earned per month from the joining date.
+  leaveAccrualPerMonth: Number.isFinite(parseFloat(process.env.LEAVE_ACCRUAL_PER_MONTH)) ? parseFloat(process.env.LEAVE_ACCRUAL_PER_MONTH) : 1.5,
+  // Attendance calendar: WEEKLY_OFF_DAYS are the days off (0 = Sunday ... 6 = Saturday).
+  weeklyOffDays: (process.env.WEEKLY_OFF_DAYS ?? "0,6").split(",").map((day) => Number(day.trim())).filter((day) => day >= 0 && day <= 6)
 };

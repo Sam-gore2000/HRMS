@@ -1151,3 +1151,873 @@ body.light-mode .profile-info-icon {
   text-align: center;
   color: #000;
 }
+
+/* ===================== ATTENDANCE CALENDAR ===================== */
+.cal-card .card-body {
+  padding: 26px 28px;
+}
+
+.cal-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 8px;
+}
+
+.cal-title {
+  margin: 0 0 8px;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.cal-picker {
+  flex: 0 1 300px;
+}
+
+.cal-picker .form-control {
+  background: var(--bg-input);
+  color: var(--text-primary);
+  border-color: var(--border-medium);
+  border-radius: 10px;
+}
+
+.cal-layout {
+  display: grid;
+  grid-template-columns: minmax(300px, 460px) minmax(240px, 1fr);
+  gap: 28px;
+  align-items: start;
+}
+
+.cal-who {
+  margin: 0 0 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.cal-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 26px;
+  margin: 6px 0 14px;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.cal-nav span {
+  min-width: 160px;
+  text-align: center;
+}
+
+.cal-nav button {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--border-medium);
+  background: transparent;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cal-nav button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 8px 4px;
+  transition: opacity 0.15s ease;
+}
+
+.cal-grid.is-loading {
+  opacity: 0.45;
+}
+
+.cal-weekday {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-muted);
+  padding-bottom: 4px;
+}
+
+.cal-cell {
+  position: relative;
+  justify-self: center;
+  width: 46px;
+  height: 46px;
+  max-width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  background: transparent;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.cal-cell:hover {
+  transform: scale(1.06);
+}
+
+.cal-cell.outside {
+  cursor: default;
+  color: var(--text-muted);
+  opacity: 0.4;
+}
+
+.cal-cell.outside:hover {
+  transform: none;
+}
+
+/* Present: aqua with ink figures */
+.cal-cell.present,
+.cal-swatch.present {
+  background: #00DAD2;
+  color: #03211F;
+}
+
+/* Half day: half aqua */
+.cal-cell.half,
+.cal-swatch.half {
+  background: linear-gradient(135deg, #00DAD2 50%, rgba(0, 218, 210, 0.18) 50%);
+  border-color: #00DAD2;
+  color: var(--text-primary);
+}
+
+.cal-cell.half .cal-day {
+  text-shadow: 0 0 6px var(--bg-card);
+}
+
+/* Leave: amber */
+.cal-cell.leave,
+.cal-swatch.leave {
+  background: rgba(251, 157, 89, 0.2);
+  border-color: #FB9D59;
+}
+
+/* Absent: solid red (the app's danger colour) with white figures */
+.cal-cell.absent,
+.cal-swatch.absent {
+  background: var(--status-danger, #EF4444);
+  border-color: var(--status-danger, #EF4444);
+  color: #ffffff;
+}
+
+/* Holiday: lime */
+.cal-cell.holiday,
+.cal-swatch.holiday {
+  background: rgba(207, 250, 57, 0.14);
+  border-color: #CFFA39;
+  border-style: dashed;
+}
+
+body.light-mode .cal-cell.holiday,
+body.light-mode .cal-swatch.holiday {
+  background: #EFF5F2;
+  border-color: #06322F;
+}
+
+/* Week off (Saturday / Sunday): quiet deep-teal disc, muted figures */
+.cal-cell.weekoff,
+.cal-swatch.weekoff {
+  background: #06322F;
+  border-color: rgba(239, 245, 242, 0.12);
+  color: var(--text-muted);
+}
+
+body.light-mode .cal-cell.weekoff,
+body.light-mode .cal-swatch.weekoff {
+  background: #EFF5F2;
+  border-color: rgba(6, 50, 47, 0.12);
+  color: #06322F;
+}
+
+/* Today: ring outside the circle */
+.cal-cell.today,
+.cal-swatch.today {
+  box-shadow: 0 0 0 3px var(--bg-card), 0 0 0 5px #00DAD2;
+}
+
+.cal-cell.selected {
+  box-shadow: 0 0 0 3px var(--bg-card), 0 0 0 5px var(--text-primary);
+}
+
+.cal-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 16px;
+  margin-top: 18px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.cal-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cal-swatch {
+  position: relative;
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+}
+
+.cal-swatch.today {
+  background: transparent;
+  box-shadow: 0 0 0 2px #00DAD2;
+  width: 10px;
+  height: 10px;
+}
+
+.cal-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.cal-summary div {
+  padding: 12px 6px;
+  border-radius: 12px;
+  border: 1px solid var(--border-light);
+  background: var(--bg-card-soft);
+  text-align: center;
+}
+
+.cal-summary strong {
+  display: block;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.cal-summary .cal-summary-wide {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 8px;
+}
+
+.cal-summary-wide strong {
+  display: inline;
+}
+
+.cal-summary span {
+  font-size: 12px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.cal-details {
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--border-light);
+  background: var(--bg-card-soft);
+}
+
+.cal-details-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  color: var(--text-primary);
+}
+
+.cal-details dl {
+  margin: 12px 0 0;
+  display: grid;
+  gap: 6px;
+}
+
+.cal-details dl div {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.cal-details dt {
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+.cal-details dd {
+  margin: 0;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-align: right;
+}
+
+.cal-pill {
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid var(--border-medium);
+  color: var(--text-primary);
+}
+
+.cal-pill.present {
+  background: #00DAD2;
+  border-color: #00DAD2;
+  color: #03211F;
+}
+
+.cal-pill.half { border-color: #00DAD2; }
+.cal-pill.leave { border-color: #FB9D59; }
+.cal-pill.absent { background: var(--status-danger, #EF4444); border-color: var(--status-danger, #EF4444); color: #ffffff; }
+.cal-pill.holiday { border-color: #CFFA39; border-style: dashed; }
+.cal-pill.weekoff { color: var(--text-muted); }
+
+body.light-mode .cal-pill.holiday {
+  border-color: #06322F;
+}
+
+.cal-hint,
+.cal-error {
+  margin: 10px 0 0;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.cal-empty {
+  padding: 30px 0 10px;
+  text-align: center;
+}
+
+.cal-error {
+  color: var(--status-danger);
+}
+
+@media (max-width: 1100px) {
+  .cal-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .cal-main {
+    max-width: 480px;
+    margin: 0 auto;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .cal-card .card-body {
+    padding: 18px 14px;
+  }
+
+  .cal-cell {
+    width: 38px;
+    height: 38px;
+    font-size: 13px;
+  }
+
+  .cal-nav {
+    gap: 12px;
+  }
+}
+
+/* ===================== TABLE ROW ACTIONS: spacing ===================== */
+.row-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-width: 380px;
+}
+
+.row-actions .btn-action {
+  margin: 0;
+}
+
+/* ===================== MANAGER TEAM PICKER (attendance calendar) ===================== */
+.cal-team {
+  margin: 4px 0 18px;
+}
+
+.cal-team-label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.cal-team-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.cal-team-select {
+  flex: 0 1 320px;
+  min-width: 220px;
+  border-radius: 999px;
+  padding: 8px 40px 8px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  background-color: var(--bg-card-soft);
+  color: var(--text-primary);
+  border: 1px solid var(--border-medium);
+  cursor: pointer;
+}
+
+.cal-team-select.active {
+  border-color: #00DAD2;
+  box-shadow: 0 0 0 1px #00DAD2;
+}
+
+.cal-team-select option {
+  background: var(--bg-card);
+  color: var(--text-primary);
+}
+
+.cal-team-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border-medium);
+  background: var(--bg-card-soft);
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 500;
+  transition: border-color 0.15s ease;
+}
+
+.cal-team-chip small {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.cal-team-chip:hover {
+  border-color: #00DAD2;
+}
+
+.cal-team-chip.active {
+  background: #00DAD2;
+  border-color: #00DAD2;
+  color: #03211F;
+}
+
+.cal-team-chip.active small {
+  color: #03211F;
+}
+
+/* ===================== LEAVE BALANCE ===================== */
+.lb-card {
+  margin-bottom: 20px;
+  padding: 18px 20px;
+  border-radius: 16px;
+  border: 1px solid var(--border-light);
+  background: var(--bg-card);
+}
+
+.lb-card.compact {
+  margin: 16px 0 0;
+  padding: 14px 16px;
+  background: var(--bg-card-soft);
+}
+
+.lb-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px 12px;
+  margin-bottom: 12px;
+}
+
+.lb-head strong {
+  font-size: 15px;
+  color: var(--text-primary);
+}
+
+.lb-head span,
+.lb-note {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.lb-note {
+  margin: 0;
+}
+
+.lb-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.lb-grid div {
+  padding: 10px 8px;
+  border-radius: 12px;
+  border: 1px solid var(--border-light);
+  text-align: center;
+}
+
+.lb-grid strong {
+  display: block;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.lb-grid span {
+  font-size: 12px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.lb-grid .lb-main {
+  background: #00DAD2;
+  border-color: #00DAD2;
+}
+
+.lb-grid .lb-main strong,
+.lb-grid .lb-main span {
+  color: #03211F;
+}
+
+.lb-card.compact .lb-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (max-width: 575px) {
+  .lb-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ===================== EMPLOYEE PICKER (admin) ===================== */
+.emp-picker {
+  flex: 0 1 300px;
+  min-width: 220px;
+}
+
+.emp-picker .form-control {
+  background: var(--bg-input);
+  color: var(--text-primary);
+  border-color: var(--border-medium);
+  border-radius: 10px;
+}
+
+/* ===================== LEAVE BALANCE: admin adjust ===================== */
+.lb-admin-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.lb-admin .lb-card {
+  margin-bottom: 0;
+  background: var(--bg-card-soft);
+}
+
+.lb-head > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.lb-adjust-btn {
+  border-radius: 8px;
+  white-space: nowrap;
+}
+
+.lb-grid {
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+}
+
+.lb-card.compact .lb-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.lb-adjust {
+  display: grid;
+  gap: 12px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-light);
+}
+
+.lb-adjust label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+}
+
+.lb-adjust label span {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.lb-adjust .form-control {
+  background: var(--bg-input);
+  color: var(--text-primary);
+  border-color: var(--border-medium);
+  border-radius: 10px;
+}
+
+.lb-modes {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.lb-modes button {
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border-medium);
+  background: transparent;
+  color: var(--text-primary);
+  font-size: 13px;
+}
+
+.lb-modes button.active {
+  background: #00DAD2;
+  border-color: #00DAD2;
+  color: #03211F;
+}
+
+.lb-adjust-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.lb-adjust-actions .btn {
+  border-radius: 10px;
+}
+
+.lb-history {
+  margin-top: 14px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.lb-history summary {
+  cursor: pointer;
+  color: var(--text-primary);
+}
+
+.lb-history ul {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.lb-history li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2px 10px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--border-light);
+}
+
+.lb-history li strong {
+  grid-row: span 2;
+  align-self: center;
+  min-width: 42px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-primary);
+}
+
+.lb-history li strong.minus::before {
+  content: "";
+}
+
+.lb-history li span {
+  color: var(--text-primary);
+}
+
+/* ===================== PAGINATION ===================== */
+.pager {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 16px;
+  margin-top: 16px;
+}
+
+.pager-info {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.pager-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.pager-buttons button {
+  min-width: 36px;
+  height: 36px;
+  padding: 0 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border-medium);
+  background: transparent;
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.pager-buttons button:hover:not(:disabled):not(.active) {
+  border-color: #00DAD2;
+}
+
+.pager-buttons button.active {
+  background: #00DAD2;
+  border-color: #00DAD2;
+  color: #03211F;
+}
+
+.pager-buttons button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.pager-gap {
+  padding: 0 4px;
+  color: var(--text-muted);
+}
+
+/* ===================== TABLE TOOLBAR: search + filters ===================== */
+.table-toolbar-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 0 16px;
+}
+
+.table-toolbar-row > .table-toolbar {
+  flex: 1 1 320px;
+}
+
+.table-toolbar-row > .search-summary {
+  flex-basis: 100%;
+  order: 3;
+}
+
+.year-filter {
+  display: flex !important;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 15px;
+}
+
+.year-filter span {
+  margin: 0 !important;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.year-filter .form-select {
+  min-width: 140px;
+  border-radius: 10px;
+  background-color: var(--bg-input);
+  color: var(--text-primary);
+  border-color: var(--border-medium);
+}
+
+/* ===================== PAYSLIP: direct download ===================== */
+.btn-download {
+  color: #CFFA39 !important;
+}
+
+body.light-mode .btn-download {
+  background: #CFFA39;
+  border-color: #CFFA39;
+  color: #06322F !important;
+}
+
+/* The payslip is drawn here, off-screen, only while its PDF is being made. */
+.pd-offscreen {
+  position: fixed;
+  top: 0;
+  left: -10000px;
+  width: 840px;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ===================== BANK DETAILS VIEW ===================== */
+.bank-view .card-body {
+  padding: 26px 28px 30px;
+}
+
+.bank-view .profile-section-title:first-child {
+  margin-top: 0;
+}
+
+.bank-reveal {
+  margin-left: auto;
+  padding: 4px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border-medium);
+  background: transparent;
+  color: var(--text-primary);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.bank-salary {
+  margin: 0;
+  max-width: 560px;
+}
+
+.bank-salary td {
+  padding: 10px 14px;
+  color: var(--text-primary);
+}
+
+.bank-salary td:last-child {
+  text-align: right;
+  font-weight: 600;
+}
+
+.bank-salary tr:first-child td {
+  font-weight: 600;
+}

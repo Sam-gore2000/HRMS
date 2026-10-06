@@ -3,6 +3,7 @@ import AttendanceData from "./AttendanceData.js";
 import BreakData from "./BreakData.js";
 import Employee from "./Employee.js";
 import Leave from "./Leave.js";
+import LeaveAdjustment from "./LeaveAdjustment.js";
 import UserLog from "./UserLog.js";
 import * as legacy from "./legacyModels.js";
 
@@ -12,6 +13,7 @@ export const mongooseModels = {
   attendance: AttendanceData,
   breaks: BreakData,
   leaves: Leave,
+  leaveAdjustments: LeaveAdjustment,
   userLogs: UserLog,
   bankDetails: legacy.BankDetail,
   payslips: legacy.Payslip,

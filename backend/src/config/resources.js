@@ -11,6 +11,9 @@
 //  - hiddenFields:  never returned by the API (password hashes)
 //  - passwordField: hashed with bcrypt on save; left unchanged when submitted empty
 //  - searchFields:  extra fields the search box looks in, besides the columns
+//  - yearField:     date field (YYYY-MM-DD text) the ?year=2026 filter applies to
+//  - ownOnly:       private to the person (salary, bank details): managers and employees only ever
+//                   see their own rows; only admins see everyone's
 // Deleting is always admin-only.
 export const resourceConfig = {
   admins: {
@@ -60,6 +63,7 @@ export const resourceConfig = {
     model: "bankDetails",
     title: "Compensation Details",
     employeeField: "empid",
+    ownOnly: true,
     employeeMap: { employeeName: "fname" },
     employeeDefaults: { designation: "position", department: "department" },
     columns: ["empid", "employeeName", "designation", "department", "tsalary", "bsalary", "accountNumber", "bankName", "branchName", "ifscCode"]
@@ -68,6 +72,8 @@ export const resourceConfig = {
     model: "payslips",
     title: "Payslip",
     employeeField: "empid",
+    ownOnly: true,
+    yearField: "date",
     employeeMap: { employeeName: "fname" },
     // month / year / netSalary are filled from the payslip date and Net Payable Amount on save.
     searchFields: ["date", "designation", "department"],

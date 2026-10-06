@@ -8,9 +8,12 @@ function teamFilter(user) {
   return user.role === ROLES.ADMIN ? {} : { report_manager_id: user.empid };
 }
 
+// Only what a manager needs to know about a team member (no password, salary or personal details).
+const TEAM_FIELDS = ["empid", "fname", "position", "department", "email", "status", "profile_pic", "jdate"];
+
 export async function team(user) {
   const members = await models.employees.find(teamFilter(user)).sort({ fname: 1 }).lean();
-  return { members };
+  return { members: members.map((member) => Object.fromEntries(TEAM_FIELDS.map((field) => [field, member[field] ?? ""]))) };
 }
 
 export async function approvals(user) {

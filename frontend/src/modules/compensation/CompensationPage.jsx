@@ -1,26 +1,27 @@
 import { useState } from "react";
+import { useViewHistory } from "../../app/history.js";
 import { ResourcePage } from "../../components/resource/ResourcePage.jsx";
-import { DocumentViewer } from "../payslip/DocumentViewer.jsx";
-import { safeFileName } from "../payslip/pdf.js";
-import { CompensationDocument } from "./CompensationDocument.jsx";
+import { ROLES } from "../../constants/app.js";
+import { BankDetailsView } from "./BankDetailsView.jsx";
 import { compensationConfig } from "./compensation.config.js";
 
-// Salary structure and bank details ("Compensation Details" for admin, "Bank Details" for employees),
-// with a View button that shows the monthly structure in the payslip layout.
+// "Compensation Details" (admin) / "Bank Details" (employees, managers).
+// View opens the bank details; admins also see the salary structure.
 export function CompensationPage({ user }) {
   const [viewing, setViewing] = useState(null);
+  const isAdmin = user.role === ROLES.ADMIN;
+  const closeView = useViewHistory(Boolean(viewing), () => setViewing(null));
 
   if (viewing) {
     return (
-      <DocumentViewer
-        title="Compensation Structure"
-        backLabel="Back"
-        onBack={() => setViewing(null)}
-        filename={`Compensation_${safeFileName(viewing.employeeName)}.pdf`}
-        render={(ref) => <CompensationDocument ref={ref} compensation={viewing} />}
+      <BankDetailsView
+        record={viewing}
+        showSalary={isAdmin}
+        title={isAdmin ? "Compensation Details" : "Bank Details"}
+        onBack={closeView}
       />
     );
   }
 
-  return <ResourcePage config={compensationConfig} user={user} onView={setViewing} viewLabel="View" viewIcon="bi-eye" />;
+  return <ResourcePage config={compensationConfig} user={user} onView={setViewing} viewLabel={isAdmin ? "View Details" : "View Bank Details"} viewIcon="bi-eye" />;
 }

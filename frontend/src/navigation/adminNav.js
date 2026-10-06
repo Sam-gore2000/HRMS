@@ -17,5 +17,5 @@ export const adminNav = [
   // { key: "meetings", label: "Team Meeting", icon: "bi-camera-video" },
   // { key: "dprs", label: "Daily Report", icon: "bi-journal-text" },
   // { key: "timesheets", label: "Timesheet", icon: "bi-clock-history" },
-  { key: "userLogs", label: "Login Details", icon: "bi-stopwatch" }
+  // { key: "userLogs", label: "Login Details", icon: "bi-stopwatch" }
 ];

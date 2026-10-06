@@ -164,15 +164,25 @@ function dayView(row, dayBreaks, today, now) {
 }
 
 // Admin: every person's working hours and breaks for a month, day by day.
-export async function monthlyReport(query = {}) {
+// Which people a report may include: admins everyone, managers their team plus themselves.
+async function reportScope(user) {
+  if (!user || user.role === "admin") return null;
+  const team = await models.employees.find({ report_manager_id: user.empid }).lean();
+  return [user.empid, ...team.map((member) => member.empid)];
+}
+
+export async function monthlyReport(query = {}, user = null) {
   const now = Date.now();
   const today = todayKey();
   const { month, from, to } = monthRange(query.month);
   const inMonth = { attendance_date: { $gte: from, $lte: to } };
-  const person = query.emp_id ? { emp_id: String(query.emp_id) } : {};
+  const allowed = await reportScope(user);
+  if (allowed && query.emp_id && !allowed.includes(String(query.emp_id))) throw httpError(403, "You can only see your own team's report.");
+  const person = query.emp_id ? { emp_id: String(query.emp_id) } : allowed ? { emp_id: { $in: allowed } } : {};
+  const employeeFilter = query.emp_id ? { empid: String(query.emp_id) } : allowed ? { empid: { $in: allowed } } : {};
 
   const [employees, rows, breakRows] = await Promise.all([
-    models.employees.find(query.emp_id ? { empid: String(query.emp_id) } : {}).sort({ fname: 1 }).lean(),
+    models.employees.find(employeeFilter).sort({ fname: 1 }).lean(),
     models.attendance.find({ ...inMonth, ...person }).sort({ attendance_date: 1 }).lean(),
     models.breaks.find({ ...inMonth, ...person }).sort({ break_start: 1 }).lean()
   ]);

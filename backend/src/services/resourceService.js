@@ -3,10 +3,10 @@ import { resourceConfig } from "../config/resources.js";
 import { ROLES } from "../constants/roles.js";
 import { models } from "../models/index.js";
 import { getRoleModule } from "../roles/index.js";
-import { daysBetweenInclusive } from "../utils/date.js";
 import { httpError } from "../utils/httpError.js";
 import { hashPassword } from "../utils/password.js";
 import { cleanBody, escapeRegex, searchConditions } from "../utils/query.js";
+import { holidayMap, workingDaysBetween } from "../utils/workdays.js";
 import { preparePayslip } from "./payslipService.js";
 
 // Extra per-resource processing before a row is saved.
@@ -48,6 +48,10 @@ export function scopeFilter(config, user, input = {}, options = {}) {
   const policy = policyFor(user);
   if (!policy.canAccess(config)) throw httpError(403, "Admin access required");
   const { mine, ...filter } = input;
+  // Private resources (payslips, bank details): only admins see other people's rows.
+  if (config.ownOnly && user.role !== ROLES.ADMIN) {
+    return { ...filter, [config.employeeField]: user.empid || "__none__" };
+  }
   return policy.scope(config, user, filter, { ...options, mine: mine === "true" });
 }
 
@@ -106,7 +110,8 @@ async function prepareBody(resource, config, user, payload, { creating = false }
   if (creating) Object.assign(body, policy.ownerFields(config, user));
   await applyEmployeeFields(config, user, body, { creating });
   await applyPassword(config, body);
-  if (resource === "leaves" && (body.leave1 || body.leave2)) body.total_leave = daysBetweenInclusive(body.leave1, body.leave2) || body.total_leave;
+  // Leave days = working days only (weekly offs and holidays inside the range are not counted).
+  if (resource === "leaves" && body.leave1 && body.leave2) body.total_leave = workingDaysBetween(body.leave1, body.leave2, await holidayMap());
   return body;
 }
 
@@ -127,7 +132,10 @@ export async function meta() {
 export async function list(resource, user, query) {
   const config = getResourceConfig(resource);
   const { page = 1, limit = 100, q, ...rest } = query;
-  const scoped = scopeFilter(config, user, rest);
+  const { year, ...filters } = rest;
+  // ?year=2026 on resources with a yearField (e.g. payslips by their date).
+  if (config.yearField && /^\d{4}$/.test(String(year || ""))) filters[config.yearField] = { $regex: `^${year}-` };
+  const scoped = scopeFilter(config, user, filters);
   // The search is AND-ed with the scope, so it can never widen what a user may see.
   const model = modelFor(config);
   const search = searchConditions(config, q, (field) => model.schema?.path?.(field)?.instance);
