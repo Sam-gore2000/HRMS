@@ -936,7 +936,7 @@ body.sidebar-collapsed .sidebar-logo .toggle-sidebar-btn {
 .attendance-punch.punch-in {
     background: var(--accent-primary);
     color: #000;
-    width: 80%;
+    width: 100%;
     margin:auto;
 }
 
@@ -952,8 +952,8 @@ body.sidebar-collapsed .sidebar-logo .toggle-sidebar-btn {
 }
 
 .attendance-punch.break-active {
-    background: #FB9D59;
-    color: #03211F;
+    background:#CFFA39;
+    color: #000;
         width: 80%;
     margin: auto;
 }

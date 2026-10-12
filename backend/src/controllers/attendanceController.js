@@ -1,7 +1,8 @@
 import * as attendanceCalendarService from "../services/attendanceCalendarService.js";
-import { adjustLeaveBalance, leaveBalance } from "../services/leaveBalanceService.js";
+import { adjustLeaveBalance, leaveBalance, removeAdjustment, setOpeningBalance } from "../services/leaveBalanceService.js";
 import * as attendanceService from "../services/attendanceService.js";
 import * as breakService from "../services/breakService.js";
+import * as regularizationService from "../services/regularizationService.js";
 import { handleRequest } from "../utils/handleRequest.js";
 
 export const status = handleRequest((req) => attendanceService.status(req.user));
@@ -22,3 +23,9 @@ export const leaveBalanceFor = handleRequest(async (req) => {
   return { data: await leaveBalance(employee.empid) };
 });
 export const adjustLeave = handleRequest((req) => adjustLeaveBalance(req.user, req.body));
+export const createRegularization = handleRequest((req) => regularizationService.createRequest(req.user, req.body));
+export const listRegularizations = handleRequest((req) => regularizationService.listRequests(req.user, req.query));
+export const decideRegularization = handleRequest((req) => regularizationService.decide(req.user, req.params.id, req.body));
+export const cancelRegularization = handleRequest((req) => regularizationService.cancelRequest(req.user, req.params.id));
+export const openingLeave = handleRequest((req) => setOpeningBalance(req.user, req.body));
+export const removeLeaveAdjustment = handleRequest((req) => removeAdjustment(req.user, req.params.id));

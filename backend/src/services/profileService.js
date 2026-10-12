@@ -37,7 +37,7 @@ async function employeeProfile(employee) {
 }
 
 function adminProfile(admin) {
-  return { _id: admin._id, username: admin.username, fname: admin.username, email: admin.email || "", role: ROLES.ADMIN, position: "Administrator", createdAt: admin.createdAt };
+  return { _id: admin._id, username: admin.username, fname: admin.username, email: admin.email || "", role: ROLES.ADMIN, position: "Administrator", createdAt: admin.createdAt, password_changed_at: admin.password_changed_at || null };
 }
 
 async function findAccount(user) {
@@ -72,6 +72,8 @@ export async function changePassword(user, { currentPassword, newPassword } = {}
   if (!(await matchesPassword(currentPassword, account.doc[field]))) throw httpError(400, "Current password is incorrect");
   if (!newPassword || String(newPassword).length < MIN_PASSWORD_LENGTH) throw httpError(400, `New password must be at least ${MIN_PASSWORD_LENGTH} characters.`);
   account.doc[field] = await hashPassword(newPassword);
+  if (typeof account.doc.set === "function") account.doc.set("password_changed_at", new Date()); // field outside the schema
+  else account.doc.password_changed_at = new Date();
   await account.doc.save();
   return { ok: true };
 }

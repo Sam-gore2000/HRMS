@@ -2,6 +2,7 @@ import { resourceConfig } from "../config/resources.js";
 import { models } from "../models/index.js";
 import { secondsSince, todayKey } from "../utils/date.js";
 import { httpError } from "../utils/httpError.js";
+import { grossWorkSeconds } from "../utils/workTime.js";
 import { breakSummary, closeStaleBreaks, empId, endBreak, findActiveBreak } from "./breakService.js";
 import { scopeFilter } from "./resourceService.js";
 
@@ -9,12 +10,9 @@ const HALF_DAY_SECONDS = 4 * 3600;
 const MIN_WORK_SECONDS = 60;
 const DUPLICATE_KEY = 11000;
 
-// Net work time for a record: punch_in -> punch_out (or now, while still working) minus breaks.
-function workSeconds(row, breakSeconds, now = Date.now()) {
-  if (!row?.punch_in) return 0;
-  if (row.punch_out && typeof row.work_seconds === "number") return row.work_seconds;
-  const end = row.punch_out ? new Date(row.punch_out).getTime() : now;
-  return Math.max(0, secondsSince(row.punch_in, end) - breakSeconds);
+// Work time for a record: punch in -> punch out (or now, while still working), breaks included.
+function workSeconds(row, now = Date.now()) {
+  return row?.punch_in ? grossWorkSeconds(row, now) : 0;
 }
 
 // Records from an earlier day that were never punched out are flagged instead of left "open".
@@ -44,7 +42,7 @@ export async function status(user) {
     attendance: row || null,
     punched_in: Boolean(row?.punch_in && !row.punch_out),
     punched_out: Boolean(row?.punch_out),
-    work_seconds: workSeconds(row, breaks.totalSeconds, now.getTime()),
+    work_seconds: workSeconds(row, now.getTime()),
     break_seconds: row?.punch_out && typeof row.break_seconds === "number" ? row.break_seconds : breaks.totalSeconds,
     closed_break_seconds: breaks.closedSeconds,
     on_break: Boolean(breaks.active),
@@ -97,7 +95,7 @@ export async function punchOut(user) {
   if (running) await endBreak(running, endedAt);
 
   const { closedSeconds } = await breakSummary(id, date, endedAt.getTime());
-  const work = Math.max(0, secondsSince(row.punch_in, endedAt.getTime()) - closedSeconds);
+  const work = Math.max(0, secondsSince(row.punch_in, endedAt.getTime())); // breaks included
   const data = await models.attendance.findOneAndUpdate(
     { _id: row._id, punch_out: null },
     { $set: { punch_out: endedAt, work_seconds: work, break_seconds: closedSeconds, status: work < HALF_DAY_SECONDS ? "Half Day" : "Present" } },
@@ -154,7 +152,7 @@ function dayView(row, dayBreaks, today, now) {
     date: row.attendance_date,
     punch_in: row.punch_in || null,
     punch_out: row.punch_out || null,
-    work_seconds: row.punch_in && (row.punch_out || live) ? workSeconds(row, breakSeconds, now) : 0,
+    work_seconds: row.punch_in && (row.punch_out || live) ? workSeconds(row, now) : 0,
     break_seconds: breakSeconds,
     break_count: breaks.length,
     breaks,

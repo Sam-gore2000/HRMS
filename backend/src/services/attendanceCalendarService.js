@@ -2,7 +2,8 @@ import { env } from "../config/env.js";
 import { ROLES } from "../constants/roles.js";
 import { models } from "../models/index.js";
 import { httpError } from "../utils/httpError.js";
-import { secondsSince, todayKey } from "../utils/date.js";
+import { grossWorkSeconds } from "../utils/workTime.js";
+import { todayKey } from "../utils/date.js";
 import { holidayMap, normalizeDate, weekday } from "../utils/workdays.js";
 import { empId } from "./breakService.js";
 
@@ -73,7 +74,7 @@ export async function monthCalendar(user, query = {}) {
       day.status = record.status === "Half Day" ? "Half Day" : "Present";
       day.punch_in = record.punch_in;
       day.punch_out = record.punch_out || null;
-      day.work_seconds = live ? Math.max(0, secondsSince(record.punch_in) - (record.break_seconds || 0)) : record.work_seconds || 0;
+      day.work_seconds = grossWorkSeconds(record); // punch in -> out (or now), breaks included
       day.break_seconds = record.break_seconds || 0;
       day.missed_punch_out = !record.punch_out && !live;
       day.working_now = live;
@@ -85,7 +86,7 @@ export async function monthCalendar(user, query = {}) {
       day.status = "Week Off"; // Saturday/Sunday (WEEKLY_OFF_DAYS), even inside a leave
     } else if (leave) {
       day.status = "Leave";
-      day.leave_type = leave.leavet || "Leave";
+      day.leave_type = `${leave.leavet || "Leave"}${/^half/i.test(leave.leave_duration || "") ? ` (${leave.leave_duration})` : ""}`;
     } else if (record?.status === "Absent") {
       day.status = "Absent";
     } else if (date < today && trackingStart && date >= trackingStart) {

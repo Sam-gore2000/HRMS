@@ -4,6 +4,7 @@ import BreakData from "./BreakData.js";
 import Employee from "./Employee.js";
 import Leave from "./Leave.js";
 import LeaveAdjustment from "./LeaveAdjustment.js";
+import PasswordReset from "./PasswordReset.js";
 import UserLog from "./UserLog.js";
 import * as legacy from "./legacyModels.js";
 
@@ -14,6 +15,7 @@ export const mongooseModels = {
   breaks: BreakData,
   leaves: Leave,
   leaveAdjustments: LeaveAdjustment,
+  passwordResets: PasswordReset,
   userLogs: UserLog,
   bankDetails: legacy.BankDetail,
   payslips: legacy.Payslip,

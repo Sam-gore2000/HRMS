@@ -6,7 +6,8 @@ import { ProfileSummaryCard } from "./ProfileSummaryCard.jsx";
 // `tabs` adds tabs after Overview: [{ key, label, render: () => <... /> }].
 export function ProfileLayout({ profile, tabs = [], onPhotoChange, uploading }) {
   const [active, setActive] = useState("overview");
-  const allTabs = [{ key: "overview", label: "Overview", render: () => <ProfileOverview profile={profile} /> }, ...tabs];
+  const passwordTab = tabs.find((tab) => tab.key === "password");
+  const allTabs = [{ key: "overview", label: "Overview", render: () => <ProfileOverview profile={profile} onChangePassword={passwordTab ? () => setActive("password") : null} /> }, ...tabs];
   const current = allTabs.find((tab) => tab.key === active) || allTabs[0];
 
   return (

@@ -97,7 +97,10 @@ async function applyPassword(config, body) {
   const field = config.passwordField;
   if (!field || !(field in body)) return;
   if (!body[field]) delete body[field];
-  else body[field] = await hashPassword(body[field]);
+  else {
+    body[field] = await hashPassword(body[field]);
+    body.password_changed_at = new Date();
+  }
 }
 
 // Cleans a create/update body: only approvers may set the approval fields (and on create only
@@ -109,11 +112,46 @@ async function prepareBody(resource, config, user, payload, { creating = false }
   if (config.approvable && !mayApprove) APPROVAL_FIELDS.forEach((field) => delete body[field]);
   if (creating) Object.assign(body, policy.ownerFields(config, user));
   await applyEmployeeFields(config, user, body, { creating });
+  checkRequired(config, body, { creating });
   await applyPassword(config, body);
-  // Leave days = working days only (weekly offs and holidays inside the range are not counted).
-  if (resource === "leaves" && body.leave1 && body.leave2) body.total_leave = workingDaysBetween(body.leave1, body.leave2, await holidayMap());
+  // Leave days = working days only (weekly offs and holidays inside the range are not counted);
+  // a half-day leave is a single date counted as 0.5.
+  if (resource === "leaves") {
+    if (isHalfDay(body.leave_duration) && body.leave1) body.leave2 = body.leave1;
+    if (body.leave1 && body.leave2) {
+      const days = workingDaysBetween(body.leave1, body.leave2, await holidayMap());
+      body.total_leave = isHalfDay(body.leave_duration) ? days * 0.5 : days;
+    }
+  }
   return body;
 }
+
+const FIELD_NAMES = { empid: "Employee ID", email: "Email", department: "Department", position: "Position", pass: "Password", password: "Password", username: "Username" };
+const fieldName = (field) => FIELD_NAMES[field] || field;
+const isBlank = (value) => value === undefined || value === null || String(value).trim() === "";
+
+// requiredFields: needed on create, can't be emptied on edit; requiredOnCreate: needed on create only.
+function checkRequired(config, body, { creating }) {
+  const missing = [
+    ...(config.requiredFields || []).filter((field) => (creating ? isBlank(body[field]) : field in body && isBlank(body[field]))),
+    ...(creating ? (config.requiredOnCreate || []).filter((field) => isBlank(body[field])) : [])
+  ];
+  if (missing.length) throw httpError(400, `Please fill in: ${missing.map(fieldName).join(", ")}.`);
+}
+
+// uniqueFields: no two rows may share a value (e.g. two employees with the same Employee ID or email).
+async function checkUnique(config, model, body, id) {
+  for (const field of config.uniqueFields || []) {
+    if (isBlank(body[field])) continue;
+    const value = String(body[field]).trim();
+    body[field] = value;
+    const clash = await model.findOne({ [field]: { $regex: `^${escapeRegex(value)}$`, $options: "i" }, ...(id ? { _id: { $ne: id } } : {}) }).lean();
+    if (clash) throw httpError(409, `${fieldName(field)} "${value}" is already used by another record.`);
+  }
+}
+
+// Half-day leave: one date, counted as 0.5 of a working day.
+const isHalfDay = (duration) => /^half/i.test(String(duration || ""));
 
 // Removes fields that must never leave the server (password hashes).
 function hideFields(config, doc) {
@@ -161,6 +199,7 @@ export async function create(resource, user, payload) {
   authorize(config, user, "write");
   const model = modelFor(config);
   const body = await prepareBody(resource, config, user, payload, { creating: true });
+  await checkUnique(config, model, body);
   if (BEFORE_SAVE[resource]) await BEFORE_SAVE[resource](body, { model });
   const data = await model.create(body);
   return { statusCode: 201, payload: { data: hideFields(config, data) } };
@@ -172,6 +211,7 @@ export async function update(resource, id, user, payload) {
   const body = await prepareBody(resource, config, user, payload);
   // Changing the approval fields counts as approving, so it carries the approval scope too.
   const approving = config.approvable && APPROVAL_FIELDS.some((field) => field in body);
+  await checkUnique(config, modelFor(config), body, id);
   if (BEFORE_SAVE[resource]) {
     const existing = await modelFor(config).findOne(scopedIdFilter(config, user, id, { approving })).lean();
     if (!existing) throw httpError(404, "Record not found");

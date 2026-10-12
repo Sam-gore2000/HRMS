@@ -22,11 +22,11 @@ export async function dashboardStats() {
     models.holidays.countDocuments({})
   ]);
   return [
-    { label: "Total Employees", value: employees, icon: "bi-people", meta: "+12 new hires" },
-    { label: "Department", value: teams, icon: "bi-diagram-3", meta: "Across organization" },
-    { label: "Pending Approvals", value: pendingLeaves, icon: "bi-clipboard-check", meta: "-3 vs yesterday" },
-    { label: "Present Employee", value: present, icon: "bi-check-circle", meta: "Today" },
-    { label: "Absent Employee", value: Math.max(0, employees - attended.length), icon: "bi-x-circle", meta: "Today" },
-    { label: "Total Holiday", value: holidays, icon: "bi-tsunami", meta: "This year" }
+    { label: "Total Employees", value: employees, icon: "bi-people", meta: "Active employees", page: "employees" },
+    { label: "Department", value: teams, icon: "bi-diagram-3", meta: "Across organization", page: "teams" },
+    { label: "Pending Approvals", value: pendingLeaves, icon: "bi-clipboard-check", meta: "Leave requests waiting", page: "leaves" },
+    { label: "Present Employee", value: present, icon: "bi-check-circle", meta: "Today", page: "attendance" },
+    { label: "Absent Employee", value: Math.max(0, employees - attended.length), icon: "bi-x-circle", meta: "Today", page: "attendance" },
+    { label: "Total Holiday", value: holidays, icon: "bi-tsunami", meta: "This year", page: "holidays" }
   ];
 }

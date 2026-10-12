@@ -162,6 +162,11 @@ export function createMemoryModel(name, { records = [], defaults = {} } = {}) {
         return index >= 0 ? docs.splice(index, 1)[0] : null;
       }),
     findByIdAndDelete: (id) => model.findOneAndDelete({ _id: String(id) }),
+    async deleteMany(filter = {}) {
+      const before = docs.length;
+      for (let index = docs.length - 1; index >= 0; index -= 1) if (matches(docs[index], filter)) docs.splice(index, 1);
+      return { acknowledged: true, deletedCount: before - docs.length };
+    },
     async countDocuments(filter = {}) {
       return docs.filter((doc) => matches(doc, filter)).length;
     },

@@ -43,7 +43,7 @@ function buildGrid(month, days) {
   return cells;
 }
 
-function DayDetails({ day }) {
+function DayDetails({ day, onRegularize }) {
   if (!day) return <p className="cal-hint">Select a date to see its details.</p>;
   const rows = [];
   if (day.punch_in) rows.push(["Punch In", formatTime(day.punch_in)]);
@@ -61,6 +61,11 @@ function DayDetails({ day }) {
       </div>
       {rows.length > 0 && (
         <dl>{rows.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
+      )}
+      {onRegularize && !day.working_now && (day.status === "Absent" || day.missed_punch_out || day.status === "Present" || day.status === "Half Day" || (day.is_today && !day.status)) && (
+        <button type="button" className="btn btn-outline-secondary btn-sm cal-regularize-day" onClick={() => onRegularize(day)}>
+          <i className="bi bi-clock-history" /> Regularize this day
+        </button>
       )}
     </div>
   );
@@ -92,7 +97,8 @@ function TeamPicker({ user, team, selected, onSelect }) {
 
 // Month calendar of Present / Half Day / Leave / Absent / Holiday / Week Off (Saturday & Sunday).
 // Employees see their own; managers their own and their team's; admins can pick any employee.
-export function AttendanceCalendar({ user }) {
+// onRegularize(day?) shows "Regularize Attendance" for the person's own calendar; refreshKey reloads it.
+export function AttendanceCalendar({ user, onRegularize, refreshKey = 0 }) {
   const isAdmin = user.role === ROLES.ADMIN;
   const isManager = user.role === ROLES.MANAGER;
   const [team, setTeam] = useState([]);
@@ -121,7 +127,7 @@ export function AttendanceCalendar({ user }) {
       .catch((err) => alive && setError(err.message))
       .finally(() => alive && setLoading(false));
     return () => { alive = false; };
-  }, [month, empId, isAdmin, showsCalendar, viewingOther]);
+  }, [month, empId, isAdmin, showsCalendar, viewingOther, refreshKey]);
 
   const cells = useMemo(() => (data && data.month === month ? buildGrid(month, data.days) : []), [data, month]);
   const atCurrentMonth = month >= currentMonth();
@@ -133,6 +139,11 @@ export function AttendanceCalendar({ user }) {
           <div>
             <h5 className="cal-title">Attendance Calendar</h5>
           </div>
+          {onRegularize && !isAdmin && !viewingOther && (
+            <button type="button" className="btn btn-success cal-regularize" onClick={() => onRegularize(null)}>
+              <i className="bi bi-clock-history" /> Regularize Attendance
+            </button>
+          )}
           {isAdmin && (
             <div className="cal-picker">
               <EmployeePicker onPick={(employee) => setEmpId(employee.empid)} id="calendar-employee-options" />
@@ -189,7 +200,7 @@ export function AttendanceCalendar({ user }) {
                   <div className="cal-summary-wide"><strong>{data.summary.working_days}</strong><span>Working Days</span></div>
                 </div>
               )}
-              <DayDetails day={selected} />
+              <DayDetails day={selected} onRegularize={onRegularize && !isAdmin && !viewingOther ? onRegularize : null} />
               {data?.employee && <LeaveBalanceCard empId={viewingOther || isAdmin ? data.employee.empid : ""} compact editable={isAdmin} />}
             </div>
           </div>

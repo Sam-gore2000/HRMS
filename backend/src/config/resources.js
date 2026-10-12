@@ -11,6 +11,9 @@
 //  - hiddenFields:  never returned by the API (password hashes)
 //  - passwordField: hashed with bcrypt on save; left unchanged when submitted empty
 //  - searchFields:  extra fields the search box looks in, besides the columns
+//  - requiredFields: must be filled on create and can't be emptied on edit
+//  - requiredOnCreate: must be filled when creating only (e.g. the password)
+//  - uniqueFields:  no two rows may share these values (case-insensitive)
 //  - yearField:     date field (YYYY-MM-DD text) the ?year=2026 filter applies to
 //  - ownOnly:       private to the person (salary, bank details): managers and employees only ever
 //                   see their own rows; only admins see everyone's
@@ -21,6 +24,9 @@ export const resourceConfig = {
     adminOnly: true,
     title: "Admin Access",
     hiddenFields: ["password"],
+    requiredFields: ["username"],
+    requiredOnCreate: ["password"],
+    uniqueFields: ["username"],
     passwordField: "password",
     columns: ["username", "email"]
   },
@@ -29,8 +35,11 @@ export const resourceConfig = {
     adminOnly: true,
     title: "Employee Details",
     hiddenFields: ["pass"],
+    requiredFields: ["empid", "email", "department", "position"],
+    requiredOnCreate: ["pass"],
+    uniqueFields: ["empid", "email"],
     passwordField: "pass",
-    searchFields: ["username", "report_manager", "skills"],
+    searchFields: ["username", "report_manager"],
     columns: ["fname", "empid", "email", "phno", "department", "position", "report_manager_id", "status"]
   },
   leaves: {
@@ -41,7 +50,7 @@ export const resourceConfig = {
     employeeField: "empid",
     managerField: "report_manager_id",
     employeeMap: { fname: "fname", report_manager_id: "report_manager_id" },
-    columns: ["fname", "empid", "leavet", "leave1", "leave2", "total_leave", "reason", "response", "status"]
+    columns: ["fname", "empid", "leavet", "leave_duration", "leave1", "leave2", "total_leave", "reason", "response", "status"]
   },
   attendance: {
     model: "attendance",

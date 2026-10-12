@@ -12,8 +12,30 @@ function displayValue(profile, item) {
   return value && value !== "NA" ? String(value) : "";
 }
 
-// Overview tab: About + grouped icon cards.
-export function ProfileOverview({ profile }) {
+// Password row: passwords are stored encrypted one-way, so only the change date can be shown.
+function PasswordInfo({ profile, onChangePassword }) {
+  const changed = profile.password_changed_at ? formatDate(profile.password_changed_at) : "";
+  return (
+    <section>
+      <h6 className="profile-section-title">Security</h6>
+      <div className="profile-info-grid">
+        <div className="profile-info">
+          <div className="profile-info-icon"><i className="bi bi-shield-lock" /></div>
+          <div className="profile-info-text">
+            <span>Password</span>
+            <strong className="profile-password-dots">••••••••</strong>
+            <small className="profile-password-meta">{changed ? `Last changed ${changed}` : "Not changed in HRMS yet"}</small>
+          </div>
+          {onChangePassword && <button type="button" className="btn btn-outline-secondary btn-sm profile-password-change" onClick={onChangePassword}>Change</button>}
+        </div>
+      </div>
+      <p className="profile-password-note"><i className="bi bi-info-circle" /> For your security, passwords are stored encrypted and can't be displayed - not even to HR. You can set a new one any time.</p>
+    </section>
+  );
+}
+
+// Overview tab: About + grouped icon cards (+ password info on your own profile).
+export function ProfileOverview({ profile, onChangePassword }) {
   const sections = profile.role === "admin" ? ADMIN_OVERVIEW_SECTIONS : OVERVIEW_SECTIONS;
   return (
     <div className="profile-overview">
@@ -42,6 +64,7 @@ export function ProfileOverview({ profile }) {
           </div>
         </section>
       ))}
+      {onChangePassword && <PasswordInfo profile={profile} onChangePassword={onChangePassword} />}
     </div>
   );
 }

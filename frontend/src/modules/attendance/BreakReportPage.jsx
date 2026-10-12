@@ -6,6 +6,7 @@ import { ROLES } from "../../constants/app.js";
 import { formatDay, formatDuration, formatTime } from "../../utils/format.js";
 import { attendanceApi } from "./attendanceApi.js";
 import { downloadDailyCsv, downloadSummaryCsv } from "./reportExport.js";
+import { ScrollTable } from "../../components/tables/ScrollTable.jsx";
 
 const LIVE_REFRESH_MS = 60_000;
 const PAGE_SIZE = 10;
@@ -54,7 +55,7 @@ function BreakSessions({ breaks }) {
 function DailyDetail({ employee }) {
   if (!employee.days.length) return <p className="report-empty">No attendance recorded this month.</p>;
   return (
-    <div className="table-responsive">
+    <ScrollTable>
       <table className="table report-daily">
         <thead>
           <tr><th>Date</th><th>Punch In</th><th>Punch Out</th><th>Work Hours</th><th>Break Time</th><th>Break Sessions</th><th>Status</th></tr>
@@ -73,7 +74,7 @@ function DailyDetail({ employee }) {
           ))}
         </tbody>
       </table>
-    </div>
+    </ScrollTable>
   );
 }
 
@@ -206,7 +207,7 @@ export function BreakReportPage({ user }) {
 
           {hasLive && <p className="report-live-note"><span className="live-dot" /> Some employees are working right now. Figures refresh every minute.</p>}
 
-          <div className="table-responsive">
+          <ScrollTable>
             <table className="table report-table">
               <thead>
                 <tr>
@@ -251,7 +252,7 @@ export function BreakReportPage({ user }) {
                 })}
               </tbody>
             </table>
-          </div>
+          </ScrollTable>
           <Pagination page={page} pageSize={PAGE_SIZE} total={employees.length} onChange={setPage} label="employees" />
         </div>
       </div>

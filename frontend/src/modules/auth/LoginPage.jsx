@@ -2,12 +2,14 @@ import { useState } from "react";
 import { Alert } from "../../components/common/Alert.jsx";
 import { COMPANY_NAME, COPYRIGHT_YEAR } from "../../constants/app.js";
 import { authApi } from "./authApi.js";
+import {ForgotPasswordModal} from "./ForgotPasswordModal.jsx"
 
 export function LoginPage({ onLogin }) {
   const [form, setForm] = useState({ username: "", password: "", remember: false });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const update = (name, value) => setForm((current) => ({ ...current, [name]: value }));
+  const [forgotOpen, setForgotOpen] = useState(false);
 
   async function submit(event) {
     event.preventDefault();
@@ -25,8 +27,8 @@ export function LoginPage({ onLogin }) {
   return (
     <main className="login-shell">
       <section className="login-card">
-        <img src="/img/Logo.png" alt={COMPANY_NAME} className="login-logo" />
-        <h1>{COMPANY_NAME}</h1>
+        <img src="/img/hrm-white-logo.png" alt={COMPANY_NAME} className="login-logo" />
+        {/* <h1>{COMPANY_NAME}</h1> */}
         <p>HRMS Portal</p>
         <form onSubmit={submit} className="row g-3">
           <label className="col-12">
@@ -42,7 +44,8 @@ export function LoginPage({ onLogin }) {
               <input type="checkbox" checked={form.remember} onChange={(e) => update("remember", e.target.checked)} />
               <span>Remember Me</span>
             </label>
-            <strong className="forgot-link">Forgot Password?</strong>
+           <button type="button" className="forgot-link" onClick={() => setForgotOpen(true)}>Forgot Password?</button>
+           {forgotOpen && <ForgotPasswordModal initialUsername={form.username} onClose={(username) => { setForgotOpen(false); if (username) update("username", username); }} />}
           </div>
           <Alert type="danger" className="py-2">{error}</Alert>
           <button className="btn login-btn w-100" disabled={loading}>{loading ? "Signing In..." : "Sign In"}</button>

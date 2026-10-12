@@ -1,4 +1,5 @@
 import * as authService from "../services/authService.js";
+import * as passwordResetService from "../services/passwordResetService.js";
 import * as profileService from "../services/profileService.js";
 import { clearAuthCookie, setAuthCookie } from "../utils/authCookie.js";
 import { handleRequest } from "../utils/handleRequest.js";
@@ -17,8 +18,9 @@ export const logout = handleRequest(async (req, res) => {
   return result;
 });
 
-export const verifyForgotPassword = handleRequest((req) => authService.verifyForgotPassword(req.body));
-export const resetForgotPassword = handleRequest((req) => authService.resetForgotPassword(req.body));
+export const forgotRequest = handleRequest((req) => passwordResetService.requestCode(req.body));
+export const forgotVerify = handleRequest((req) => passwordResetService.verifyCode(req.body));
+export const forgotReset = handleRequest((req) => passwordResetService.resetPassword(req.body));
 export const getProfile = handleRequest((req) => profileService.getProfile(req.user));
 export const updateProfile = handleRequest((req) => profileService.updateProfile(req.user, req.body));
 export const uploadPhoto = handleRequest((req) => profileService.updatePhoto(req.user, req.file));

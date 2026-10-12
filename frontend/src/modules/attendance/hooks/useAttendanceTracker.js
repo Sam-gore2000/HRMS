@@ -38,7 +38,8 @@ export function useAttendanceTracker() {
   const punchedOut = Boolean(state?.punched_out);
   const onBreak = Boolean(state?.on_break);
   const sinceSync = Math.max(0, Math.floor((now - syncedAt) / 1000));
-  const workSeconds = (state?.work_seconds || 0) + (punchedIn && !onBreak ? sinceSync : 0);
+  // Work time keeps counting during breaks (work = punch in -> punch out); break time is shown separately.
+  const workSeconds = (state?.work_seconds || 0) + (punchedIn ? sinceSync : 0);
   const breakSeconds = (state?.break_seconds || 0) + (onBreak ? sinceSync : 0);
 
   async function run(action, successText) {

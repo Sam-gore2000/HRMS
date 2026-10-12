@@ -52,19 +52,3 @@ export async function logout(user) {
   if (user?.session_id && user?.empid) await sessionLogService.close(user);
   return { ok: true };
 }
-
-export async function verifyForgotPassword({ username, email }) {
-  if (!username || !email) throw httpError(400, "Username and email are required");
-  const admin = await models.admins.findOne({ username, email }).lean();
-  if (admin) return { resetRole: ROLES.ADMIN, resetKey: admin.username };
-  const employee = await models.employees.findOne({ empid: username, email }).lean();
-  if (employee) return { resetRole: ROLES.EMPLOYEE, resetKey: String(employee._id) };
-  throw httpError(404, "No account matched those details");
-}
-
-export async function resetForgotPassword({ resetRole, resetKey, password }) {
-  if (!resetRole || !resetKey || !password) throw httpError(400, "Reset details and password are required");
-  if (resetRole === ROLES.ADMIN) await models.admins.updateOne({ username: resetKey }, { $set: { password } });
-  else await models.employees.updateOne({ _id: resetKey }, { $set: { pass: password } });
-  return { ok: true };
-}

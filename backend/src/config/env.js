@@ -18,7 +18,20 @@ export const env = {
   clientOrigin: process.env.CLIENT_ORIGIN || "http://localhost:5173",
   uploadDir: process.env.UPLOAD_DIR || path.resolve(srcDir, "../../uploads"),
   disableMemoryFallback: process.env.DISABLE_MEMORY_FALLBACK === "true",
+  // Email (forgot-password codes). Gmail: SMTP_USER = the Gmail address, SMTP_PASS = its 16-letter App Password.
+  smtp: {
+    host: process.env.SMTP_HOST || "smtp.gmail.com",
+    port: Number(process.env.SMTP_PORT) || 465,
+    user: process.env.SMTP_USER || "",
+    pass: (process.env.SMTP_PASS || "").replace(/\s+/g, ""),
+    from: process.env.MAIL_FROM || ""
+  },
+  isProduction: process.env.NODE_ENV === "production",
   // Paid leave earned per month from the joining date.
+  // New joiners can't use paid leave until they finish probation (months from the joining date).
+  probationMonths: Number.isFinite(parseInt(process.env.PROBATION_MONTHS, 10)) ? parseInt(process.env.PROBATION_MONTHS, 10) : 3,
+  // Leave year: balances count from this month each year (1 = January -> Jan-Dec; 4 = April -> Apr-Mar).
+  leaveYearStartMonth: Math.min(12, Math.max(1, parseInt(process.env.LEAVE_YEAR_START_MONTH, 10) || 1)),
   leaveAccrualPerMonth: Number.isFinite(parseFloat(process.env.LEAVE_ACCRUAL_PER_MONTH)) ? parseFloat(process.env.LEAVE_ACCRUAL_PER_MONTH) : 1.5,
   // Attendance calendar: WEEKLY_OFF_DAYS are the days off (0 = Sunday ... 6 = Saturday).
   weeklyOffDays: (process.env.WEEKLY_OFF_DAYS ?? "0,6").split(",").map((day) => Number(day.trim())).filter((day) => day >= 0 && day <= 6)

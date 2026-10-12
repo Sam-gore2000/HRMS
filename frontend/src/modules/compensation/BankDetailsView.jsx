@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { PageTitle } from "../../components/common/PageTitle.jsx";
+import { ScrollTable } from "../../components/tables/ScrollTable.jsx";
 
 const show = (value) => (value === undefined || value === null || value === "" ? "" : String(value));
 const amount = (value) => {
@@ -77,7 +78,7 @@ export function BankDetailsView({ record, showSalary = false, title = "Bank Deta
           {showSalary && (
             <>
               <h6 className="profile-section-title">Salary Structure</h6>
-              <div className="table-responsive">
+              <ScrollTable>
                 <table className="table bank-salary">
                   <tbody>
                     {SALARY.map(([label, field]) => (
@@ -85,7 +86,7 @@ export function BankDetailsView({ record, showSalary = false, title = "Bank Deta
                     ))}
                   </tbody>
                 </table>
-              </div>
+              </ScrollTable>
             </>
           )}
         </div>

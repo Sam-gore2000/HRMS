@@ -6,13 +6,13 @@ import { StatsRow } from "./components/StatsRow.jsx";
 import { WeeklyCard } from "./components/WeeklyCard.jsx";
 import { dashboardApi } from "./dashboardApi.js";
 
-export function DashboardPage({ user }) {
+export function DashboardPage({ user, navigate, canOpen }) {
   const [data, setData] = useState({ stats: [], notices: [] });
   useEffect(() => { dashboardApi.summary().then(setData).catch(() => {}); }, []);
 
   return (
     <section className="section dashboard">
-      <StatsRow stats={data.stats} />
+      <StatsRow stats={data.stats} navigate={navigate} canOpen={canOpen} />
       <div className="row">
         <div className="col-lg-8">
           <div className="row">

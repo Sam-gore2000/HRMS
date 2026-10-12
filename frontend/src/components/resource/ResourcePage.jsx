@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ROLES } from "../../constants/app.js";
 import { useEmployeeDirectory, invalidateEmployeeDirectory } from "../../hooks/useEmployeeDirectory.js";
 import { useFormState } from "../../hooks/useFormState.js";
@@ -31,12 +31,14 @@ function recordLabel(row) {
 //   approvable   managers/admins get Approve / Reject actions
 //   columnLabels table headings, e.g. { fname: "Employee Name" } (otherwise the form label is used)
 //   compute(values)          -> { field: value } recalculated after every change (fields marked computed: true)
+//   defaults                 -> starting values for a new form (e.g. { leave_duration: "Full Day" })
+// Field flags: required, requiredOnCreate (e.g. password), readOnlyWhen(values) -> hint text or false.
 //   onEmployeeSelected(emp)  -> Promise<{ field: value }> extra values to load when an admin picks an employee
 // Optional props: onView(row) adds a "View Profile" style action; viewLabel names it;
 // intro is shown under the page title (e.g. the attendance calendar); filters are extra list
 // parameters (e.g. { year: 2026 }) and toolbar renders their controls next to the search box;
-// rowActions adds buttons to every row: [{ label, icon, onClick(row) }].
-export function ResourcePage({ config, user, onView, viewLabel, viewIcon, intro, filters, toolbar, rowActions }) {
+// rowActions adds buttons to every row: [{ label, icon, onClick(row) }]; changing refreshKey reloads the table.
+export function ResourcePage({ config, user, onView, viewLabel, viewIcon, intro, filters, toolbar, rowActions, refreshKey = 0 }) {
   const { resource, selfService = false, approvable = false } = config;
   const data = useResource(resource, { filters });
   const dialog = useDialog();
@@ -51,7 +53,7 @@ export function ResourcePage({ config, user, onView, viewLabel, viewIcon, intro,
   const linked = hasEmployeeFields(fields);
   const directory = useEmployeeDirectory(isAdmin && linked);
   // Employees/managers always start with their own ID and name filled in.
-  const blankForm = useCallback(() => (linked && !isAdmin ? ownValues(fields, user) : {}), [linked, isAdmin, fields, user]);
+  const blankForm = useCallback(() => ({ ...(config.defaults || {}), ...(linked && !isAdmin ? ownValues(fields, user) : {}) }), [config.defaults, linked, isAdmin, fields, user]);
 
   const [form, setField, resetForm] = useFormState(blankForm());
   const formRef = useRef(form);
@@ -59,6 +61,9 @@ export function ResourcePage({ config, user, onView, viewLabel, viewIcon, intro,
   const selection = useRef(0);
   const [editing, setEditing] = useState(null);
   const [saving, setSaving] = useState(false);
+
+  // Reload the table when something outside it changed the data (e.g. an approved regularization).
+  useEffect(() => { if (refreshKey) data.reload().catch(() => {}); }, [refreshKey]);
 
   const columns = data.meta.columns.length ? data.meta.columns : fields.map((field) => field.name);
   const canWrite = isAdmin || selfService;
@@ -98,11 +103,23 @@ export function ResourcePage({ config, user, onView, viewLabel, viewIcon, intro,
     recompute(next);
   }
 
-  const fieldProps = (field) => (field.computed ? { readOnly: true, hint: "Calculated automatically" } : employeeFieldProps(field, { isAdmin, values: form, directory, fields }));
+  function fieldProps(field) {
+    if (field.computed) return { readOnly: true, hint: "Calculated automatically" };
+    const lockedHint = field.readOnlyWhen?.(form);
+    if (lockedHint) return { readOnly: true, hint: lockedHint };
+    const props = employeeFieldProps(field, { isAdmin, values: form, directory, fields });
+    props.required = Boolean(field.required || (field.requiredOnCreate && !editing));
+    // Editing: passwords are stored encrypted and can't be shown - an empty box keeps the current one.
+    if (field.type === "password" && editing) {
+      props.placeholder = "•••••••• (unchanged)";
+      props.hint = props.hint || "The current password is kept unless you type a new one.";
+    }
+    return props;
+  }
 
   function startEdit(row) {
     setEditing(row._id || row.id);
-    resetForm(row);
+    resetForm({ ...(config.defaults || {}), ...row }); // older rows may lack newer fields (e.g. leave duration)
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
@@ -208,6 +225,7 @@ export function ResourcePage({ config, user, onView, viewLabel, viewIcon, intro,
           viewLabel={viewLabel}
           viewIcon={viewIcon}
           extraActions={rowActions}
+          showActions={canWrite || isAdmin || (approvable && canApprove) || Boolean(onView) || Boolean(rowActions?.length)}
           startIndex={(data.page - 1) * data.pageSize}
         />
         <Pagination page={data.page} pageSize={data.pageSize} total={data.total} onChange={(next) => { data.setPage(next); }} />

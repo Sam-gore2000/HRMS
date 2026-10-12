@@ -3,12 +3,16 @@ import { EmployeePicker } from "../../components/forms/EmployeePicker.jsx";
 import { ResourcePage } from "../../components/resource/ResourcePage.jsx";
 import { ROLES } from "../../constants/app.js";
 import { LeaveBalanceCard } from "./LeaveBalanceCard.jsx";
+import { OpeningBalanceForm } from "./OpeningBalanceForm.jsx";
 import { leaveConfig } from "./leave.config.js";
 
-// Admin: pick an employee to see and adjust their paid leave balance.
+// Admin: pick an employee to see and adjust their paid leave balance; set opening balances.
 function AdminLeaveBalance() {
   const [empId, setEmpId] = useState("");
+  const [refresh, setRefresh] = useState(0);
   return (
+    <>
+    <OpeningBalanceForm onSaved={(savedId) => { if (savedId === empId) setRefresh((value) => value + 1); }} />
     <div className="card lb-admin">
       <div className="card-body">
         <div className="lb-admin-top">
@@ -18,9 +22,10 @@ function AdminLeaveBalance() {
           </div>
           <EmployeePicker onPick={(employee) => setEmpId(employee.empid)} id="leave-balance-employee-options" />
         </div>
-        {empId && <LeaveBalanceCard empId={empId} editable />}
+        {empId && <LeaveBalanceCard empId={empId} editable refreshKey={refresh} />}
       </div>
     </div>
+    </>
   );
 }
 
